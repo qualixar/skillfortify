@@ -218,8 +218,6 @@ Backed by peer-reviewed research with five formal theorems and full proofs, form
 
 **[Read the paper on arXiv](https://arxiv.org/abs/2603.00195)** | **[Zenodo](https://doi.org/10.5281/zenodo.18787663)** | DOI: 10.5281/zenodo.18787663
 
-Part of the **AgentAssert** suite ([arXiv:2602.22302](https://arxiv.org/abs/2602.22302)) -- formal foundations for trustworthy AI agents.
-
 ---
 
 ## Contributing

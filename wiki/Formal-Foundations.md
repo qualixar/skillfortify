@@ -186,21 +186,6 @@ Theorem 1 (attacker completeness) underpins the entire system: because the threa
 
 ---
 
-## Connection to AgentAssert
-
-SkillFortify's formal foundations complement the AgentAssert framework:
-
-| AgentAssert | SkillFortify |
-|-------------|-------------|
-| Behavioral contracts specify what agents SHOULD do | Capability model specifies what skills CAN do |
-| Runtime enforcement catches behavioral drift | Static analysis catches capability violations before runtime |
-| Composition conditions (C1-C4) for agent pipelines | Composition analysis for skill interactions |
-| ContractSpec DSL for declaring agent behavior | Capability declarations for skill permissions |
-
-The two systems address the same fundamental problem -- ensuring AI agents behave correctly -- from complementary angles. AgentAssert works at the agent level (behavior over time). SkillFortify works at the skill level (what individual components can access).
-
----
-
 ## Known Limitations of the Formal Model
 
 Every formal model has scope boundaries. SkillFortify's formal guarantees apply within the model's assumptions. The paper documents these limitations explicitly:
@@ -232,12 +217,11 @@ These limitations are inherent to the approach and are documented for transparen
 
 ## Further Reading
 
-- **[Research Paper](https://doi.org/10.5281/zenodo.18787663)** -- Full 31-page paper with all five proofs, benchmark methodology, and experimental results
-- **[AgentAssert Paper](https://arxiv.org/abs/2602.22302)** -- The companion framework for agent behavioral contracts
+- **[Research Paper](https://arxiv.org/abs/2603.00195)** -- Full 31-page paper with all five proofs, benchmark methodology, and experimental results
 - **[SkillFortifyBench](SkillFortifyBench)** -- The 540-skill benchmark used to evaluate the formal analysis
 - **[Trust Levels](Trust-Levels)** -- Practical guide to trust scores and levels
 - **[Why SkillFortify](Why-SkillFortify)** -- The problem and why formal analysis is the right approach
 
 ---
 
-*SkillFortify is part of the [AgentAssert](https://agentassert.com) research suite -- building formal foundations for trustworthy AI agents.*
+*SkillFortify -- formal foundations for trustworthy AI agents.*

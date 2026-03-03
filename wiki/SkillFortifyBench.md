@@ -219,4 +219,4 @@ SkillFortifyBench differs from MalTool in that it includes verified benign sampl
 
 ---
 
-*SkillFortify is part of the [AgentAssert](https://agentassert.com) research suite -- building formal foundations for trustworthy AI agents.*
+*SkillFortify -- formal foundations for trustworthy AI agents.*

@@ -118,8 +118,6 @@ Run `skillfortify frameworks` for the full list with detection patterns.
 | **GitHub Repository** | [github.com/varun369/skillfortify](https://github.com/varun369/skillfortify) |
 | **PyPI Package** | [pypi.org/project/skillfortify](https://pypi.org/project/skillfortify/) |
 | **Research Paper** | [arXiv:2603.00195](https://arxiv.org/abs/2603.00195) \| [Zenodo](https://doi.org/10.5281/zenodo.18787663) |
-| **AgentAssert Paper** | [arXiv:2602.22302](https://arxiv.org/abs/2602.22302) |
-| **AgentAssert Suite** | [agentassert.com](https://agentassert.com) |
 
 ---
 
@@ -136,20 +134,6 @@ If you use SkillFortify in your research, please cite:
   url       = {https://arxiv.org/abs/2603.00195}
 }
 ```
-
----
-
-## Part of the AgentAssert Research Suite
-
-SkillFortify is the second product in a research program building formal foundations for trustworthy AI agents:
-
-| Product | What It Establishes | Status |
-|---------|---------------------|--------|
-| **[AgentAssert](https://arxiv.org/abs/2602.22302)** ([Zenodo](https://zenodo.org/records/18775393)) | How to SPECIFY and ENFORCE agent behavior | Published |
-| **SkillFortify** | How to VERIFY and SECURE the agent supply chain | Current |
-| More coming | Formal methods for agent testing, communication, and memory | Planned |
-
-Together, AgentAssert specifies what agents SHOULD do. SkillFortify ensures the skills they USE are safe.
 
 ---
 

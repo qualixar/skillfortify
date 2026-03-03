@@ -173,4 +173,4 @@ Yes. 31 pages, five theorems with full proofs, comprehensive evaluation. Availab
 
 ---
 
-*SkillFortify is part of the [AgentAssert](https://agentassert.com) research suite -- building formal foundations for trustworthy AI agents.*
+*SkillFortify -- formal foundations for trustworthy AI agents.*

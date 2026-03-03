@@ -250,4 +250,4 @@ Store ASBOMs for every release to maintain a complete audit trail of your agent'
 
 ---
 
-*SkillFortify is part of the [AgentAssert](https://agentassert.com) research suite -- building formal foundations for trustworthy AI agents.*
+*SkillFortify -- formal foundations for trustworthy AI agents.*

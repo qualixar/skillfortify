@@ -162,4 +162,4 @@ See [CLI Reference](CLI-Reference) for full details.
 
 ---
 
-*SkillFortify is part of the [AgentAssert](https://agentassert.com) research suite.*
+*SkillFortify -- formal foundations for trustworthy AI agents.*

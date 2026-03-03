@@ -135,4 +135,4 @@ SkillFortify is designed to be extensible. If you use an agent framework not cur
 
 ---
 
-*SkillFortify is part of the [AgentAssert](https://agentassert.com) research suite -- building formal foundations for trustworthy AI agents.*
+*SkillFortify -- formal foundations for trustworthy AI agents.*

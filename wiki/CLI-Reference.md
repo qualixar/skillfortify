@@ -191,4 +191,4 @@ jobs:
 
 ---
 
-*SkillFortify is part of the [AgentAssert](https://agentassert.com) research suite.*
+*SkillFortify -- formal foundations for trustworthy AI agents.*

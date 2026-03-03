@@ -196,4 +196,4 @@ Heuristic scanning is a good start but has a known ceiling. Formal verification 
 
 ---
 
-*SkillFortify is part of the [AgentAssert](https://agentassert.com) research suite -- building formal foundations for trustworthy AI agents.*
+*SkillFortify -- formal foundations for trustworthy AI agents.*

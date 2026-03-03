@@ -218,4 +218,4 @@ skillfortify lock ./production-config -o production-skill-lock.json
 
 ---
 
-*SkillFortify is part of the [AgentAssert](https://agentassert.com) research suite -- building formal foundations for trustworthy AI agents.*
+*SkillFortify -- formal foundations for trustworthy AI agents.*

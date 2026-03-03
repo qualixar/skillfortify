@@ -63,7 +63,7 @@ Transformed SkillFortify from a project scanner into a system-wide security tool
 - **Fleet dashboard**: Centralized visibility across all agent projects in an organization
 - **Cryptographic skill signing**: Keyless signing protocol for skill authors
 - **Advanced composition analysis**: Cross-skill interaction rules and policy enforcement
-- **Integration with AgentAssert behavioral contracts**: Skills verified against agent-level specifications
+- **Behavioral contract integration**: Skills verified against agent-level specifications
 
 ---
 
@@ -87,4 +87,4 @@ Open a discussion on [GitHub Discussions](https://github.com/varun369/skillforti
 
 ---
 
-*SkillFortify is part of the [AgentAssert](https://agentassert.com) research suite -- building formal foundations for trustworthy AI agents.*
+*SkillFortify -- formal foundations for trustworthy AI agents.*
