@@ -4,6 +4,11 @@ All notable changes to SkillFortify are documented here.
 
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.3.2] - 2026-03-04
+
+### Added
+- arXiv paper reference (arXiv:2603.00195) in package metadata and documentation
+
 ## [0.3.0] - 2026-03-01
 
 ### Added
