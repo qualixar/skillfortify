@@ -216,7 +216,7 @@ jobs:
 
 Backed by peer-reviewed research with five formal theorems and full proofs, formalizing the agent skill supply chain threat model, capability verification, trust algebra, and dependency resolution.
 
-**[Read the paper on Zenodo](https://doi.org/10.5281/zenodo.18787663)** | DOI: 10.5281/zenodo.18787663
+**[Read the paper on arXiv](https://arxiv.org/abs/2603.00195)** | **[Zenodo](https://doi.org/10.5281/zenodo.18787663)** | DOI: 10.5281/zenodo.18787663
 
 Part of the **AgentAssert** suite ([arXiv:2602.22302](https://arxiv.org/abs/2602.22302)) -- formal foundations for trustworthy AI agents.
 
@@ -246,13 +246,12 @@ MIT License. See [LICENSE](LICENSE) for details.
 ## Citation
 
 ```bibtex
-@software{bhardwaj2026skillfortify,
+@article{bhardwaj2026skillfortify,
   author    = {Bhardwaj, Varun Pratap},
-  title     = {SkillFortify: Formal Analysis and Supply Chain Security
-               for Agentic AI Skills},
+  title     = {Formal Analysis and Supply Chain Security for Agentic AI Skills},
+  journal   = {arXiv preprint arXiv:2603.00195},
   year      = {2026},
   doi       = {10.5281/zenodo.18787663},
-  publisher = {Zenodo},
-  url       = {https://doi.org/10.5281/zenodo.18787663}
+  url       = {https://arxiv.org/abs/2603.00195}
 }
 ```
