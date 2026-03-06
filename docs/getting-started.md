@@ -15,7 +15,7 @@ pip install skillfortify
 ### From Source
 
 ```bash
-git clone https://github.com/varun369/skillfortify.git
+git clone https://github.com/qualixar/skillfortify.git
 cd skillfortify
 pip install -e .
 ```

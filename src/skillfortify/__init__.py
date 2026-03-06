@@ -5,7 +5,7 @@ Part of Qualixar — The Complete Agent Development Platform.
 
 from __future__ import annotations
 
-__version__ = "0.3.2"
+__version__ = "0.3.3"
 __author__ = "Varun Pratap Bhardwaj"
 __author_email__ = "varun.pratap.bhardwaj@gmail.com"
 __license__ = "MIT"

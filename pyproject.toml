@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "skillfortify"
-version = "0.3.2"
+version = "0.3.3"
 description = "SkillFortify — Supply chain security scanner for AI agent skills. Supports 22 frameworks."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -32,7 +32,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://pypi.org/project/skillfortify/"
+Homepage = "https://github.com/qualixar/skillfortify"
+Repository = "https://github.com/qualixar/skillfortify"
 Paper = "https://arxiv.org/abs/2603.00195"
 
 [project.optional-dependencies]

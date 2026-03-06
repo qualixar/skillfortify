@@ -5,11 +5,11 @@ its MCP server configurations, skill directories, and dot-directories on
 disk. The registry enables ``SystemScanner`` to check for the presence of
 these tools without the user specifying paths manually.
 
-Profiles cover 22+ AI coding tools as of March 2026, from major players
-(Claude Code, Cursor, VS Code Copilot) to emerging tools (Kiro, Codex,
-Trae). The list is intentionally generous -- checking for a non-existent
-directory is cheap (one syscall), and discovering an unexpected tool is
-high-value for the user.
+Profiles cover 22+ AI coding tools, from major players (Claude Code, Cursor,
+VS Code Copilot) to emerging tools (Kiro, Codex, Trae). The list is
+intentionally generous -- checking for a non-existent directory is cheap
+(one syscall), and discovering an unexpected tool is high-value for the
+user.
 
 Platform Notes:
     macOS stores VS Code configs under ``~/Library/Application Support/``.

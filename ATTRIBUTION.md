@@ -40,10 +40,6 @@ is_valid = QualixarSigner.verify(output_data)
 
 ## Part of Qualixar
 
-SkillFortify is part of the Qualixar ecosystem of agent development tools:
-
-- **SkillFortify** — Supply chain security for AI agent skills
-- **AgentAssay** — Stochastic behavioral testing for AI agents
-- **SuperLocalMemory** — Local-first AI agent memory
+SkillFortify is part of the Qualixar research initiative.
 
 Learn more at [qualixar.com](https://qualixar.com).

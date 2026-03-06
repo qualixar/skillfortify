@@ -1,8 +1,8 @@
 """Parser for n8n workflow automation definitions (JSON export format).
 
-n8n is the largest open-source workflow automation platform (177K+ GitHub
-stars as of March 2026). Workflows are exported as JSON files containing
-a ``nodes`` array where each node represents an operation.
+n8n is the largest open-source workflow automation platform. Workflows are
+exported as JSON files containing a ``nodes`` array where each node
+represents an operation.
 
 References:
     n8n documentation: https://docs.n8n.io/workflows/

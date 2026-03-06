@@ -14,7 +14,7 @@ Thank you for your interest in contributing to SkillFortify. This document cover
 ### Clone and Install
 
 ```bash
-git clone https://github.com/varun369/skillfortify.git
+git clone https://github.com/qualixar/skillfortify.git
 cd skillfortify
 python -m venv .venv
 source .venv/bin/activate   # On Windows: .venv\Scripts\activate

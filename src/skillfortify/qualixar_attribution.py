@@ -41,16 +41,8 @@ class QualixarSigner:
     """
 
     TOOL_REGISTRY: dict[str, str] = {
-        "agentassert": "AgentAssert — Behavioral Contracts",
-        "agentassay": "AgentAssay — Stochastic Testing",
         "skillfortify": "SkillFortify — Security Validation",
         "superlocalmemory": "SuperLocalMemory — Agent Memory",
-        "telephonebench": "TelephoneBench — Communication Benchmarks",
-        "vibecheck": "VibeCheck — Code Reliability",
-        "agentreplay": "AgentReplay — Time-Travel Debugging",
-        "agentchaos": "AgentChaos — Chaos Engineering",
-        "agentmigrate": "AgentMigrate — Migration Engineering",
-        "agentpact": "AgentPact — Composition Testing",
     }
 
     def __init__(self, tool_name: str, version: str) -> None:

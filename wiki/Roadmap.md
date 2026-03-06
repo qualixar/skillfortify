@@ -73,17 +73,17 @@ SkillFortify is open source (MIT License). Contributions are welcome:
 
 - **New framework parsers**: Add detection for frameworks not yet covered
 - **Benchmark skills**: Contribute samples to SkillFortifyBench
-- **Bug reports**: [github.com/varun369/skillfortify/issues](https://github.com/varun369/skillfortify/issues)
+- **Bug reports**: [github.com/qualixar/skillfortify/issues](https://github.com/qualixar/skillfortify/issues)
 - **Documentation**: Improve wiki pages, add tutorials
 - **Research**: Extend the formal model, propose new theorems
 
-See [CONTRIBUTING.md](https://github.com/varun369/skillfortify/blob/main/CONTRIBUTING.md) for guidelines.
+See [CONTRIBUTING.md](https://github.com/qualixar/skillfortify/blob/main/CONTRIBUTING.md) for guidelines.
 
 ---
 
 ## Feature Requests
 
-Open a discussion on [GitHub Discussions](https://github.com/varun369/skillfortify/discussions) or file a feature request as an issue. The roadmap is shaped by real developer needs.
+Open a discussion on [GitHub Discussions](https://github.com/qualixar/skillfortify/discussions) or file a feature request as an issue. The roadmap is shaped by real developer needs.
 
 ---
 

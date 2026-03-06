@@ -104,17 +104,15 @@ class ParserRegistry:
 def default_registry() -> ParserRegistry:
     """Create a ParserRegistry pre-loaded with all built-in parsers.
 
-    The default registry includes parsers for 22 agent frameworks:
+    The default registry includes parsers for 22 agent frameworks,
+    covering skill definitions, MCP configs, and low-code workflows:
 
-    P0 (Critical):
     1. ClaudeSkillsParser -- Claude Code skills (.claude/skills/*.md)
     2. McpConfigParser -- MCP server configs (mcp.json, etc.)
     3. McpServerParser -- MCP server source code (deep analysis)
     4. OpenClawParser -- OpenClaw skills (.claw/*.yaml)
     5. OpenAIAgentsParser -- OpenAI Agents SDK (@function_tool)
     6. GoogleADKParser -- Google ADK (google.adk)
-
-    P1 (Major ecosystems):
     7. LangChainParser -- LangChain tools (BaseTool / @tool)
     8. CrewAIParser -- CrewAI tools (crew.yaml)
     9. AutoGenParser -- AutoGen tools (register_for_llm)
@@ -122,8 +120,6 @@ def default_registry() -> ParserRegistry:
     11. ComposioParser -- Composio (Action / App / @action)
     12. SemanticKernelParser -- Microsoft Semantic Kernel
     13. LlamaIndexParser -- LlamaIndex (FunctionTool / ReActAgent)
-
-    P2 (Full coverage):
     14. N8nWorkflowParser -- n8n workflows (JSON)
     15. FlowiseParser -- Flowise chatflows (JSON)
     16. MastraParser -- Mastra tools (TypeScript)
@@ -138,14 +134,14 @@ def default_registry() -> ParserRegistry:
         A ParserRegistry with all 22 built-in parsers registered.
     """
     registry = ParserRegistry()
-    # P0: Critical path
+    # Skill definition formats
     registry.register(ClaudeSkillsParser())
     registry.register(McpConfigParser())
     registry.register(McpServerParser())
     registry.register(OpenClawParser())
     registry.register(OpenAIAgentsParser())
     registry.register(GoogleADKParser())
-    # P1: Major ecosystems
+    # Framework integrations
     registry.register(LangChainParser())
     registry.register(CrewAIParser())
     registry.register(AutoGenParser())
@@ -153,7 +149,7 @@ def default_registry() -> ParserRegistry:
     registry.register(ComposioParser())
     registry.register(SemanticKernelParser())
     registry.register(LlamaIndexParser())
-    # P2: Full coverage
+    # Low-code and additional frameworks
     registry.register(N8nWorkflowParser())
     registry.register(FlowiseParser())
     registry.register(MastraParser())

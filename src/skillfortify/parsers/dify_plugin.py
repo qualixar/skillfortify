@@ -1,9 +1,9 @@
 """Parser for Dify plugin definitions (manifest.yaml / manifest.json).
 
-Dify is an open-source LLM app development platform (100K+ GitHub stars)
-with an active plugin marketplace. Plugins are defined via manifest files
-that declare tool identity, parameters, credential requirements, and
-endpoint configurations.
+Dify is a popular open-source LLM app development platform with an active
+plugin marketplace. Plugins are defined via manifest files that declare
+tool identity, parameters, credential requirements, and endpoint
+configurations.
 
 Detection signals:
     - ``manifest.yaml`` / ``manifest.json`` with Dify plugin schema

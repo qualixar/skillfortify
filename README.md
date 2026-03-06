@@ -3,11 +3,11 @@
 > Supply chain security scanner for AI agent skills -- supports 22 frameworks.
 
 [![PyPI version](https://img.shields.io/pypi/v/skillfortify.svg)](https://pypi.org/project/skillfortify/)
-[![Tests](https://img.shields.io/github/actions/workflow/status/varun369/skillfortify/ci.yml?label=tests)](https://github.com/varun369/skillfortify/actions)
+[![Tests](https://img.shields.io/github/actions/workflow/status/qualixar/skillfortify/ci.yml?label=tests)](https://github.com/qualixar/skillfortify/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/downloads/)
 
-**[Website](https://www.superlocalmemory.com/skillfortify)** | **[PyPI](https://pypi.org/project/skillfortify/)** | **[Paper (arXiv)](https://arxiv.org/abs/2603.00195)** | **[Wiki](https://github.com/varun369/skillfortify/wiki)**
+**[Website](https://www.superlocalmemory.com/skillfortify)** | **[PyPI](https://pypi.org/project/skillfortify/)** | **[Paper (arXiv)](https://arxiv.org/abs/2603.00195)** | **[Wiki](https://github.com/qualixar/skillfortify/wiki)**
 
 ---
 

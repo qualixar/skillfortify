@@ -103,36 +103,37 @@ When skill A and skill B are installed together, new security properties (and ri
 
 ---
 
-## Comparison: SkillFortify vs Current Tools
+## What Sets SkillFortify Apart
 
-| Capability | SkillFortify | Snyk Agent Scan | Cisco skill-scanner | SkillShield.io | ToolShield | MCPShield |
-|-----------|:------------:|:---------------:|:-------------------:|:--------------:|:----------:|:---------:|
-| **Formal verification** | Yes | No | No | No | No | No |
-| **Soundness guarantee** | 5 theorems | None | None | None | None | None |
-| **False positive rate** | 0% (benchmark) | Not published | Not published | Not published | Not published | Not published |
-| **"No findings = safe" caveat** | No caveat needed | N/A | "No findings != no risk" | N/A | N/A | N/A |
-| **Capability-level analysis** | Formal model | No | No | No | No | No |
-| **Dependency graph analysis** | SAT-based | Partial | No | No | No | No |
-| **Lockfile generation** | skill-lock.json | No | No | No | No | No |
-| **Trust score algebra** | Formal | No | No | No | No | No |
-| **ASBOM (CycloneDX)** | 1.6 | No | No | No | No | No |
-| **Agent frameworks** | 22 | Limited | 2-3 | Limited | 1-2 | 1 |
-| **System auto-discovery** | 23 IDE profiles | No | No | No | No | No |
-| **HTML dashboard** | Yes | No | No | No | No | No |
-| **Registry scanning** | Yes | No | No | No | No | No |
-| **Peer-reviewed paper** | 31 pages, 5 theorems | No | No | No | 1 paper | No |
-| **Runs offline** | Yes | No (cloud) | Yes | Unknown | Yes | Yes |
-| **License** | MIT (free) | Freemium | Free | Unknown | Free | Free |
+SkillFortify provides capabilities not available in heuristic scanning tools:
+
+| Capability | SkillFortify | Heuristic Scanners |
+|-----------|:------------:|:------------------:|
+| **Formal verification** | Yes | No |
+| **Soundness guarantee** | 5 proven theorems | None |
+| **False positive rate** | 0% (benchmark) | Varies |
+| **Capability-level analysis** | Formal model | Pattern matching |
+| **Dependency graph analysis** | SAT-based resolution | Partial or none |
+| **Lockfile generation** | skill-lock.json | Not available |
+| **Trust score algebra** | Formal propagation | Not available |
+| **ASBOM (CycloneDX 1.6)** | Yes | Rare |
+| **Agent frameworks** | 22 | Typically 1-3 |
+| **System auto-discovery** | 23 IDE profiles | Not available |
+| **HTML dashboard** | Interactive | Not available |
+| **Registry scanning** | Pre-install evaluation | Not available |
+| **Peer-reviewed paper** | 31 pages, 5 theorems | Rare |
+| **Runs offline** | Yes | Varies |
+| **License** | MIT (free) | Varies |
 
 ### Key Differentiators
 
-1. **Formal verification vs heuristic detection**: SkillFortify is the only tool grounded in a formal threat model with proven soundness properties. Every other tool uses pattern matching, rules, or LLM-based detection.
+1. **Formal verification vs heuristic detection**: SkillFortify is the only tool grounded in a formal threat model with proven soundness properties. Heuristic tools use pattern matching, rules, or LLM-based detection with no mathematical guarantees.
 
 2. **Zero false positives**: On the 540-skill SkillFortifyBench benchmark, SkillFortify achieved 100% precision. This is a direct consequence of the sound formal model.
 
-3. **Full supply chain coverage**: Lockfile generation, dependency resolution, formal trust scoring, CycloneDX ASBOM generation, registry scanning, system-wide auto-discovery, and enterprise dashboards. Other tools scan for threats but do not address the broader supply chain workflow.
+3. **Full supply chain coverage**: Lockfile generation, dependency resolution, formal trust scoring, CycloneDX ASBOM generation, registry scanning, system-wide auto-discovery, and enterprise dashboards -- a complete supply chain security solution, not just a scanner.
 
-4. **22 agent frameworks, 23 IDE profiles**: The broadest coverage of any tool in this space, with automatic discovery of every agent skill configuration across your development environment.
+4. **Broadest framework support**: 22 agent frameworks and 23 IDE profiles with automatic discovery of every skill configuration across your development environment.
 
 ---
 

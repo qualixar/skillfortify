@@ -5,7 +5,7 @@ imports and ``@kernel_function`` decorators. Each decorated method becomes a
 separate ParsedSkill with URLs, env vars, shell commands, and dependencies.
 
 References:
-    Microsoft Semantic Kernel (27K GitHub stars, enterprise Azure AI).
+    Microsoft Semantic Kernel -- Microsoft's enterprise AI orchestration SDK.
 """
 
 from __future__ import annotations

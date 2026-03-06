@@ -1,9 +1,8 @@
 """Parser for OpenClaw skill definitions (.claw/ or .openclaw/).
 
-OpenClaw is the largest open-source agent skill marketplace (228K+ GitHub
-stars as of Feb 2026). Skills are defined in YAML files within ``.claw/``
-or ``.openclaw/`` directories. Each YAML file declares a skill with
-structured metadata:
+OpenClaw is the largest open-source agent skill marketplace. Skills are defined
+in YAML files within ``.claw/`` or ``.openclaw/`` directories. Each YAML file
+declares a skill with structured metadata:
 
 .. code-block:: yaml
 

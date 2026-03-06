@@ -1,7 +1,7 @@
 """Parser for Composio tool definitions (Action/App/custom @action).
 
 Extracts security-relevant metadata from Python files that use the
-Composio SDK (26.5K stars, 500+ integrations). Composio acts as a
+Composio SDK, a widely-used integration platform. Composio acts as a
 universal agent integration layer, connecting AI agents to external
 services via pre-built actions and OAuth-managed app connections.
 

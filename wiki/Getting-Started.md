@@ -14,7 +14,7 @@ skillfortify --version
 **From source:**
 
 ```bash
-git clone https://github.com/varun369/skillfortify.git
+git clone https://github.com/qualixar/skillfortify.git
 cd skillfortify
 pip install -e ".[dev]"
 ```
@@ -158,7 +158,7 @@ See [CLI Reference](CLI-Reference) for full details.
 - **[CLI Reference](CLI-Reference)** -- All nine commands documented
 - **[FAQ](FAQ)** -- Common questions
 - **[Supported Formats](Supported-Formats)** -- All 22 frameworks
-- **[GitHub Issues](https://github.com/varun369/skillfortify/issues)** -- Report bugs
+- **[GitHub Issues](https://github.com/qualixar/skillfortify/issues)** -- Report bugs
 
 ---
 

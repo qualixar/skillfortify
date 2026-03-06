@@ -122,8 +122,8 @@ A CRITICAL finding on a Claude Code skill means the same thing as a CRITICAL fin
 
 SkillFortify is designed to be extensible. If you use an agent framework not currently supported:
 
-1. **Request support**: Open an issue on [GitHub](https://github.com/varun369/skillfortify/issues)
-2. **Contribute a parser**: See [CONTRIBUTING.md](https://github.com/varun369/skillfortify/blob/main/CONTRIBUTING.md)
+1. **Request support**: Open an issue on [GitHub](https://github.com/qualixar/skillfortify/issues)
+2. **Contribute a parser**: See [CONTRIBUTING.md](https://github.com/qualixar/skillfortify/blob/main/CONTRIBUTING.md)
 
 ---
 

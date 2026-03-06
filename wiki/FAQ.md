@@ -12,7 +12,7 @@ SkillFortify is a security tool that formally verifies what your AI agent skills
 
 ### Is SkillFortify free?
 
-Yes. SkillFortify is open source under the MIT License. No paid tiers, usage limits, or feature restrictions. Full source code at [github.com/varun369/skillfortify](https://github.com/varun369/skillfortify).
+Yes. SkillFortify is open source under the MIT License. No paid tiers, usage limits, or feature restrictions. Full source code at [github.com/qualixar/skillfortify](https://github.com/qualixar/skillfortify).
 
 ### Does SkillFortify work offline?
 
@@ -159,7 +159,7 @@ Yes. 31 pages, five theorems with full proofs, comprehensive evaluation. Availab
                for Agentic AI Skills},
   year      = {2026},
   publisher = {GitHub},
-  url       = {https://github.com/varun369/skillfortify}
+  url       = {https://github.com/qualixar/skillfortify}
 }
 ```
 
@@ -167,9 +167,9 @@ Yes. 31 pages, five theorems with full proofs, comprehensive evaluation. Availab
 
 ## Contributing
 
-- **[GitHub Discussions](https://github.com/varun369/skillfortify/discussions)** -- Questions and community
-- **[GitHub Issues](https://github.com/varun369/skillfortify/issues)** -- Bugs and feature requests
-- **[SECURITY.md](https://github.com/varun369/skillfortify/blob/main/SECURITY.md)** -- Responsible disclosure for vulnerabilities
+- **[GitHub Discussions](https://github.com/qualixar/skillfortify/discussions)** -- Questions and community
+- **[GitHub Issues](https://github.com/qualixar/skillfortify/issues)** -- Bugs and feature requests
+- **[SECURITY.md](https://github.com/qualixar/skillfortify/blob/main/SECURITY.md)** -- Responsible disclosure for vulnerabilities
 
 ---
 

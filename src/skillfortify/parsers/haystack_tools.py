@@ -6,7 +6,7 @@ components, OpenAPIServiceConnector usage, Secret.from_env_var() calls,
 generator configurations, and @component decorators.
 
 References:
-    Haystack by deepset (23K+ GitHub stars) -- enterprise RAG framework.
+    Haystack by deepset -- deepset's enterprise RAG framework.
     https://docs.haystack.deepset.ai/
 """
 

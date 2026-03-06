@@ -135,7 +135,7 @@ pip install skillfortify[dev]
 
 ```bash
 # Clone the repository
-git clone https://github.com/varun369/skillfortify.git
+git clone https://github.com/qualixar/skillfortify.git
 cd skillfortify
 
 # Run benchmark tests
@@ -177,7 +177,7 @@ The benchmark is open for community contributions. To add new test skills:
 2. Document the attack type and expected behavior
 3. Classify the attack into one of the 13 types (or propose a new type)
 4. Verify that the sample is detectable by SkillFortify (or document it as a gap)
-5. Submit a pull request to the [benchmark directory](https://github.com/varun369/skillfortify/tree/main/tests/benchmark)
+5. Submit a pull request to the [benchmark directory](https://github.com/qualixar/skillfortify/tree/main/tests/benchmark)
 
 ### Adding Benign Samples
 

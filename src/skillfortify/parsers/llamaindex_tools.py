@@ -10,9 +10,8 @@ LlamaIndex framework (``llama_index``). Covers:
 - **LLM provider** configurations (``OpenAI``, ``Anthropic``, etc.)
 - URLs, environment variables, shell commands, and import dependencies
 
-LlamaIndex is a major RAG framework (47K GitHub stars, 300+ LlamaHub
-packages). Its tool and agent surface area is a key supply chain
-attack vector for agentic AI applications.
+LlamaIndex is a widely-used RAG framework. Its tool and agent surface area
+is a key supply chain attack vector for agentic AI applications.
 
 References:
     "Agent Skills in the Wild" (arXiv:2601.10338, Jan 2026).

@@ -19,3 +19,7 @@ env/
 *.swp
 *.swo
 .DS_Store
+
+# Workspace files (never commit)
+CLAUDE.md
+.backup/

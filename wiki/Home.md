@@ -115,7 +115,7 @@ Run `skillfortify frameworks` for the full list with detection patterns.
 
 | Resource | URL |
 |----------|-----|
-| **GitHub Repository** | [github.com/varun369/skillfortify](https://github.com/varun369/skillfortify) |
+| **GitHub Repository** | [github.com/qualixar/skillfortify](https://github.com/qualixar/skillfortify) |
 | **PyPI Package** | [pypi.org/project/skillfortify](https://pypi.org/project/skillfortify/) |
 | **Research Paper** | [arXiv:2603.00195](https://arxiv.org/abs/2603.00195) \| [Zenodo](https://doi.org/10.5281/zenodo.18787663) |
 
@@ -148,4 +148,4 @@ If you use SkillFortify in your research, please cite:
 
 ## License
 
-MIT License. See [LICENSE](https://github.com/varun369/skillfortify/blob/main/LICENSE) for details.
+MIT License. See [LICENSE](https://github.com/qualixar/skillfortify/blob/main/LICENSE) for details.
