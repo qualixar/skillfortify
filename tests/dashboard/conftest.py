@@ -54,19 +54,27 @@ def multi_framework_skills() -> list[ParsedSkill]:
     """Skills from multiple frameworks."""
     return [
         ParsedSkill(
-            name="skill-a", version="1.0", source_path=Path("/a"),
+            name="skill-a",
+            version="1.0",
+            source_path=Path("/a"),
             format="claude",
         ),
         ParsedSkill(
-            name="skill-b", version="1.0", source_path=Path("/b"),
+            name="skill-b",
+            version="1.0",
+            source_path=Path("/b"),
             format="mcp_server",
         ),
         ParsedSkill(
-            name="skill-c", version="1.0", source_path=Path("/c"),
+            name="skill-c",
+            version="1.0",
+            source_path=Path("/c"),
             format="claude",
         ),
         ParsedSkill(
-            name="skill-d", version="1.0", source_path=Path("/d"),
+            name="skill-d",
+            version="1.0",
+            source_path=Path("/d"),
             format="langchain",
         ),
     ]
@@ -141,9 +149,11 @@ def safe_result() -> AnalysisResult:
         skill_name="weather-api",
         is_safe=True,
         findings=[],
-        inferred_capabilities=CapabilitySet.from_list([
-            Capability("network", AccessLevel.READ),
-        ]),
+        inferred_capabilities=CapabilitySet.from_list(
+            [
+                Capability("network", AccessLevel.READ),
+            ]
+        ),
     )
 
 

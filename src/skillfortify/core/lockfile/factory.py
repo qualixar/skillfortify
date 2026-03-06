@@ -55,8 +55,7 @@ def _from_resolution(
     """
     if not resolution.success:
         raise ValueError(
-            "Cannot create lockfile from failed resolution. "
-            f"Conflicts: {resolution.conflicts}"
+            f"Cannot create lockfile from failed resolution. Conflicts: {resolution.conflicts}"
         )
 
     lf = cls()

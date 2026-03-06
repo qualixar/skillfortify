@@ -36,23 +36,26 @@ _ADK_IMPORT_MARKERS = (
     "from google import adk",
 )
 
-_ADK_BUILTIN_TOOLS = frozenset({
-    "google_search",
-    "code_execution",
-    "built_in_code_execution",
-})
+_ADK_BUILTIN_TOOLS = frozenset(
+    {
+        "google_search",
+        "code_execution",
+        "built_in_code_execution",
+    }
+)
 
-_ADK_CALLBACK_NAMES = frozenset({
-    "before_tool_callback",
-    "after_tool_callback",
-    "before_model_callback",
-    "after_model_callback",
-    "before_agent_callback",
-    "after_agent_callback",
-})
+_ADK_CALLBACK_NAMES = frozenset(
+    {
+        "before_tool_callback",
+        "after_tool_callback",
+        "before_model_callback",
+        "after_model_callback",
+        "before_agent_callback",
+        "after_agent_callback",
+    }
+)
 
 FORMAT_NAME = "google_adk"
-
 
 
 def _extract_urls(text: str) -> list[str]:
@@ -129,7 +132,6 @@ def _build_skill(
     )
 
 
-
 def _is_agent_constructor(call: ast.Call) -> bool:
     """Check if a Call node is google.adk.Agent(...)."""
     func = call.func
@@ -186,9 +188,10 @@ def _tools_to_capabilities(tool_names: list[str]) -> list[str]:
     return capabilities
 
 
-
 def _parse_agent_call(
-    call: ast.Call, source: str, file_path: Path,
+    call: ast.Call,
+    source: str,
+    file_path: Path,
 ) -> ParsedSkill | None:
     """Parse an Agent(...) call and extract metadata."""
     name = _get_kwarg_str(call, "name") or "unnamed_agent"
@@ -202,7 +205,8 @@ def _parse_agent_call(
 
 
 def _extract_agent_definitions(
-    source: str, file_path: Path,
+    source: str,
+    file_path: Path,
 ) -> list[ParsedSkill]:
     """Extract Agent() constructor calls from Python AST."""
     try:
@@ -223,7 +227,8 @@ def _extract_agent_definitions(
 
 
 def _regex_fallback_agents(
-    source: str, file_path: Path,
+    source: str,
+    file_path: Path,
 ) -> list[ParsedSkill]:
     """Regex fallback for Agent(...) definitions in unparseable source."""
     results: list[ParsedSkill] = []
@@ -236,7 +241,6 @@ def _regex_fallback_agents(
             _build_skill(match.group(1), "", source, file_path, source),
         )
     return results
-
 
 
 class GoogleADKParser(SkillParser):

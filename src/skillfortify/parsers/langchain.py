@@ -130,7 +130,9 @@ def _extract_tools_from_source(source: str, file_path: Path) -> list[ParsedSkill
 
 
 def _parse_class_tool(
-    node: ast.ClassDef, source: str, file_path: Path,
+    node: ast.ClassDef,
+    source: str,
+    file_path: Path,
 ) -> ParsedSkill | None:
     """Extract a ParsedSkill from a BaseTool subclass."""
     # Check if this class inherits from BaseTool.
@@ -170,7 +172,9 @@ def _parse_class_tool(
 
 
 def _parse_function_tool(
-    node: ast.FunctionDef, source: str, file_path: Path,
+    node: ast.FunctionDef,
+    source: str,
+    file_path: Path,
 ) -> ParsedSkill | None:
     """Extract a ParsedSkill from a @tool decorated function."""
     has_tool_dec = any(
@@ -211,7 +215,8 @@ def _build_parsed_skill(
 
 
 def _extract_tools_regex_fallback(
-    source: str, file_path: Path,
+    source: str,
+    file_path: Path,
 ) -> list[ParsedSkill]:
     """Regex fallback for files that fail AST parsing."""
     results: list[ParsedSkill] = []

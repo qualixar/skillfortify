@@ -6,6 +6,7 @@ Uses Hypothesis to exhaustively test all element combinations.
 
 Lattice: L_cap = ({NONE, READ, WRITE, ADMIN}, <=)
 """
+
 from __future__ import annotations
 
 from hypothesis import given
@@ -36,9 +37,7 @@ class TestJoinLaws:
         assert AccessLevel.join(a, b) == AccessLevel.join(b, a)
 
     @given(a=access_levels, b=access_levels, c=access_levels)
-    def test_associativity(
-        self, a: AccessLevel, b: AccessLevel, c: AccessLevel
-    ) -> None:
+    def test_associativity(self, a: AccessLevel, b: AccessLevel, c: AccessLevel) -> None:
         """join(join(a, b), c) == join(a, join(b, c))."""
         lhs = AccessLevel.join(AccessLevel.join(a, b), c)
         rhs = AccessLevel.join(a, AccessLevel.join(b, c))
@@ -81,9 +80,7 @@ class TestMeetLaws:
         assert AccessLevel.meet(a, b) == AccessLevel.meet(b, a)
 
     @given(a=access_levels, b=access_levels, c=access_levels)
-    def test_associativity(
-        self, a: AccessLevel, b: AccessLevel, c: AccessLevel
-    ) -> None:
+    def test_associativity(self, a: AccessLevel, b: AccessLevel, c: AccessLevel) -> None:
         """meet(meet(a, b), c) == meet(a, meet(b, c))."""
         lhs = AccessLevel.meet(AccessLevel.meet(a, b), c)
         rhs = AccessLevel.meet(a, AccessLevel.meet(b, c))
@@ -121,16 +118,12 @@ class TestAbsorptionLaws:
     """Absorption laws linking join and meet in a lattice."""
 
     @given(a=access_levels, b=access_levels)
-    def test_join_absorbs_meet(
-        self, a: AccessLevel, b: AccessLevel
-    ) -> None:
+    def test_join_absorbs_meet(self, a: AccessLevel, b: AccessLevel) -> None:
         """join(a, meet(a, b)) == a."""
         assert AccessLevel.join(a, AccessLevel.meet(a, b)) == a
 
     @given(a=access_levels, b=access_levels)
-    def test_meet_absorbs_join(
-        self, a: AccessLevel, b: AccessLevel
-    ) -> None:
+    def test_meet_absorbs_join(self, a: AccessLevel, b: AccessLevel) -> None:
         """meet(a, join(a, b)) == a."""
         assert AccessLevel.meet(a, AccessLevel.join(a, b)) == a
 
@@ -150,9 +143,7 @@ class TestSubsumption:
         assert c.subsumes(c)
 
     @given(r=resources, a=access_levels, b=access_levels, c_lvl=access_levels)
-    def test_transitivity(
-        self, r: str, a: AccessLevel, b: AccessLevel, c_lvl: AccessLevel
-    ) -> None:
+    def test_transitivity(self, r: str, a: AccessLevel, b: AccessLevel, c_lvl: AccessLevel) -> None:
         """If C1 subsumes C2 and C2 subsumes C3, then C1 subsumes C3."""
         c1 = Capability(r, a)
         c2 = Capability(r, b)
@@ -161,9 +152,7 @@ class TestSubsumption:
             assert c1.subsumes(c3)
 
     @given(r=resources, a=access_levels, b=access_levels)
-    def test_antisymmetry(
-        self, r: str, a: AccessLevel, b: AccessLevel
-    ) -> None:
+    def test_antisymmetry(self, r: str, a: AccessLevel, b: AccessLevel) -> None:
         """If C1 subsumes C2 and C2 subsumes C1, then C1 == C2."""
         c1 = Capability(r, a)
         c2 = Capability(r, b)
@@ -171,7 +160,8 @@ class TestSubsumption:
             assert c1 == c2
 
     @given(
-        r1=resources, a1=access_levels,
+        r1=resources,
+        a1=access_levels,
         r2=st.sampled_from(["clipboard", "browser", "database"]),
         a2=access_levels,
     )
@@ -196,17 +186,17 @@ class TestCapabilitySetSubset:
     def test_empty_set_is_subset_of_anything(self) -> None:
         """The empty capability set is a subset of any set."""
         empty = CapabilitySet()
-        full = CapabilitySet.from_list([
-            Capability("filesystem", AccessLevel.ADMIN),
-            Capability("network", AccessLevel.ADMIN),
-        ])
+        full = CapabilitySet.from_list(
+            [
+                Capability("filesystem", AccessLevel.ADMIN),
+                Capability("network", AccessLevel.ADMIN),
+            ]
+        )
         assert empty.is_subset_of(full)
         assert empty.is_subset_of(CapabilitySet())
 
     @given(r=resources, a=access_levels)
-    def test_singleton_subset_reflexivity(
-        self, r: str, a: AccessLevel
-    ) -> None:
+    def test_singleton_subset_reflexivity(self, r: str, a: AccessLevel) -> None:
         """A singleton set is always a subset of itself."""
         cs = CapabilitySet.from_list([Capability(r, a)])
         assert cs.is_subset_of(cs)

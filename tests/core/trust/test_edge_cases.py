@@ -30,7 +30,10 @@ class TestAllSignalsZero:
         """All-zero signals yield intrinsic score of 0.0."""
         engine = TrustEngine()
         signals = TrustSignals(
-            provenance=0.0, behavioral=0.0, community=0.0, historical=0.0,
+            provenance=0.0,
+            behavioral=0.0,
+            community=0.0,
+            historical=0.0,
         )
         intrinsic = engine.compute_intrinsic(signals)
         assert intrinsic == 0.0
@@ -39,7 +42,10 @@ class TestAllSignalsZero:
         """All-zero signals yield trust level UNSIGNED."""
         engine = TrustEngine()
         signals = TrustSignals(
-            provenance=0.0, behavioral=0.0, community=0.0, historical=0.0,
+            provenance=0.0,
+            behavioral=0.0,
+            community=0.0,
+            historical=0.0,
         )
         score = engine.compute_score("zero-skill", "0.0.0", signals)
         assert score.effective_score == 0.0
@@ -53,7 +59,10 @@ class TestAllSignalsOne:
         """All-one signals yield intrinsic score of 1.0."""
         engine = TrustEngine()
         signals = TrustSignals(
-            provenance=1.0, behavioral=1.0, community=1.0, historical=1.0,
+            provenance=1.0,
+            behavioral=1.0,
+            community=1.0,
+            historical=1.0,
         )
         intrinsic = engine.compute_intrinsic(signals)
         assert intrinsic == pytest.approx(1.0)
@@ -62,7 +71,10 @@ class TestAllSignalsOne:
         """All-one signals yield trust level FORMALLY_VERIFIED."""
         engine = TrustEngine()
         signals = TrustSignals(
-            provenance=1.0, behavioral=1.0, community=1.0, historical=1.0,
+            provenance=1.0,
+            behavioral=1.0,
+            community=1.0,
+            historical=1.0,
         )
         score = engine.compute_score("perfect-skill", "1.0.0", signals)
         assert score.effective_score == pytest.approx(1.0)
@@ -76,7 +88,10 @@ class TestSingleSignalActive:
         """Only provenance=1.0 yields score equal to provenance weight."""
         engine = TrustEngine()
         signals = TrustSignals(
-            provenance=1.0, behavioral=0.0, community=0.0, historical=0.0,
+            provenance=1.0,
+            behavioral=0.0,
+            community=0.0,
+            historical=0.0,
         )
         intrinsic = engine.compute_intrinsic(signals)
         # Default provenance weight is 0.3
@@ -86,7 +101,10 @@ class TestSingleSignalActive:
         """Only behavioral=1.0 yields score equal to behavioral weight."""
         engine = TrustEngine()
         signals = TrustSignals(
-            provenance=0.0, behavioral=1.0, community=0.0, historical=0.0,
+            provenance=0.0,
+            behavioral=1.0,
+            community=0.0,
+            historical=0.0,
         )
         intrinsic = engine.compute_intrinsic(signals)
         assert intrinsic == pytest.approx(0.3)
@@ -95,7 +113,10 @@ class TestSingleSignalActive:
         """Only community=1.0 yields score equal to community weight."""
         engine = TrustEngine()
         signals = TrustSignals(
-            provenance=0.0, behavioral=0.0, community=1.0, historical=0.0,
+            provenance=0.0,
+            behavioral=0.0,
+            community=1.0,
+            historical=0.0,
         )
         intrinsic = engine.compute_intrinsic(signals)
         assert intrinsic == pytest.approx(0.2)
@@ -108,7 +129,10 @@ class TestDecayEdgeCases:
         """365-day decay should produce a very low but non-negative score."""
         engine = TrustEngine(decay_rate=0.01)
         signals = TrustSignals(
-            provenance=1.0, behavioral=1.0, community=1.0, historical=1.0,
+            provenance=1.0,
+            behavioral=1.0,
+            community=1.0,
+            historical=1.0,
         )
         base_score = engine.compute_score("old-skill", "1.0.0", signals)
 
@@ -126,7 +150,10 @@ class TestDecayEdgeCases:
         """Very small lambda=0.0001 causes minimal decay over 30 days."""
         engine = TrustEngine(decay_rate=0.0001)
         signals = TrustSignals(
-            provenance=1.0, behavioral=1.0, community=1.0, historical=1.0,
+            provenance=1.0,
+            behavioral=1.0,
+            community=1.0,
+            historical=1.0,
         )
         base_score = engine.compute_score("stable-skill", "1.0.0", signals)
 
@@ -142,7 +169,10 @@ class TestDecayEdgeCases:
         """If last_update is in the future, no decay is applied."""
         engine = TrustEngine(decay_rate=0.01)
         signals = TrustSignals(
-            provenance=0.8, behavioral=0.9, community=0.7, historical=0.6,
+            provenance=0.8,
+            behavioral=0.9,
+            community=0.7,
+            historical=0.6,
         )
         base_score = engine.compute_score("future-skill", "2.0.0", signals)
 
@@ -152,5 +182,6 @@ class TestDecayEdgeCases:
 
         # No decay: effective score unchanged.
         assert decayed.effective_score == pytest.approx(
-            base_score.effective_score, abs=1e-9,
+            base_score.effective_score,
+            abs=1e-9,
         )

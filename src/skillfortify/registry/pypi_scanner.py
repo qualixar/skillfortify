@@ -36,19 +36,23 @@ DEFAULT_KEYWORDS: list[str] = [
     "crewai-tool",
 ]
 
-KNOWN_MALICIOUS_PACKAGES: frozenset[str] = frozenset({
-    "mcp-server-exploit",
-    "langchain-malware",
-    "agent-tool-backdoor",
-})
+KNOWN_MALICIOUS_PACKAGES: frozenset[str] = frozenset(
+    {
+        "mcp-server-exploit",
+        "langchain-malware",
+        "agent-tool-backdoor",
+    }
+)
 
-SUSPICIOUS_DEPENDENCIES: frozenset[str] = frozenset({
-    "pycryptoenv",
-    "pycryptosys",
-    "colorwin",
-    "py-obfuscate",
-    "stealer",
-})
+SUSPICIOUS_DEPENDENCIES: frozenset[str] = frozenset(
+    {
+        "pycryptoenv",
+        "pycryptosys",
+        "colorwin",
+        "py-obfuscate",
+        "stealer",
+    }
+)
 
 
 # ---------------------------------------------------------------------------
@@ -64,9 +68,7 @@ class PyPIScanner(RegistryScanner):
         """Return the human-readable registry name."""
         return "PyPI"
 
-    async def fetch_entries(
-        self, *, limit: int = 100, keyword: str = ""
-    ) -> list[RegistryEntry]:
+    async def fetch_entries(self, *, limit: int = 100, keyword: str = "") -> list[RegistryEntry]:
         """Search PyPI for agent-tool packages.
 
         Args:
@@ -100,12 +102,16 @@ class PyPIScanner(RegistryScanner):
         findings: list[Finding] = []
 
         if entry.name.lower() in KNOWN_MALICIOUS_PACKAGES:
-            findings.append(Finding(
-                skill_name=entry.name, severity=Severity.CRITICAL,
-                message=f"Package '{entry.name}' is in the known-malicious list",
-                attack_class="known_malicious",
-                finding_type="blocklist_match", evidence=entry.name,
-            ))
+            findings.append(
+                Finding(
+                    skill_name=entry.name,
+                    severity=Severity.CRITICAL,
+                    message=f"Package '{entry.name}' is in the known-malicious list",
+                    attack_class="known_malicious",
+                    finding_type="blocklist_match",
+                    evidence=entry.name,
+                )
+            )
 
         findings.extend(typosquat_to_findings(entry.name))
 
@@ -155,24 +161,29 @@ def _info_to_entry(info: dict[str, Any]) -> RegistryEntry:
         description=str(info.get("summary", ""))[:500],
         author=str(info.get("author", info.get("maintainer", ""))),
         version=str(info.get("version", "")),
-        stars=0, last_updated="",
+        stars=0,
+        last_updated="",
     )
 
 
 def _check_dependencies(name: str, metadata: dict[str, Any]) -> list[Finding]:
     """Flag suspicious dependencies in the package requirements."""
     findings: list[Finding] = []
-    requires = (metadata.get("info", {}).get("requires_dist") or [])
+    requires = metadata.get("info", {}).get("requires_dist") or []
     for req in requires:
         req_norm = req.split()[0].lower().replace("-", "").replace("_", "")
         for suspicious in SUSPICIOUS_DEPENDENCIES:
             if suspicious.lower().replace("-", "").replace("_", "") in req_norm:
-                findings.append(Finding(
-                    skill_name=name, severity=Severity.CRITICAL,
-                    message=f"Suspicious dependency: {req.split()[0]}",
-                    attack_class="malicious_dependency",
-                    finding_type="dependency_check", evidence=req,
-                ))
+                findings.append(
+                    Finding(
+                        skill_name=name,
+                        severity=Severity.CRITICAL,
+                        message=f"Suspicious dependency: {req.split()[0]}",
+                        attack_class="malicious_dependency",
+                        finding_type="dependency_check",
+                        evidence=req,
+                    )
+                )
     return findings
 
 
@@ -182,13 +193,16 @@ def _check_metadata_patterns(name: str, metadata: dict[str, Any]) -> list[Findin
     info = metadata.get("info", {})
     author = info.get("author", "") or info.get("maintainer", "")
     if not author:
-        findings.append(Finding(
-            skill_name=name, severity=Severity.MEDIUM,
-            message="Package has no declared author or maintainer",
-            attack_class="missing_provenance",
-            finding_type="metadata_check",
-            evidence="author=None, maintainer=None",
-        ))
+        findings.append(
+            Finding(
+                skill_name=name,
+                severity=Severity.MEDIUM,
+                message="Package has no declared author or maintainer",
+                attack_class="missing_provenance",
+                finding_type="metadata_check",
+                evidence="author=None, maintainer=None",
+            )
+        )
     desc = info.get("description", "")
     if desc:
         findings.extend(matches_to_findings(name, desc[:5000]))

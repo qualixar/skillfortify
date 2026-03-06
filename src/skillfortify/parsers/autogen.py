@@ -108,7 +108,11 @@ def _has_function_schema(text: str) -> bool:
 
 
 def _build_skill(
-    name: str, description: str, body: str, path: Path, source: str,
+    name: str,
+    description: str,
+    body: str,
+    path: Path,
+    source: str,
 ) -> ParsedSkill:
     """Construct a ParsedSkill from extracted AutoGen tool metadata."""
     return ParsedSkill(
@@ -127,7 +131,8 @@ def _build_skill(
 
 
 def _extract_register_for_llm_tools(
-    source: str, file_path: Path,
+    source: str,
+    file_path: Path,
 ) -> list[ParsedSkill]:
     """Extract tools decorated with @agent.register_for_llm."""
     results: list[ParsedSkill] = []
@@ -181,7 +186,8 @@ def _extract_description_kwarg(call_node: ast.expr) -> str:
 
 
 def _extract_function_schemas(
-    source: str, file_path: Path,
+    source: str,
+    file_path: Path,
 ) -> list[ParsedSkill]:
     """Extract tools from function schema dict literals."""
     results: list[ParsedSkill] = []
@@ -219,7 +225,8 @@ def _extract_function_schemas(
 
 
 def _regex_fallback_decorators(
-    source: str, file_path: Path,
+    source: str,
+    file_path: Path,
 ) -> list[ParsedSkill]:
     """Regex fallback for register_for_llm decorated functions."""
     results: list[ParsedSkill] = []

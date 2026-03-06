@@ -1,4 +1,5 @@
 """CAMEL-AI RolePlaying society with assistant and user roles."""
+
 from camel.societies import RolePlaying
 from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType

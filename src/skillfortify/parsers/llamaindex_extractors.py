@@ -33,32 +33,37 @@ _SHELL_CALL_PATTERN = re.compile(
     r"""\s*\(\s*["']([^"']+)["']""",
 )
 
-_AGENT_CLASS_NAMES = frozenset({
-    "ReActAgent",
-    "FunctionCallingAgent",
-    "OpenAIAgent",
-    "CustomSimpleAgentWorker",
-})
+_AGENT_CLASS_NAMES = frozenset(
+    {
+        "ReActAgent",
+        "FunctionCallingAgent",
+        "OpenAIAgent",
+        "CustomSimpleAgentWorker",
+    }
+)
 
-_READER_CLASS_NAMES = frozenset({
-    "SimpleWebPageReader",
-    "SimpleDirectoryReader",
-    "DatabaseReader",
-    "WikipediaReader",
-    "BeautifulSoupWebReader",
-    "TrafilaturaWebReader",
-    "SlackReader",
-    "DiscordReader",
-    "GithubRepositoryReader",
-    "GoogleDocsReader",
-    "NotionPageReader",
-    "S3Reader",
-})
+_READER_CLASS_NAMES = frozenset(
+    {
+        "SimpleWebPageReader",
+        "SimpleDirectoryReader",
+        "DatabaseReader",
+        "WikipediaReader",
+        "BeautifulSoupWebReader",
+        "TrafilaturaWebReader",
+        "SlackReader",
+        "DiscordReader",
+        "GithubRepositoryReader",
+        "GoogleDocsReader",
+        "NotionPageReader",
+        "S3Reader",
+    }
+)
 
 
 # -------------------------------------------------------------------
 # Low-level text extraction
 # -------------------------------------------------------------------
+
 
 def extract_urls(text: str) -> list[str]:
     """Extract all HTTP/HTTPS URLs from *text*."""
@@ -107,6 +112,7 @@ def extract_imports(text: str) -> list[str]:
 # -------------------------------------------------------------------
 # AST helper utilities
 # -------------------------------------------------------------------
+
 
 def get_kwarg_str(call: ast.Call, key: str) -> str:
     """Extract a string keyword argument from an ``ast.Call`` node."""
@@ -169,6 +175,7 @@ def build_skill(
 # Node-type detection predicates
 # -------------------------------------------------------------------
 
+
 def is_function_tool_call(node: ast.Call) -> bool:
     """True when *node* is ``FunctionTool.from_defaults(...)``."""
     func = node.func
@@ -211,8 +218,11 @@ def is_data_reader(node: ast.Call) -> bool:
 # Per-call-type parsers
 # -------------------------------------------------------------------
 
+
 def parse_function_tool(
-    call: ast.Call, source: str, file_path: Path,
+    call: ast.Call,
+    source: str,
+    file_path: Path,
 ) -> ParsedSkill:
     """Extract a ``ParsedSkill`` from ``FunctionTool.from_defaults(...)``."""
     fn_name = ""
@@ -231,7 +241,9 @@ def parse_function_tool(
 
 
 def parse_query_engine_tool(
-    call: ast.Call, source: str, file_path: Path,
+    call: ast.Call,
+    source: str,
+    file_path: Path,
 ) -> ParsedSkill:
     """Extract a ``ParsedSkill`` from ``QueryEngineTool(...)``."""
     meta_name, meta_desc = "", ""
@@ -245,7 +257,9 @@ def parse_query_engine_tool(
 
 
 def parse_agent_call(
-    call: ast.Call, source: str, file_path: Path,
+    call: ast.Call,
+    source: str,
+    file_path: Path,
 ) -> ParsedSkill:
     """Extract a ``ParsedSkill`` from ``ReActAgent.from_tools(...)`` etc."""
     func = call.func
@@ -271,7 +285,9 @@ def parse_agent_call(
 
 
 def parse_data_reader(
-    call: ast.Call, source: str, file_path: Path,
+    call: ast.Call,
+    source: str,
+    file_path: Path,
 ) -> ParsedSkill:
     """Extract a ``ParsedSkill`` from a data reader constructor."""
     func = call.func
@@ -282,6 +298,10 @@ def parse_data_reader(
         reader_name = func.attr
     body = ast.get_source_segment(source, call) or ""
     return build_skill(
-        reader_name, f"Data connector: {reader_name}",
-        body, file_path, source, [f"reader:{reader_name}"],
+        reader_name,
+        f"Data connector: {reader_name}",
+        body,
+        file_path,
+        source,
+        [f"reader:{reader_name}"],
     )

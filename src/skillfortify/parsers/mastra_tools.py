@@ -53,17 +53,19 @@ _ENV_VAR_PATTERN = re.compile(r"process\.env\.(\w+)")
 _ENV_VAR_BRACKET = re.compile(r"""process\.env\[["'](\w+)["']\]""")
 
 _SHELL_EXEC_PATTERNS = (
-    re.compile(r"\bchild_process\b"), re.compile(r"\bexec\s*\("),
-    re.compile(r"\bexecSync\s*\("), re.compile(r"\bspawn\s*\("),
+    re.compile(r"\bchild_process\b"),
+    re.compile(r"\bexec\s*\("),
+    re.compile(r"\bexecSync\s*\("),
+    re.compile(r"\bspawn\s*\("),
     re.compile(r"\bspawnSync\s*\("),
 )
 
-_NET_PATTERNS = (re.compile(r"\bfetch\s*\("), re.compile(r"\baxios\b"),
-                 re.compile(r"\bhttp\.\w+"))
+_NET_PATTERNS = (re.compile(r"\bfetch\s*\("), re.compile(r"\baxios\b"), re.compile(r"\bhttp\.\w+"))
 _FS_PATTERN = re.compile(r"\bfs\.\w+")
 
 _SENSITIVE_ENV = re.compile(
-    r"(SECRET|KEY|TOKEN|PASSWORD|CREDENTIAL|PRIVATE)", re.IGNORECASE,
+    r"(SECRET|KEY|TOKEN|PASSWORD|CREDENTIAL|PRIVATE)",
+    re.IGNORECASE,
 )
 
 _MASTRA_CONFIG_FILES = ("mastra.config.ts", "mastra.config.js")
@@ -72,6 +74,7 @@ _TS_EXTENSIONS = (".ts", ".js", ".tsx", ".jsx")
 
 
 # ── Extraction helpers ────────────────────────────────────────────────────
+
 
 def _extract_env_vars(text: str) -> list[str]:
     """Extract unique environment variable names from TypeScript source."""
@@ -140,24 +143,35 @@ def _read_safe(filepath: Path) -> str:
 
 
 def _build_skill(
-    name: str, description: str, source: str, filepath: Path,
-    deps: list[str], instructions: str = "",
+    name: str,
+    description: str,
+    source: str,
+    filepath: Path,
+    deps: list[str],
+    instructions: str = "",
 ) -> ParsedSkill:
     """Build a ParsedSkill from extracted Mastra metadata."""
     env_vars = _extract_env_vars(source)
     return ParsedSkill(
-        name=name, version="unknown", source_path=filepath,
-        format="mastra", description=description,
+        name=name,
+        version="unknown",
+        source_path=filepath,
+        format="mastra",
+        description=description,
         instructions=instructions,
         declared_capabilities=_extract_capabilities(source, env_vars),
-        dependencies=deps, code_blocks=[source],
-        urls=_extract_urls(source), env_vars_referenced=env_vars,
-        shell_commands=_extract_shell_commands(source), raw_content=source,
+        dependencies=deps,
+        code_blocks=[source],
+        urls=_extract_urls(source),
+        env_vars_referenced=env_vars,
+        shell_commands=_extract_shell_commands(source),
+        raw_content=source,
     )
 
 
 def _parse_ts_file(
-    filepath: Path, deps: list[str],
+    filepath: Path,
+    deps: list[str],
 ) -> list[ParsedSkill]:
     """Parse a single TypeScript/JS file for Mastra tool and agent defs."""
     source = _read_safe(filepath)
@@ -208,6 +222,7 @@ def _package_json_has_mastra(directory: Path) -> bool:
 
 # ── Main parser class ─────────────────────────────────────────────────────
 
+
 class MastraParser(SkillParser):
     """Parser for Mastra AI agent framework tool and agent definitions.
 
@@ -254,9 +269,7 @@ class MastraParser(SkillParser):
         # Also parse config files directly
         for cfg_name in _MASTRA_CONFIG_FILES:
             cfg_path = path / cfg_name
-            if cfg_path.is_file() and cfg_path not in {
-                r.source_path for r in results
-            }:
+            if cfg_path.is_file() and cfg_path not in {r.source_path for r in results}:
                 results.extend(_parse_ts_file(cfg_path, deps))
 
         return results

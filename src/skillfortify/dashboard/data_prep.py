@@ -79,9 +79,7 @@ def prepare_executive_summary(
         "medium_count": severity_counts.get("MEDIUM", 0),
         "low_count": severity_counts.get("LOW", 0),
         "frameworks_detected": frameworks,
-        "scan_timestamp": datetime.now(timezone.utc).isoformat(
-            timespec="seconds"
-        ),
+        "scan_timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
 
 
@@ -123,10 +121,12 @@ def prepare_capabilities_matrix(
     for result in results:
         caps = _extract_capabilities(result)
         if caps:
-            matrix.append({
-                "skill_name": result.skill_name,
-                "capabilities": caps,
-            })
+            matrix.append(
+                {
+                    "skill_name": result.skill_name,
+                    "capabilities": caps,
+                }
+            )
     return matrix
 
 

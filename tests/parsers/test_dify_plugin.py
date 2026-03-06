@@ -24,6 +24,7 @@ FIXTURES_DIR = Path(__file__).parent.parent / "fixtures" / "dify"
 # Fixtures
 # ---------------------------------------------------------------------------
 
+
 @pytest.fixture
 def parser() -> DifyPluginParser:
     """Return a fresh DifyPluginParser instance."""
@@ -111,6 +112,7 @@ def non_dify_yaml_dir(tmp_path: Path) -> Path:
 # TestCanParse
 # ---------------------------------------------------------------------------
 
+
 class TestCanParse:
     """Validate the can_parse detection logic."""
 
@@ -126,19 +128,24 @@ class TestCanParse:
     def test_rejects_empty_dir(self, parser: DifyPluginParser, tmp_path: Path) -> None:
         assert parser.can_parse(tmp_path) is False
 
-    def test_rejects_empty_manifest(self, parser: DifyPluginParser, empty_manifest_dir: Path) -> None:
+    def test_rejects_empty_manifest(
+        self, parser: DifyPluginParser, empty_manifest_dir: Path
+    ) -> None:
         assert parser.can_parse(empty_manifest_dir) is False
 
     def test_rejects_non_dify_yaml(self, parser: DifyPluginParser, non_dify_yaml_dir: Path) -> None:
         assert parser.can_parse(non_dify_yaml_dir) is False
 
-    def test_rejects_malformed_yaml(self, parser: DifyPluginParser, malformed_yaml_dir: Path) -> None:
+    def test_rejects_malformed_yaml(
+        self, parser: DifyPluginParser, malformed_yaml_dir: Path
+    ) -> None:
         assert parser.can_parse(malformed_yaml_dir) is False
 
 
 # ---------------------------------------------------------------------------
 # TestParseBasic
 # ---------------------------------------------------------------------------
+
 
 class TestParseBasic:
     """Validate basic manifest parsing."""
@@ -156,7 +163,9 @@ class TestParseBasic:
         skills = parser.parse(basic_plugin_dir)
         assert skills[0].format == "dify"
 
-    def test_returns_parsed_skill_instances(self, parser: DifyPluginParser, basic_plugin_dir: Path) -> None:
+    def test_returns_parsed_skill_instances(
+        self, parser: DifyPluginParser, basic_plugin_dir: Path
+    ) -> None:
         for skill in parser.parse(basic_plugin_dir):
             assert isinstance(skill, ParsedSkill)
 
@@ -168,7 +177,9 @@ class TestParseBasic:
         skills = parser.parse(basic_plugin_dir)
         assert "hello-world" in skills[0].raw_content
 
-    def test_declared_capabilities_includes_type(self, parser: DifyPluginParser, basic_plugin_dir: Path) -> None:
+    def test_declared_capabilities_includes_type(
+        self, parser: DifyPluginParser, basic_plugin_dir: Path
+    ) -> None:
         skills = parser.parse(basic_plugin_dir)
         assert "tool" in skills[0].declared_capabilities
 
@@ -181,10 +192,13 @@ class TestParseBasic:
 # TestParseUnsafe
 # ---------------------------------------------------------------------------
 
+
 class TestParseUnsafe:
     """Validate detection of suspicious content in unsafe manifests."""
 
-    def test_extracts_malicious_urls(self, parser: DifyPluginParser, unsafe_plugin_dir: Path) -> None:
+    def test_extracts_malicious_urls(
+        self, parser: DifyPluginParser, unsafe_plugin_dir: Path
+    ) -> None:
         urls = parser.parse(unsafe_plugin_dir)[0].urls
         assert any("evil.example.com" in url for url in urls)
 
@@ -192,19 +206,27 @@ class TestParseUnsafe:
         urls = parser.parse(unsafe_plugin_dir)[0].urls
         assert any("exfil.attacker.net" in url for url in urls)
 
-    def test_extracts_shell_commands(self, parser: DifyPluginParser, unsafe_plugin_dir: Path) -> None:
+    def test_extracts_shell_commands(
+        self, parser: DifyPluginParser, unsafe_plugin_dir: Path
+    ) -> None:
         shell_cmds = parser.parse(unsafe_plugin_dir)[0].shell_commands
         assert any("curl" in cmd for cmd in shell_cmds)
 
-    def test_extracts_dangerous_shell(self, parser: DifyPluginParser, unsafe_plugin_dir: Path) -> None:
+    def test_extracts_dangerous_shell(
+        self, parser: DifyPluginParser, unsafe_plugin_dir: Path
+    ) -> None:
         shell_cmds = parser.parse(unsafe_plugin_dir)[0].shell_commands
         assert any("rm -rf" in cmd for cmd in shell_cmds)
 
-    def test_extracts_credential_vars(self, parser: DifyPluginParser, unsafe_plugin_dir: Path) -> None:
+    def test_extracts_credential_vars(
+        self, parser: DifyPluginParser, unsafe_plugin_dir: Path
+    ) -> None:
         env_vars = parser.parse(unsafe_plugin_dir)[0].env_vars_referenced
         assert "ATTACKER_API_KEY" in env_vars
 
-    def test_extracts_env_vars_from_meta(self, parser: DifyPluginParser, unsafe_plugin_dir: Path) -> None:
+    def test_extracts_env_vars_from_meta(
+        self, parser: DifyPluginParser, unsafe_plugin_dir: Path
+    ) -> None:
         env_vars = parser.parse(unsafe_plugin_dir)[0].env_vars_referenced
         assert "SECRET_TOKEN" in env_vars
 
@@ -213,16 +235,21 @@ class TestParseUnsafe:
 # TestParseCredentials
 # ---------------------------------------------------------------------------
 
+
 class TestParseCredentials:
     """Validate extraction of credential declarations."""
 
-    def test_extracts_multiple_credentials(self, parser: DifyPluginParser, credentials_plugin_dir: Path) -> None:
+    def test_extracts_multiple_credentials(
+        self, parser: DifyPluginParser, credentials_plugin_dir: Path
+    ) -> None:
         env_vars = parser.parse(credentials_plugin_dir)[0].env_vars_referenced
         assert "API_KEY" in env_vars
         assert "API_SECRET" in env_vars
         assert "OAUTH_TOKEN" in env_vars
 
-    def test_extracts_api_urls(self, parser: DifyPluginParser, credentials_plugin_dir: Path) -> None:
+    def test_extracts_api_urls(
+        self, parser: DifyPluginParser, credentials_plugin_dir: Path
+    ) -> None:
         urls = parser.parse(credentials_plugin_dir)[0].urls
         assert any("api.service.com" in url for url in urls)
 
@@ -231,13 +258,18 @@ class TestParseCredentials:
 # TestParseMultiTool
 # ---------------------------------------------------------------------------
 
+
 class TestParseMultiTool:
     """Validate multi-tool manifest parsing."""
 
-    def test_parses_multi_tool_manifest(self, parser: DifyPluginParser, multi_tool_dir: Path) -> None:
+    def test_parses_multi_tool_manifest(
+        self, parser: DifyPluginParser, multi_tool_dir: Path
+    ) -> None:
         assert len(parser.parse(multi_tool_dir)) >= 1
 
-    def test_extracts_multi_tool_credentials(self, parser: DifyPluginParser, multi_tool_dir: Path) -> None:
+    def test_extracts_multi_tool_credentials(
+        self, parser: DifyPluginParser, multi_tool_dir: Path
+    ) -> None:
         env_vars = parser.parse(multi_tool_dir)[0].env_vars_referenced
         assert "SEARCH_API_KEY" in env_vars
         assert "SMTP_PASSWORD" in env_vars
@@ -256,16 +288,21 @@ class TestParseMultiTool:
 # TestParseProvider
 # ---------------------------------------------------------------------------
 
+
 class TestParseProvider:
     """Validate provider YAML parsing."""
 
     def test_parses_provider_file(self, parser: DifyPluginParser, provider_dir: Path) -> None:
         assert len(parser.parse(provider_dir)) >= 1
 
-    def test_provider_name_from_identity(self, parser: DifyPluginParser, provider_dir: Path) -> None:
+    def test_provider_name_from_identity(
+        self, parser: DifyPluginParser, provider_dir: Path
+    ) -> None:
         assert parser.parse(provider_dir)[0].name == "custom_provider"
 
-    def test_provider_credentials_extracted(self, parser: DifyPluginParser, provider_dir: Path) -> None:
+    def test_provider_credentials_extracted(
+        self, parser: DifyPluginParser, provider_dir: Path
+    ) -> None:
         env_vars = parser.parse(provider_dir)[0].env_vars_referenced
         assert "PROVIDER_API_KEY" in env_vars
         assert "PROVIDER_SECRET" in env_vars
@@ -281,6 +318,7 @@ class TestParseProvider:
 # TestParseDifyDir
 # ---------------------------------------------------------------------------
 
+
 class TestParseDifyDir:
     """Validate .dify/ directory parsing."""
 
@@ -295,6 +333,7 @@ class TestParseDifyDir:
 # ---------------------------------------------------------------------------
 # TestJsonManifest
 # ---------------------------------------------------------------------------
+
 
 class TestJsonManifest:
     """Validate JSON manifest parsing."""
@@ -312,16 +351,23 @@ class TestJsonManifest:
 # TestEdgeCases
 # ---------------------------------------------------------------------------
 
+
 class TestEdgeCases:
     """Validate edge case handling and robustness."""
 
-    def test_empty_manifest_returns_empty(self, parser: DifyPluginParser, empty_manifest_dir: Path) -> None:
+    def test_empty_manifest_returns_empty(
+        self, parser: DifyPluginParser, empty_manifest_dir: Path
+    ) -> None:
         assert parser.parse(empty_manifest_dir) == []
 
-    def test_malformed_yaml_returns_empty(self, parser: DifyPluginParser, malformed_yaml_dir: Path) -> None:
+    def test_malformed_yaml_returns_empty(
+        self, parser: DifyPluginParser, malformed_yaml_dir: Path
+    ) -> None:
         assert parser.parse(malformed_yaml_dir) == []
 
-    def test_non_dify_yaml_returns_empty(self, parser: DifyPluginParser, non_dify_yaml_dir: Path) -> None:
+    def test_non_dify_yaml_returns_empty(
+        self, parser: DifyPluginParser, non_dify_yaml_dir: Path
+    ) -> None:
         assert parser.parse(non_dify_yaml_dir) == []
 
     def test_empty_dir_returns_empty(self, parser: DifyPluginParser, tmp_path: Path) -> None:

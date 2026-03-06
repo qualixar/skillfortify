@@ -31,16 +31,18 @@ from skillfortify.core.analyzer.models import Severity
 # URL allow-list for safe domains
 # ---------------------------------------------------------------------------
 
-_SAFE_URL_DOMAINS: frozenset[str] = frozenset({
-    "github.com",
-    "www.github.com",
-    "pypi.org",
-    "www.pypi.org",
-    "npmjs.org",
-    "www.npmjs.org",
-    "npmjs.com",
-    "www.npmjs.com",
-})
+_SAFE_URL_DOMAINS: frozenset[str] = frozenset(
+    {
+        "github.com",
+        "www.github.com",
+        "pypi.org",
+        "www.pypi.org",
+        "npmjs.org",
+        "www.npmjs.org",
+        "npmjs.com",
+        "www.npmjs.com",
+    }
+)
 
 _SAFE_URL_DOMAIN_SUFFIXES: tuple[str, ...] = (
     ".github.com",

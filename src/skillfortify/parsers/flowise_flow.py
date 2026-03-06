@@ -120,25 +120,25 @@ class FlowiseParser(SkillParser):
         code_blocks = extract_code_blocks(nodes)
         all_code = "\n".join(code_blocks)
 
-        combined_env = sorted(set(
-            extract_env_vars(all_code) + extract_credentials(nodes)
-        ))
+        combined_env = sorted(set(extract_env_vars(all_code) + extract_credentials(nodes)))
 
-        return [ParsedSkill(
-            name=file_path.stem,
-            version="unknown",
-            source_path=file_path,
-            format="flowise",
-            description=self._build_description(nodes),
-            instructions="",
-            declared_capabilities=get_node_types(nodes),
-            dependencies=extract_node_dependencies(code_blocks),
-            code_blocks=code_blocks,
-            urls=extract_urls(raw_content),
-            env_vars_referenced=combined_env,
-            shell_commands=extract_shell_commands(all_code),
-            raw_content=raw_content,
-        )]
+        return [
+            ParsedSkill(
+                name=file_path.stem,
+                version="unknown",
+                source_path=file_path,
+                format="flowise",
+                description=self._build_description(nodes),
+                instructions="",
+                declared_capabilities=get_node_types(nodes),
+                dependencies=extract_node_dependencies(code_blocks),
+                code_blocks=code_blocks,
+                urls=extract_urls(raw_content),
+                env_vars_referenced=combined_env,
+                shell_commands=extract_shell_commands(all_code),
+                raw_content=raw_content,
+            )
+        ]
 
     @staticmethod
     def _build_description(nodes: list[dict[str, Any]]) -> str:

@@ -4,6 +4,7 @@ Verifies that the ParserRegistry correctly auto-detects and parses
 skills in realistic project directory structures for each supported
 format and combinations thereof.
 """
+
 from __future__ import annotations
 
 import json
@@ -39,14 +40,10 @@ Performs {name} operations on input data.
 def _create_mcp_project(root: Path, servers: dict) -> None:
     """Create an MCP project with a mcp.json config."""
     config = {"mcpServers": servers}
-    (root / "mcp.json").write_text(
-        json.dumps(config, indent=2), encoding="utf-8"
-    )
+    (root / "mcp.json").write_text(json.dumps(config, indent=2), encoding="utf-8")
 
 
-def _create_openclaw_project(
-    root: Path, skills: list[dict], dir_name: str = ".claw"
-) -> None:
+def _create_openclaw_project(root: Path, skills: list[dict], dir_name: str = ".claw") -> None:
     """Create an OpenClaw project with skill YAML files."""
     claw_dir = root / dir_name
     claw_dir.mkdir(parents=True, exist_ok=True)
@@ -102,17 +99,20 @@ class TestScanMcpProject:
 
     def test_discovers_mcp_servers(self, tmp_path: Path) -> None:
         """Each mcpServers entry becomes a parsed skill."""
-        _create_mcp_project(tmp_path, {
-            "filesystem": {
-                "command": "npx",
-                "args": ["-y", "@modelcontextprotocol/server-filesystem"],
+        _create_mcp_project(
+            tmp_path,
+            {
+                "filesystem": {
+                    "command": "npx",
+                    "args": ["-y", "@modelcontextprotocol/server-filesystem"],
+                },
+                "database": {
+                    "command": "node",
+                    "args": ["db-server.js"],
+                    "env": {"DATABASE_URL": "postgres://localhost/db"},
+                },
             },
-            "database": {
-                "command": "node",
-                "args": ["db-server.js"],
-                "env": {"DATABASE_URL": "postgres://localhost/db"},
-            },
-        })
+        )
 
         skills = default_registry().discover(tmp_path)
         names = {s.name for s in skills}
@@ -122,27 +122,24 @@ class TestScanMcpProject:
 
     def test_mcp_hidden_config(self, tmp_path: Path) -> None:
         """Parser detects .mcp.json (hidden file variant)."""
-        config = {
-            "mcpServers": {
-                "hidden-server": {"command": "node", "args": ["server.js"]}
-            }
-        }
-        (tmp_path / ".mcp.json").write_text(
-            json.dumps(config), encoding="utf-8"
-        )
+        config = {"mcpServers": {"hidden-server": {"command": "node", "args": ["server.js"]}}}
+        (tmp_path / ".mcp.json").write_text(json.dumps(config), encoding="utf-8")
         skills = default_registry().discover(tmp_path)
         assert len(skills) == 1
         assert skills[0].name == "hidden-server"
 
     def test_mcp_extracts_env_vars(self, tmp_path: Path) -> None:
         """Environment variables in MCP config are captured."""
-        _create_mcp_project(tmp_path, {
-            "api-server": {
-                "command": "node",
-                "args": ["server.js"],
-                "env": {"API_KEY": "abc", "SECRET_TOKEN": "xyz"},
-            }
-        })
+        _create_mcp_project(
+            tmp_path,
+            {
+                "api-server": {
+                    "command": "node",
+                    "args": ["server.js"],
+                    "env": {"API_KEY": "abc", "SECRET_TOKEN": "xyz"},
+                }
+            },
+        )
         skills = default_registry().discover(tmp_path)
         assert len(skills) == 1
         assert "API_KEY" in skills[0].env_vars_referenced
@@ -154,10 +151,13 @@ class TestScanOpenClawProject:
 
     def test_discovers_claw_skills(self, tmp_path: Path) -> None:
         """YAML files in .claw/ are discovered as openclaw skills."""
-        _create_openclaw_project(tmp_path, [
-            {"name": "web-scraper", "version": "1.3.0"},
-            {"name": "file-handler", "version": "0.5.0"},
-        ])
+        _create_openclaw_project(
+            tmp_path,
+            [
+                {"name": "web-scraper", "version": "1.3.0"},
+                {"name": "file-handler", "version": "0.5.0"},
+            ],
+        )
         skills = default_registry().discover(tmp_path)
         names = {s.name for s in skills}
         assert names == {"web-scraper", "file-handler"}
@@ -176,9 +176,12 @@ class TestScanOpenClawProject:
 
     def test_openclaw_preserves_version(self, tmp_path: Path) -> None:
         """Skill version from YAML is correctly parsed."""
-        _create_openclaw_project(tmp_path, [
-            {"name": "versioned", "version": "3.7.2"},
-        ])
+        _create_openclaw_project(
+            tmp_path,
+            [
+                {"name": "versioned", "version": "3.7.2"},
+            ],
+        )
         skills = default_registry().discover(tmp_path)
         assert skills[0].version == "3.7.2"
 
@@ -189,12 +192,18 @@ class TestScanMixedProject:
     def test_all_three_formats_discovered(self, tmp_path: Path) -> None:
         """Claude + MCP + OpenClaw in one directory are all found."""
         _create_claude_project(tmp_path, ["claude-skill"])
-        _create_mcp_project(tmp_path, {
-            "mcp-server": {"command": "node", "args": ["s.js"]},
-        })
-        _create_openclaw_project(tmp_path, [
-            {"name": "claw-skill", "version": "1.0.0"},
-        ])
+        _create_mcp_project(
+            tmp_path,
+            {
+                "mcp-server": {"command": "node", "args": ["s.js"]},
+            },
+        )
+        _create_openclaw_project(
+            tmp_path,
+            [
+                {"name": "claw-skill", "version": "1.0.0"},
+            ],
+        )
 
         skills = default_registry().discover(tmp_path)
         formats = {s.format for s in skills}
@@ -203,12 +212,18 @@ class TestScanMixedProject:
     def test_analysis_runs_on_all_formats(self, tmp_path: Path) -> None:
         """Static analyzer processes skills from all formats."""
         _create_claude_project(tmp_path, ["cs"])
-        _create_mcp_project(tmp_path, {
-            "ms": {"command": "node", "args": ["s.js"]},
-        })
-        _create_openclaw_project(tmp_path, [
-            {"name": "os", "version": "1.0.0"},
-        ])
+        _create_mcp_project(
+            tmp_path,
+            {
+                "ms": {"command": "node", "args": ["s.js"]},
+            },
+        )
+        _create_openclaw_project(
+            tmp_path,
+            [
+                {"name": "os", "version": "1.0.0"},
+            ],
+        )
 
         skills = default_registry().discover(tmp_path)
         analyzer = StaticAnalyzer()

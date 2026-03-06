@@ -128,17 +128,28 @@ def _is_subclass_of(node: ast.ClassDef, base_names: tuple[str, ...]) -> bool:
 
 
 def _build_skill(
-    name: str, description: str, body: str,
-    path: Path, source: str, *, skill_type: str = "",
+    name: str,
+    description: str,
+    body: str,
+    path: Path,
+    source: str,
+    *,
+    skill_type: str = "",
 ) -> ParsedSkill:
     """Construct a ``ParsedSkill`` from extracted MetaGPT metadata."""
     desc = f"[{skill_type}] {description}".strip() if skill_type else description
     return ParsedSkill(
-        name=name, version="unknown", source_path=path, format="metagpt",
-        description=desc, code_blocks=[body] if body else [],
-        urls=_extract_urls(body), env_vars_referenced=_extract_env_vars(body),
+        name=name,
+        version="unknown",
+        source_path=path,
+        format="metagpt",
+        description=desc,
+        code_blocks=[body] if body else [],
+        urls=_extract_urls(body),
+        env_vars_referenced=_extract_env_vars(body),
         shell_commands=_extract_shell_commands(body),
-        dependencies=_extract_imports(source), raw_content=source,
+        dependencies=_extract_imports(source),
+        raw_content=source,
     )
 
 
@@ -180,7 +191,9 @@ def _parse_actions(tree: ast.Module, source: str, path: Path) -> list[ParsedSkil
 
 
 def _parse_register_tools(
-    tree: ast.Module, source: str, path: Path,
+    tree: ast.Module,
+    source: str,
+    path: Path,
 ) -> list[ParsedSkill]:
     """Extract ``ParsedSkill`` instances from ``@register_tool()`` functions."""
     results: list[ParsedSkill] = []

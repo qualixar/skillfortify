@@ -61,8 +61,7 @@ def _result_to_json(result, skill_format: str) -> dict:
     caps = []
     if result.inferred_capabilities:
         caps = [
-            {"resource": c.resource, "access": c.access.name}
-            for c in result.inferred_capabilities
+            {"resource": c.resource, "access": c.access.name} for c in result.inferred_capabilities
         ]
     findings = [
         {
@@ -87,7 +86,8 @@ def _result_to_json(result, skill_format: str) -> dict:
 @click.command("verify")
 @click.argument("skill_path", type=click.Path(exists=True))
 @click.option(
-    "--format", "output_format",
+    "--format",
+    "output_format",
     type=click.Choice(["text", "json"]),
     default="text",
     help="Output format (default: text).",
@@ -107,9 +107,13 @@ def verify_command(skill_path: str, output_format: str) -> None:
     root = _find_project_root(resolved)
     if root is None:
         if output_format == "json":
-            click.echo(json.dumps({
-                "error": f"Could not parse skill at: {skill_path}",
-            }))
+            click.echo(
+                json.dumps(
+                    {
+                        "error": f"Could not parse skill at: {skill_path}",
+                    }
+                )
+            )
         else:
             click.echo(f"Error: Could not parse skill at: {skill_path}")
         sys.exit(2)
@@ -119,16 +123,17 @@ def verify_command(skill_path: str, output_format: str) -> None:
     all_skills = registry.discover(root)
 
     # Find the skill matching this specific file path
-    matched = [
-        s for s in all_skills
-        if Path(s.source_path).resolve() == resolved
-    ]
+    matched = [s for s in all_skills if Path(s.source_path).resolve() == resolved]
 
     if not matched:
         if output_format == "json":
-            click.echo(json.dumps({
-                "error": f"Could not parse skill at: {skill_path}",
-            }))
+            click.echo(
+                json.dumps(
+                    {
+                        "error": f"Could not parse skill at: {skill_path}",
+                    }
+                )
+            )
         else:
             click.echo(f"Error: Could not parse skill at: {skill_path}")
         sys.exit(2)
@@ -138,11 +143,10 @@ def verify_command(skill_path: str, output_format: str) -> None:
     result = analyzer.analyze(skill)
 
     if output_format == "json":
-        click.echo(json.dumps(
-            _result_to_json(result, skill.format), indent=2
-        ))
+        click.echo(json.dumps(_result_to_json(result, skill.format), indent=2))
     else:
         from skillfortify.cli.output import print_analysis_detail
+
         print_analysis_detail(result)
 
     sys.exit(0 if result.is_safe else 1)

@@ -102,9 +102,7 @@ class SkillComponent:
                 {"name": "skillfortify:capabilities", "value": ",".join(self.capabilities)}
             )
         if self.trust_score is not None:
-            props.append(
-                {"name": "skillfortify:trust-score", "value": f"{self.trust_score:.2f}"}
-            )
+            props.append({"name": "skillfortify:trust-score", "value": f"{self.trust_score:.2f}"})
         if self.trust_level is not None:
             props.append({"name": "skillfortify:trust-level", "value": self.trust_level})
         if self.source_path:
@@ -123,9 +121,7 @@ class SkillComponent:
         """Serialise to a CycloneDX 1.6 ``dependency`` dict."""
         dep: dict[str, Any] = {"ref": self.purl}
         if self.dependencies:
-            dep["dependsOn"] = [
-                f"pkg:agent-skill/{d}@unknown" for d in self.dependencies
-            ]
+            dep["dependsOn"] = [f"pkg:agent-skill/{d}@unknown" for d in self.dependencies]
         return dep
 
 

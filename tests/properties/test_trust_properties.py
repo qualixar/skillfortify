@@ -7,6 +7,7 @@ Verifies the formal guarantees of the trust computation engine:
 - Decay monotonicity: longer time -> lower or equal score
 - Weight normalization: default weights sum to 1.0
 """
+
 from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
@@ -122,9 +123,7 @@ class TestTrustMonotonicity:
         assert score_after >= score_before - 1e-9
 
     @given(s1=signals_strategy(), s2=signals_strategy())
-    def test_component_wise_ge_implies_score_ge(
-        self, s1: TrustSignals, s2: TrustSignals
-    ) -> None:
+    def test_component_wise_ge_implies_score_ge(self, s1: TrustSignals, s2: TrustSignals) -> None:
         """If s1 >= s2 component-wise, then T(s1) >= T(s2)."""
         if s1.component_wise_ge(s2):
             engine = TrustEngine()
@@ -186,15 +185,15 @@ class TestPropagationConservatism:
         engine = TrustEngine()
         dep_score = engine.compute_score("dep", "1.0.0", dep_signals)
         parent_score = engine.compute_score(
-            "parent", "1.0.0", parent_signals,
+            "parent",
+            "1.0.0",
+            parent_signals,
             dependency_scores=[dep_score],
         )
         assert parent_score.effective_score <= parent_score.intrinsic_score + 1e-9
 
     @given(signals=signals_strategy())
-    def test_no_deps_effective_equals_intrinsic(
-        self, signals: TrustSignals
-    ) -> None:
+    def test_no_deps_effective_equals_intrinsic(self, signals: TrustSignals) -> None:
         """Without dependencies, effective_score == intrinsic_score."""
         engine = TrustEngine()
         score = engine.compute_score("skill", "1.0.0", signals)
@@ -210,9 +209,7 @@ class TestDecayMonotonicity:
     """Longer elapsed time -> lower or equal score."""
 
     @given(signals=signals_strategy(), days=st.integers(min_value=0, max_value=365))
-    def test_decay_never_increases_score(
-        self, signals: TrustSignals, days: int
-    ) -> None:
+    def test_decay_never_increases_score(self, signals: TrustSignals, days: int) -> None:
         """Decayed score is <= original effective score."""
         engine = TrustEngine(decay_rate=0.01)
         score = engine.compute_score("skill", "1.0.0", signals)
@@ -227,21 +224,15 @@ class TestDecayMonotonicity:
         d1=st.integers(min_value=0, max_value=180),
         d2=st.integers(min_value=0, max_value=180),
     )
-    def test_more_days_means_more_decay(
-        self, signals: TrustSignals, d1: int, d2: int
-    ) -> None:
+    def test_more_days_means_more_decay(self, signals: TrustSignals, d1: int, d2: int) -> None:
         """If d1 <= d2, then decayed(d1) >= decayed(d2)."""
         assume(d1 <= d2)
         engine = TrustEngine(decay_rate=0.01)
         score = engine.compute_score("skill", "1.0.0", signals)
 
         now = datetime.now(timezone.utc)
-        decayed_1 = engine.apply_decay(
-            score, now - timedelta(days=d1), now
-        )
-        decayed_2 = engine.apply_decay(
-            score, now - timedelta(days=d2), now
-        )
+        decayed_1 = engine.apply_decay(score, now - timedelta(days=d1), now)
+        decayed_2 = engine.apply_decay(score, now - timedelta(days=d2), now)
         assert decayed_1.effective_score >= decayed_2.effective_score - 1e-9
 
 
@@ -261,14 +252,12 @@ class TestWeightNormalization:
 
     def test_negative_weight_rejected(self) -> None:
         """Negative weights are rejected to preserve monotonicity."""
-        w = TrustWeights(provenance=-0.1, behavioral=0.4,
-                         community=0.4, historical=0.3)
+        w = TrustWeights(provenance=-0.1, behavioral=0.4, community=0.4, historical=0.3)
         with pytest.raises(ValueError):
             w.validate()
 
     def test_non_unit_sum_rejected(self) -> None:
         """Weights not summing to 1.0 are rejected."""
-        w = TrustWeights(provenance=0.5, behavioral=0.5,
-                         community=0.5, historical=0.5)
+        w = TrustWeights(provenance=0.5, behavioral=0.5, community=0.5, historical=0.5)
         with pytest.raises(ValueError):
             w.validate()

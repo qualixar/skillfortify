@@ -83,11 +83,7 @@ def multi_format_skill_dir(tmp_path: Path) -> Path:
     skills_dir = tmp_path / ".claude" / "skills"
     skills_dir.mkdir(parents=True)
     (skills_dir / "deploy.md").write_text(
-        "---\n"
-        "name: deploy\n"
-        "description: Deploy to production\n"
-        "---\n\n"
-        "Simple deployment helper.\n"
+        "---\nname: deploy\ndescription: Deploy to production\n---\n\nSimple deployment helper.\n"
     )
 
     # MCP config

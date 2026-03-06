@@ -39,11 +39,13 @@ DEFAULT_KEYWORDS: list[str] = [
     "agent-skill",
 ]
 
-KNOWN_MALICIOUS_PACKAGES: frozenset[str] = frozenset({
-    "mcp-server-malicious-test",
-    "agent-skill-backdoor",
-    "@fakemcp/server",
-})
+KNOWN_MALICIOUS_PACKAGES: frozenset[str] = frozenset(
+    {
+        "mcp-server-malicious-test",
+        "agent-skill-backdoor",
+        "@fakemcp/server",
+    }
+)
 
 
 # ---------------------------------------------------------------------------
@@ -59,9 +61,7 @@ class NpmScanner(RegistryScanner):
         """Return the human-readable registry name."""
         return "npm"
 
-    async def fetch_entries(
-        self, *, limit: int = 100, keyword: str = ""
-    ) -> list[RegistryEntry]:
+    async def fetch_entries(self, *, limit: int = 100, keyword: str = "") -> list[RegistryEntry]:
         """Search npm for agent-tool packages.
 
         Args:
@@ -95,12 +95,16 @@ class NpmScanner(RegistryScanner):
         findings: list[Finding] = []
 
         if entry.name.lower() in KNOWN_MALICIOUS_PACKAGES:
-            findings.append(Finding(
-                skill_name=entry.name, severity=Severity.CRITICAL,
-                message=f"Package '{entry.name}' is in the known-malicious list",
-                attack_class="known_malicious",
-                finding_type="blocklist_match", evidence=entry.name,
-            ))
+            findings.append(
+                Finding(
+                    skill_name=entry.name,
+                    severity=Severity.CRITICAL,
+                    message=f"Package '{entry.name}' is in the known-malicious list",
+                    attack_class="known_malicious",
+                    finding_type="blocklist_match",
+                    evidence=entry.name,
+                )
+            )
 
         findings.extend(typosquat_to_findings(entry.name))
 
@@ -151,13 +155,17 @@ def _npm_object_to_entry(obj: Any) -> RegistryEntry | None:
     publisher = package.get("publisher", {})
     author_name = publisher.get("username", "") if isinstance(publisher, dict) else ""
     links = package.get("links", {})
-    url = links.get("npm", f"https://www.npmjs.com/package/{name}") if isinstance(links, dict) else ""
+    url = (
+        links.get("npm", f"https://www.npmjs.com/package/{name}") if isinstance(links, dict) else ""
+    )
     return RegistryEntry(
-        name=str(name), url=str(url),
+        name=str(name),
+        url=str(url),
         description=str(package.get("description", ""))[:500],
         author=str(author_name),
         version=str(package.get("version", "")),
-        stars=0, last_updated=str(package.get("date", "")),
+        stars=0,
+        last_updated=str(package.get("date", "")),
     )
 
 
@@ -177,22 +185,30 @@ def _check_scripts(name: str, metadata: dict[str, Any]) -> list[Finding]:
         return []
     findings: list[Finding] = []
     for m in check_npm_scripts(scripts):
-        findings.append(Finding(
-            skill_name=name,
-            severity=Severity.CRITICAL if m.is_critical else Severity.HIGH,
-            message=m.description, attack_class=m.category,
-            finding_type="script_analysis", evidence=m.evidence,
-        ))
+        findings.append(
+            Finding(
+                skill_name=name,
+                severity=Severity.CRITICAL if m.is_critical else Severity.HIGH,
+                message=m.description,
+                attack_class=m.category,
+                finding_type="script_analysis",
+                evidence=m.evidence,
+            )
+        )
     return findings
 
 
 def _check_provenance(name: str, metadata: dict[str, Any]) -> list[Finding]:
     """Check package provenance metadata."""
     if not metadata.get("repository"):
-        return [Finding(
-            skill_name=name, severity=Severity.LOW,
-            message="Package has no linked source repository",
-            attack_class="missing_provenance",
-            finding_type="metadata_check", evidence="repository=None",
-        )]
+        return [
+            Finding(
+                skill_name=name,
+                severity=Severity.LOW,
+                message="Package has no linked source repository",
+                attack_class="missing_provenance",
+                finding_type="metadata_check",
+                evidence="repository=None",
+            )
+        ]
     return []

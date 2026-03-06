@@ -72,8 +72,7 @@ def _results_to_json(results: list[AnalysisResult]) -> list[dict]:
         caps = []
         if r.inferred_capabilities:
             caps = [
-                {"resource": c.resource, "access": c.access.name}
-                for c in r.inferred_capabilities
+                {"resource": c.resource, "access": c.access.name} for c in r.inferred_capabilities
             ]
         findings = [
             {
@@ -85,14 +84,16 @@ def _results_to_json(results: list[AnalysisResult]) -> list[dict]:
             }
             for f in r.findings
         ]
-        out.append({
-            "skill_name": r.skill_name,
-            "is_safe": r.is_safe,
-            "findings_count": len(r.findings),
-            "max_severity": r.max_severity.name if r.max_severity else None,
-            "inferred_capabilities": caps,
-            "findings": findings,
-        })
+        out.append(
+            {
+                "skill_name": r.skill_name,
+                "is_safe": r.is_safe,
+                "findings_count": len(r.findings),
+                "max_severity": r.max_severity.name if r.max_severity else None,
+                "inferred_capabilities": caps,
+                "findings": findings,
+            }
+        )
     return out
 
 
@@ -151,11 +152,15 @@ def _run_system_scan(
 
     if not result.skills:
         if output_format == "json":
-            click.echo(json.dumps({
-                "ides_found": len(result.ides_found),
-                "skills": [],
-                "summary": "No skills found on system",
-            }))
+            click.echo(
+                json.dumps(
+                    {
+                        "ides_found": len(result.ides_found),
+                        "skills": [],
+                        "summary": "No skills found on system",
+                    }
+                )
+            )
         elif output_format == "text":
             click.echo("\nNo skills found across any AI tools.")
         sys.exit(2)
@@ -204,14 +209,8 @@ def _print_discovery_table(result: object) -> None:
         click.echo("  ".join(parts))
 
     click.echo("")
-    active = sum(
-        1 for ide in result.ides_found
-        if ide.mcp_configs or ide.skill_dirs
-    )
-    click.echo(
-        f"Scanning {result.total_skills} skills across "
-        f"{active} active IDE(s)..."
-    )
+    active = sum(1 for ide in result.ides_found if ide.mcp_configs or ide.skill_dirs)
+    click.echo(f"Scanning {result.total_skills} skills across {active} active IDE(s)...")
     click.echo("")
 
 
@@ -233,12 +232,14 @@ def _output_results(
         click.echo(json.dumps(_results_to_json(results), indent=2))
     elif output_format == "html":
         from skillfortify.dashboard.generator import DashboardGenerator
+
         gen = DashboardGenerator()
         out_path = (target or Path.cwd()) / "skillfortify-report.html"
         gen.write(out_path, results=results, skills=skills)
         click.echo(f"HTML report written to: {out_path.resolve()}")
     else:
         from skillfortify.cli.output import print_scan_results
+
         print_scan_results(results)
 
 
@@ -256,7 +257,8 @@ def _output_results(
     help="Scan all AI tools on this system (auto-discovery).",
 )
 @click.option(
-    "--format", "output_format",
+    "--format",
+    "output_format",
     type=click.Choice(["text", "json", "html"]),
     default="text",
     help="Output format: text (default), json, or html.",

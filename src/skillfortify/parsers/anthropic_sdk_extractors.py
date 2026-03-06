@@ -120,7 +120,9 @@ def _has_tool_decorator(node: ast.FunctionDef | ast.AsyncFunctionDef) -> bool:
 
 
 def extract_tools(
-    tree: ast.Module, source: str, path: Path,
+    tree: ast.Module,
+    source: str,
+    path: Path,
 ) -> list[ParsedSkill]:
     """Extract ``@tool`` decorated functions from *tree*."""
     results: list[ParsedSkill] = []
@@ -156,7 +158,9 @@ def _get_kwarg_str(call: ast.Call, key: str) -> str:
 
 
 def extract_agents(
-    tree: ast.Module, source: str, path: Path,
+    tree: ast.Module,
+    source: str,
+    path: Path,
 ) -> list[ParsedSkill]:
     """Extract ``Agent(...)`` instantiations from *tree*."""
     results: list[ParsedSkill] = []
@@ -181,15 +185,17 @@ def extract_agents(
                     if isinstance(elt, ast.Name):
                         caps.append(f"tool:{elt.id}")
         body_text = ast.get_source_segment(source, node) or ""
-        results.append(_build_skill(
-            name=name,
-            description=instructions or f"Anthropic SDK agent (model={model})",
-            body=body_text,
-            path=path,
-            source=source,
-            capabilities=caps,
-            instructions=instructions,
-        ))
+        results.append(
+            _build_skill(
+                name=name,
+                description=instructions or f"Anthropic SDK agent (model={model})",
+                body=body_text,
+                path=path,
+                source=source,
+                capabilities=caps,
+                instructions=instructions,
+            )
+        )
     return results
 
 
@@ -204,7 +210,9 @@ def _is_mcp_server_call(node: ast.Call) -> bool:
 
 
 def extract_mcp_servers(
-    tree: ast.Module, source: str, path: Path,
+    tree: ast.Module,
+    source: str,
+    path: Path,
 ) -> list[ParsedSkill]:
     """Extract ``MCPServer(...)`` instantiations from *tree*."""
     results: list[ParsedSkill] = []
@@ -217,19 +225,23 @@ def extract_mcp_servers(
         body_text = ast.get_source_segment(source, node) or ""
         name = command or "MCPServer"
         caps = [f"mcp:{command}"] if command else ["mcp:unknown"]
-        results.append(_build_skill(
-            name=name,
-            description=f"MCP server connection via MCPServer (command={command})",
-            body=body_text,
-            path=path,
-            source=source,
-            capabilities=caps,
-        ))
+        results.append(
+            _build_skill(
+                name=name,
+                description=f"MCP server connection via MCPServer (command={command})",
+                body=body_text,
+                path=path,
+                source=source,
+                capabilities=caps,
+            )
+        )
     return results
 
 
 def extract_hooks(
-    tree: ast.Module, source: str, path: Path,
+    tree: ast.Module,
+    source: str,
+    path: Path,
 ) -> list[ParsedSkill]:
     """Extract ``Hook`` subclass definitions from *tree*."""
     results: list[ParsedSkill] = []
@@ -245,20 +257,22 @@ def extract_hooks(
         name = node.name
         description = ast.get_docstring(node) or ""
         methods = [
-            n.name for n in ast.walk(node)
-            if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))
-            and n.name != "__init__"
+            n.name
+            for n in ast.walk(node)
+            if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and n.name != "__init__"
         ]
         caps = [f"hook:{m}" for m in methods]
         body_text = ast.get_source_segment(source, node) or ""
-        results.append(_build_skill(
-            name=name,
-            description=description,
-            body=body_text,
-            path=path,
-            source=source,
-            capabilities=caps,
-        ))
+        results.append(
+            _build_skill(
+                name=name,
+                description=description,
+                body=body_text,
+                path=path,
+                source=source,
+                capabilities=caps,
+            )
+        )
     return results
 
 

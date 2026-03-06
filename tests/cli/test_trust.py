@@ -48,14 +48,10 @@ class TestTrustCleanSkill:
             for level in ["UNSIGNED", "SIGNED", "COMMUNITY_VERIFIED", "FORMALLY_VERIFIED"]
         )
 
-    def test_clean_skill_json_output(
-        self, runner: CliRunner, clean_claude_skill_dir: Path
-    ) -> None:
+    def test_clean_skill_json_output(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """Trust JSON output should contain all score fields."""
         skill_file = clean_claude_skill_dir / ".claude" / "skills" / "helper.md"
-        result = runner.invoke(
-            cli, ["trust", str(skill_file), "--format", "json"]
-        )
+        result = runner.invoke(cli, ["trust", str(skill_file), "--format", "json"])
         assert result.exit_code == 0
         data = json.loads(result.output)
         assert "skill_name" in data
@@ -69,9 +65,7 @@ class TestTrustCleanSkill:
     ) -> None:
         """Clean skill should have high behavioral signal (1.0)."""
         skill_file = clean_claude_skill_dir / ".claude" / "skills" / "helper.md"
-        result = runner.invoke(
-            cli, ["trust", str(skill_file), "--format", "json"]
-        )
+        result = runner.invoke(cli, ["trust", str(skill_file), "--format", "json"])
         data = json.loads(result.output)
         assert data["signals"]["behavioral"] == 1.0
 
@@ -83,12 +77,8 @@ class TestTrustMaliciousSkill:
         self, runner: CliRunner, malicious_claude_skill_dir: Path
     ) -> None:
         """Malicious skill should have lower behavioral signal."""
-        skill_file = (
-            malicious_claude_skill_dir / ".claude" / "skills" / "exfiltrator.md"
-        )
-        result = runner.invoke(
-            cli, ["trust", str(skill_file), "--format", "json"]
-        )
+        skill_file = malicious_claude_skill_dir / ".claude" / "skills" / "exfiltrator.md"
+        result = runner.invoke(cli, ["trust", str(skill_file), "--format", "json"])
         data = json.loads(result.output)
         # Findings should reduce the behavioral signal below 1.0
         assert data["signals"]["behavioral"] < 1.0
@@ -97,12 +87,8 @@ class TestTrustMaliciousSkill:
         self, runner: CliRunner, malicious_claude_skill_dir: Path
     ) -> None:
         """Malicious skill should have lower intrinsic score than clean."""
-        skill_file = (
-            malicious_claude_skill_dir / ".claude" / "skills" / "exfiltrator.md"
-        )
-        result = runner.invoke(
-            cli, ["trust", str(skill_file), "--format", "json"]
-        )
+        skill_file = malicious_claude_skill_dir / ".claude" / "skills" / "exfiltrator.md"
+        result = runner.invoke(cli, ["trust", str(skill_file), "--format", "json"])
         data = json.loads(result.output)
         # Default baselines are 0.5 for provenance/community/historical
         # Behavioral will be < 1.0 due to findings
@@ -113,23 +99,17 @@ class TestTrustMaliciousSkill:
 class TestTrustNonParseable:
     """Tests for trust on non-parseable files."""
 
-    def test_non_skill_exits_with_code_2(
-        self, runner: CliRunner, tmp_path: Path
-    ) -> None:
+    def test_non_skill_exits_with_code_2(self, runner: CliRunner, tmp_path: Path) -> None:
         """Trust on a non-skill file should exit with code 2."""
         plain_file = tmp_path / "readme.txt"
         plain_file.write_text("Not a skill.")
         result = runner.invoke(cli, ["trust", str(plain_file)])
         assert result.exit_code == 2
 
-    def test_non_skill_json_error(
-        self, runner: CliRunner, tmp_path: Path
-    ) -> None:
+    def test_non_skill_json_error(self, runner: CliRunner, tmp_path: Path) -> None:
         """Non-skill trust JSON should contain error."""
         plain_file = tmp_path / "readme.txt"
         plain_file.write_text("Not a skill.")
-        result = runner.invoke(
-            cli, ["trust", str(plain_file), "--format", "json"]
-        )
+        result = runner.invoke(cli, ["trust", str(plain_file), "--format", "json"])
         data = json.loads(result.output)
         assert "error" in data

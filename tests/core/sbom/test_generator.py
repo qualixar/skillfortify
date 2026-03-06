@@ -33,9 +33,7 @@ class TestASBOMGeneratorBasic:
     def test_add_multiple_components(self) -> None:
         gen = ASBOMGenerator()
         for i in range(5):
-            gen.add_component(
-                SkillComponent(name=f"skill-{i}", version="1.0", format="mcp")
-            )
+            gen.add_component(SkillComponent(name=f"skill-{i}", version="1.0", format="mcp"))
         assert gen.component_count == 5
 
     def test_summary_counts(self) -> None:
@@ -45,14 +43,20 @@ class TestASBOMGeneratorBasic:
         )
         gen.add_component(
             SkillComponent(
-                name="unsafe-1", version="1.0", format="mcp",
-                is_safe=False, findings_count=3,
+                name="unsafe-1",
+                version="1.0",
+                format="mcp",
+                is_safe=False,
+                findings_count=3,
             )
         )
         gen.add_component(
             SkillComponent(
-                name="unsafe-2", version="2.0", format="openclaw",
-                is_safe=False, findings_count=1,
+                name="unsafe-2",
+                version="2.0",
+                format="openclaw",
+                is_safe=False,
+                findings_count=1,
             )
         )
         s = gen.summary()
@@ -91,7 +95,8 @@ class TestCycloneDXStructure:
     def _gen_with_one(self) -> dict:
         gen = ASBOMGenerator(
             metadata=ASBOMMetadata(
-                project_name="my-agent", project_version="1.2.3",
+                project_name="my-agent",
+                project_version="1.2.3",
                 skillfortify_version="0.1.0",
                 timestamp=datetime(2026, 2, 26, 12, 0, 0, tzinfo=timezone.utc),
             )
@@ -111,7 +116,7 @@ class TestCycloneDXStructure:
     def test_serial_number_format(self) -> None:
         bom = self._gen_with_one()
         assert bom["serialNumber"].startswith("urn:uuid:")
-        assert len(bom["serialNumber"][len("urn:uuid:"):]) == 36
+        assert len(bom["serialNumber"][len("urn:uuid:") :]) == 36
 
     def test_metadata_timestamp(self) -> None:
         assert "2026-02-26" in self._gen_with_one()["metadata"]["timestamp"]
@@ -163,7 +168,8 @@ class TestAddFromParsedSkill:
         gen = ASBOMGenerator()
         skill = make_skill(name="bad-skill", version="0.1.0", format="openclaw")
         result = make_analysis(
-            skill_name="bad-skill", is_safe=False,
+            skill_name="bad-skill",
+            is_safe=False,
             findings=[make_finding("bad-skill"), make_finding("bad-skill")],
         )
         gen.add_from_parsed_skill(skill, analysis_result=result)
@@ -173,7 +179,9 @@ class TestAddFromParsedSkill:
 
     def test_capabilities_propagated(self) -> None:
         gen = ASBOMGenerator()
-        skill = make_skill(name="fs-skill", declared_capabilities=["filesystem:READ", "network:WRITE"])
+        skill = make_skill(
+            name="fs-skill", declared_capabilities=["filesystem:READ", "network:WRITE"]
+        )
         gen.add_from_parsed_skill(skill)
         assert gen.components[0].capabilities == ["filesystem:READ", "network:WRITE"]
 
@@ -202,10 +210,14 @@ class TestDependencies:
 
     def test_component_with_dependencies(self) -> None:
         gen = ASBOMGenerator()
-        gen.add_component(SkillComponent(
-            name="orchestrator", version="1.0.0", format="claude",
-            dependencies=["helper-a", "helper-b"],
-        ))
+        gen.add_component(
+            SkillComponent(
+                name="orchestrator",
+                version="1.0.0",
+                format="claude",
+                dependencies=["helper-a", "helper-b"],
+            )
+        )
         dep = gen.generate()["dependencies"][0]
         assert dep["ref"] == "pkg:agent-skill/orchestrator@1.0.0"
         assert "pkg:agent-skill/helper-a@unknown" in dep["dependsOn"]
@@ -220,8 +232,12 @@ class TestDependencies:
 
     def test_multiple_dependency_entries(self) -> None:
         gen = ASBOMGenerator()
-        gen.add_component(SkillComponent(name="a", version="1.0", format="mcp", dependencies=["common"]))
-        gen.add_component(SkillComponent(name="b", version="2.0", format="mcp", dependencies=["common"]))
+        gen.add_component(
+            SkillComponent(name="a", version="1.0", format="mcp", dependencies=["common"])
+        )
+        gen.add_component(
+            SkillComponent(name="b", version="2.0", format="mcp", dependencies=["common"])
+        )
         bom = gen.generate()
         assert len(bom["dependencies"]) == 2
         refs = {d["ref"] for d in bom["dependencies"]}

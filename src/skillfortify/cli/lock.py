@@ -62,7 +62,8 @@ def _build_lockfile_from_skills(skills, results) -> Lockfile:
 @click.command("lock")
 @click.argument("path", type=click.Path(exists=True, file_okay=False))
 @click.option(
-    "--output", "-o",
+    "--output",
+    "-o",
     type=click.Path(),
     default=None,
     help="Output path for lockfile (default: <path>/skill-lock.json).",
@@ -96,6 +97,7 @@ def lock_command(path: str, output: str | None) -> None:
 
     # Display summary
     from skillfortify.cli.output import print_resolution_summary
+
     installed = {s.name: s.version for s in skills}
     print_resolution_summary(
         success=True,

@@ -41,7 +41,7 @@ agents:
       - data_fetcher
 """
 
-_CLASS_TOOL_SOURCE = '''\
+_CLASS_TOOL_SOURCE = """\
 from crewai.tools import BaseTool
 import requests
 
@@ -52,7 +52,7 @@ class SearchTool(BaseTool):
     def _run(self, query: str) -> str:
         resp = requests.get("https://api.search.example.com/v1", params={"q": query})
         return resp.text
-'''
+"""
 
 _DECORATOR_TOOL_SOURCE = '''\
 from crewai.tools import tool
@@ -66,7 +66,7 @@ def scrape_page(url: str) -> str:
     return requests.get(f"https://scraper.example.com/api?url={url}").text
 '''
 
-_SHELL_TOOL_SOURCE = '''\
+_SHELL_TOOL_SOURCE = """\
 from crewai.tools import BaseTool
 import subprocess
 
@@ -76,7 +76,7 @@ class CommandTool(BaseTool):
 
     def _run(self, cmd: str) -> str:
         return subprocess.run("cat /etc/passwd", capture_output=True, text=True).stdout
-'''
+"""
 
 _MULTI_TOOL_SOURCE = '''\
 from crewai.tools import BaseTool, tool
@@ -174,7 +174,9 @@ class TestCrewAIParser:
         assert parser.can_parse(agents_yaml_dir) is True
 
     def test_can_parse_python_tools(
-        self, parser: CrewAIParser, crewai_python_dir: Path,
+        self,
+        parser: CrewAIParser,
+        crewai_python_dir: Path,
     ) -> None:
         """Parser recognises a directory with CrewAI Python tool files."""
         assert parser.can_parse(crewai_python_dir) is True
@@ -184,14 +186,18 @@ class TestCrewAIParser:
         assert parser.can_parse(empty_dir) is False
 
     def test_cannot_parse_non_crewai_python(
-        self, parser: CrewAIParser, tmp_path: Path,
+        self,
+        parser: CrewAIParser,
+        tmp_path: Path,
     ) -> None:
         """Parser ignores Python files without CrewAI imports."""
         (tmp_path / "app.py").write_text("print('hello')\n")
         assert parser.can_parse(tmp_path) is False
 
     def test_parse_crew_yaml_tool_names(
-        self, parser: CrewAIParser, crew_yaml_dir: Path,
+        self,
+        parser: CrewAIParser,
+        crew_yaml_dir: Path,
     ) -> None:
         """Extracts tool names from crew.yaml agent definitions."""
         skills = parser.parse(crew_yaml_dir)
@@ -201,14 +207,18 @@ class TestCrewAIParser:
         assert "text_generator" in names
 
     def test_parse_crew_yaml_count(
-        self, parser: CrewAIParser, crew_yaml_dir: Path,
+        self,
+        parser: CrewAIParser,
+        crew_yaml_dir: Path,
     ) -> None:
         """Correct number of tools extracted from crew.yaml."""
         skills = parser.parse(crew_yaml_dir)
         assert len(skills) == 3  # 2 from researcher + 1 from writer
 
     def test_parse_agents_yaml(
-        self, parser: CrewAIParser, agents_yaml_dir: Path,
+        self,
+        parser: CrewAIParser,
+        agents_yaml_dir: Path,
     ) -> None:
         """Extracts tools from agents.yaml."""
         skills = parser.parse(agents_yaml_dir)
@@ -216,14 +226,18 @@ class TestCrewAIParser:
         assert skills[0].name == "data_fetcher"
 
     def test_parse_class_tool_name(
-        self, parser: CrewAIParser, crewai_python_dir: Path,
+        self,
+        parser: CrewAIParser,
+        crewai_python_dir: Path,
     ) -> None:
         """Extracts tool name from BaseTool subclass."""
         skills = parser.parse(crewai_python_dir)
         assert any(s.name == "Search Tool" for s in skills)
 
     def test_parse_class_tool_description(
-        self, parser: CrewAIParser, crewai_python_dir: Path,
+        self,
+        parser: CrewAIParser,
+        crewai_python_dir: Path,
     ) -> None:
         """Extracts description from BaseTool subclass."""
         skills = parser.parse(crewai_python_dir)
@@ -232,7 +246,9 @@ class TestCrewAIParser:
         assert "Searches the web" in tool_skills[0].description
 
     def test_parse_decorator_tool(
-        self, parser: CrewAIParser, tmp_path: Path,
+        self,
+        parser: CrewAIParser,
+        tmp_path: Path,
     ) -> None:
         """Extracts tool from @tool decorated function."""
         (tmp_path / "scraper.py").write_text(_DECORATOR_TOOL_SOURCE)
@@ -240,7 +256,9 @@ class TestCrewAIParser:
         assert any(s.name == "scrape_page" for s in skills)
 
     def test_extracts_urls(
-        self, parser: CrewAIParser, crewai_python_dir: Path,
+        self,
+        parser: CrewAIParser,
+        crewai_python_dir: Path,
     ) -> None:
         """Extracts URLs from tool code."""
         skills = parser.parse(crewai_python_dir)
@@ -248,7 +266,9 @@ class TestCrewAIParser:
         assert any("api.search.example.com" in u for u in tool_skills[0].urls)
 
     def test_extracts_env_vars(
-        self, parser: CrewAIParser, tmp_path: Path,
+        self,
+        parser: CrewAIParser,
+        tmp_path: Path,
     ) -> None:
         """Extracts environment variable references."""
         (tmp_path / "scraper.py").write_text(_DECORATOR_TOOL_SOURCE)
@@ -257,7 +277,9 @@ class TestCrewAIParser:
         assert "SCRAPER_API_KEY" in tool_skills[0].env_vars_referenced
 
     def test_extracts_shell_commands(
-        self, parser: CrewAIParser, tmp_path: Path,
+        self,
+        parser: CrewAIParser,
+        tmp_path: Path,
     ) -> None:
         """Extracts shell commands from subprocess calls."""
         (tmp_path / "cmd.py").write_text(_SHELL_TOOL_SOURCE)
@@ -266,7 +288,9 @@ class TestCrewAIParser:
         assert any("cat" in cmd for cmd in tool_skills[0].shell_commands)
 
     def test_extracts_dependencies(
-        self, parser: CrewAIParser, crewai_python_dir: Path,
+        self,
+        parser: CrewAIParser,
+        crewai_python_dir: Path,
     ) -> None:
         """Extracts import dependencies."""
         skills = parser.parse(crewai_python_dir)
@@ -274,7 +298,9 @@ class TestCrewAIParser:
         assert "crewai" in tool_skills[0].dependencies
 
     def test_format_is_correct(
-        self, parser: CrewAIParser, crewai_python_dir: Path,
+        self,
+        parser: CrewAIParser,
+        crewai_python_dir: Path,
     ) -> None:
         """All parsed skills have format='crewai'."""
         skills = parser.parse(crewai_python_dir)
@@ -282,7 +308,9 @@ class TestCrewAIParser:
             assert skill.format == "crewai"
 
     def test_format_yaml_tools(
-        self, parser: CrewAIParser, crew_yaml_dir: Path,
+        self,
+        parser: CrewAIParser,
+        crew_yaml_dir: Path,
     ) -> None:
         """YAML-derived tools also have format='crewai'."""
         skills = parser.parse(crew_yaml_dir)
@@ -290,7 +318,9 @@ class TestCrewAIParser:
             assert skill.format == "crewai"
 
     def test_combined_yaml_and_python(
-        self, parser: CrewAIParser, crewai_full_dir: Path,
+        self,
+        parser: CrewAIParser,
+        crewai_full_dir: Path,
     ) -> None:
         """Parses both YAML configs and Python tool files."""
         skills = parser.parse(crewai_full_dir)
@@ -298,7 +328,9 @@ class TestCrewAIParser:
         assert len(skills) == 4
 
     def test_multiple_tools_in_one_file(
-        self, parser: CrewAIParser, tmp_path: Path,
+        self,
+        parser: CrewAIParser,
+        tmp_path: Path,
     ) -> None:
         """Parses multiple tool definitions from a single file."""
         (tmp_path / "multi.py").write_text(_MULTI_TOOL_SOURCE)
@@ -308,7 +340,9 @@ class TestCrewAIParser:
         assert "tool_beta" in names
 
     def test_malformed_yaml(
-        self, parser: CrewAIParser, tmp_path: Path,
+        self,
+        parser: CrewAIParser,
+        tmp_path: Path,
     ) -> None:
         """Handles malformed crew.yaml gracefully."""
         (tmp_path / "crew.yaml").write_text(_MALFORMED_YAML)
@@ -316,14 +350,18 @@ class TestCrewAIParser:
         assert skills == []
 
     def test_handles_empty_dir(
-        self, parser: CrewAIParser, empty_dir: Path,
+        self,
+        parser: CrewAIParser,
+        empty_dir: Path,
     ) -> None:
         """Parsing an empty directory returns an empty list."""
         skills = parser.parse(empty_dir)
         assert skills == []
 
     def test_multiple_env_vars(
-        self, parser: CrewAIParser, tmp_path: Path,
+        self,
+        parser: CrewAIParser,
+        tmp_path: Path,
     ) -> None:
         """Extracts multiple environment variable references."""
         (tmp_path / "secrets.py").write_text(_ENV_VARS_SOURCE)
@@ -333,7 +371,9 @@ class TestCrewAIParser:
         assert "SERVICE_TOKEN" in tool_skills[0].env_vars_referenced
 
     def test_source_path_set(
-        self, parser: CrewAIParser, crewai_python_dir: Path,
+        self,
+        parser: CrewAIParser,
+        crewai_python_dir: Path,
     ) -> None:
         """source_path points to the actual file."""
         skills = parser.parse(crewai_python_dir)
@@ -341,7 +381,9 @@ class TestCrewAIParser:
         assert tool_skills[0].source_path.exists()
 
     def test_returns_parsed_skill_instances(
-        self, parser: CrewAIParser, crewai_full_dir: Path,
+        self,
+        parser: CrewAIParser,
+        crewai_full_dir: Path,
     ) -> None:
         """All returned items are ParsedSkill instances."""
         skills = parser.parse(crewai_full_dir)

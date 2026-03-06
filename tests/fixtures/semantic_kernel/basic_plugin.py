@@ -20,7 +20,5 @@ class WeatherPlugin:
     @kernel_function(description="Get 5-day forecast")
     def get_forecast(self, city: str, days: int = 5) -> str:
         """Return multi-day weather forecast."""
-        response = requests.get(
-            f"https://api.weather.com/v2/forecast/{city}?days={days}"
-        )
+        response = requests.get(f"https://api.weather.com/v2/forecast/{city}?days={days}")
         return response.json()

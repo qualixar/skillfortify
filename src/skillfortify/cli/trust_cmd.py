@@ -74,9 +74,7 @@ def _compute_behavioral_signal(result) -> float:
         Severity.HIGH: 0.20,
         Severity.CRITICAL: 0.35,
     }
-    total_penalty = sum(
-        penalty_map.get(f.severity, 0.1) for f in result.findings
-    )
+    total_penalty = sum(penalty_map.get(f.severity, 0.1) for f in result.findings)
     return max(0.0, 1.0 - total_penalty)
 
 
@@ -102,7 +100,8 @@ def _trust_score_to_json(score) -> dict:
 @click.command("trust")
 @click.argument("skill_path", type=click.Path(exists=True))
 @click.option(
-    "--format", "output_format",
+    "--format",
+    "output_format",
     type=click.Choice(["text", "json"]),
     default="text",
     help="Output format (default: text).",
@@ -124,9 +123,13 @@ def trust_command(skill_path: str, output_format: str) -> None:
     root = _find_project_root(resolved)
     if root is None:
         if output_format == "json":
-            click.echo(json.dumps({
-                "error": f"Could not parse skill at: {skill_path}",
-            }))
+            click.echo(
+                json.dumps(
+                    {
+                        "error": f"Could not parse skill at: {skill_path}",
+                    }
+                )
+            )
         else:
             click.echo(f"Error: Could not parse skill at: {skill_path}")
         sys.exit(2)
@@ -136,16 +139,17 @@ def trust_command(skill_path: str, output_format: str) -> None:
     all_skills = registry.discover(root)
 
     # Find the matching skill
-    matched = [
-        s for s in all_skills
-        if Path(s.source_path).resolve() == resolved
-    ]
+    matched = [s for s in all_skills if Path(s.source_path).resolve() == resolved]
 
     if not matched:
         if output_format == "json":
-            click.echo(json.dumps({
-                "error": f"Could not parse skill at: {skill_path}",
-            }))
+            click.echo(
+                json.dumps(
+                    {
+                        "error": f"Could not parse skill at: {skill_path}",
+                    }
+                )
+            )
         else:
             click.echo(f"Error: Could not parse skill at: {skill_path}")
         sys.exit(2)
@@ -175,6 +179,7 @@ def trust_command(skill_path: str, output_format: str) -> None:
         click.echo(json.dumps(_trust_score_to_json(trust_score), indent=2))
     else:
         from skillfortify.cli.output import print_trust_score
+
         print_trust_score(trust_score)
 
     sys.exit(0)

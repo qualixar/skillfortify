@@ -47,6 +47,7 @@ FORMAT = "openai_agents"
 # Text extraction functions                                                    #
 # --------------------------------------------------------------------------- #
 
+
 def extract_urls(text: str) -> list[str]:
     """Extract all HTTP/HTTPS URLs from *text*."""
     return URL_PATTERN.findall(text)
@@ -98,6 +99,7 @@ def _regex_import_fallback(text: str) -> list[str]:
 # --------------------------------------------------------------------------- #
 # Skill builder                                                                #
 # --------------------------------------------------------------------------- #
+
 
 def build_skill(
     name: str,

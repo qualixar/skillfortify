@@ -5,6 +5,7 @@ Verifies that lockfile serialization is:
 - Round-trip safe: to_json -> from_json preserves all data
 - Integrity consistent: compute_integrity is deterministic
 """
+
 from __future__ import annotations
 
 import re
@@ -30,11 +31,16 @@ versions = st.from_regex(r"[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}", fullmatch=True)
 formats = st.sampled_from(["claude", "mcp", "openclaw"])
 
 capabilities = st.lists(
-    st.sampled_from([
-        "filesystem:READ", "filesystem:WRITE",
-        "network:READ", "network:WRITE",
-        "shell:WRITE", "environment:READ",
-    ]),
+    st.sampled_from(
+        [
+            "filesystem:READ",
+            "filesystem:WRITE",
+            "network:READ",
+            "network:WRITE",
+            "shell:WRITE",
+            "environment:READ",
+        ]
+    ),
     min_size=0,
     max_size=4,
     unique=True,
@@ -81,7 +87,8 @@ class TestLockfileDeterminism:
         """Two lockfiles with identical skills produce identical JSON."""
         skills = [
             LockedSkill(
-                name=f"skill-{i}", version="1.0.0",
+                name=f"skill-{i}",
+                version="1.0.0",
                 integrity=Lockfile.compute_integrity(f"content-{i}"),
                 format="claude",
             )
@@ -102,7 +109,8 @@ class TestLockfileDeterminism:
         """Skills added in different order produce the same JSON."""
         skills = [
             LockedSkill(
-                name=name, version="1.0.0",
+                name=name,
+                version="1.0.0",
                 integrity=Lockfile.compute_integrity(name),
                 format="mcp",
             )
@@ -145,17 +153,19 @@ class TestRoundTrip:
     def test_round_trip_preserves_skills(self) -> None:
         """Skill data survives a JSON round-trip."""
         lf = Lockfile()
-        lf.add_skill(LockedSkill(
-            name="round-trip",
-            version="2.5.0",
-            integrity=Lockfile.compute_integrity("content"),
-            format="openclaw",
-            capabilities=["network:READ", "filesystem:WRITE"],
-            dependencies={"dep-a": "1.0.0"},
-            trust_score=0.85,
-            trust_level="FORMALLY_VERIFIED",
-            source_path="/some/path",
-        ))
+        lf.add_skill(
+            LockedSkill(
+                name="round-trip",
+                version="2.5.0",
+                integrity=Lockfile.compute_integrity("content"),
+                format="openclaw",
+                capabilities=["network:READ", "filesystem:WRITE"],
+                dependencies={"dep-a": "1.0.0"},
+                trust_score=0.85,
+                trust_level="FORMALLY_VERIFIED",
+                source_path="/some/path",
+            )
+        )
 
         json_str = lf.to_json()
         restored = Lockfile.from_json(json_str)
@@ -171,9 +181,7 @@ class TestRoundTrip:
 
     @given(skill=locked_skill_strategy())
     @settings(max_examples=50)
-    def test_round_trip_preserves_generated_skills(
-        self, skill: LockedSkill
-    ) -> None:
+    def test_round_trip_preserves_generated_skills(self, skill: LockedSkill) -> None:
         """Generated skills survive round-trip serialization."""
         lf = Lockfile()
         lf.add_skill(skill)
@@ -191,10 +199,14 @@ class TestRoundTrip:
     def test_round_trip_preserves_metadata(self) -> None:
         """Lockfile metadata survives round-trip."""
         lf = Lockfile()
-        lf.add_skill(LockedSkill(
-            name="meta-test", version="1.0.0",
-            integrity="sha256:" + "a" * 64, format="claude",
-        ))
+        lf.add_skill(
+            LockedSkill(
+                name="meta-test",
+                version="1.0.0",
+                integrity="sha256:" + "a" * 64,
+                format="claude",
+            )
+        )
 
         json_str = lf.to_json()
         restored = Lockfile.from_json(json_str)
@@ -227,9 +239,7 @@ class TestIntegrityDeterminism:
         c1=st.text(min_size=1, max_size=500),
         c2=st.text(min_size=1, max_size=500),
     )
-    def test_different_content_different_hash(
-        self, c1: str, c2: str
-    ) -> None:
+    def test_different_content_different_hash(self, c1: str, c2: str) -> None:
         """Different content produces different hashes (collision resistance)."""
         assume(c1 != c2)
         h1 = Lockfile.compute_integrity(c1)

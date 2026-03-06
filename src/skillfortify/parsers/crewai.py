@@ -118,14 +118,16 @@ def _parse_yaml_config(config_path: Path) -> list[ParsedSkill]:
             if not isinstance(tools, list):
                 continue
             for tool_name in tools:
-                results.append(ParsedSkill(
-                    name=str(tool_name),
-                    version="unknown",
-                    source_path=config_path,
-                    format="crewai",
-                    description=f"Tool referenced by agent '{agent_name}'",
-                    raw_content=raw,
-                ))
+                results.append(
+                    ParsedSkill(
+                        name=str(tool_name),
+                        version="unknown",
+                        source_path=config_path,
+                        format="crewai",
+                        description=f"Tool referenced by agent '{agent_name}'",
+                        raw_content=raw,
+                    )
+                )
     return results
 
 
@@ -154,7 +156,9 @@ def _parse_python_tool_file(py_file: Path) -> list[ParsedSkill]:
 
 
 def _parse_class_tool(
-    node: ast.ClassDef, source: str, file_path: Path,
+    node: ast.ClassDef,
+    source: str,
+    file_path: Path,
 ) -> ParsedSkill | None:
     """Extract a ParsedSkill from a CrewAI BaseTool subclass."""
     is_base_tool = any(
@@ -192,7 +196,9 @@ def _parse_class_tool(
 
 
 def _parse_function_tool(
-    node: ast.FunctionDef, source: str, file_path: Path,
+    node: ast.FunctionDef,
+    source: str,
+    file_path: Path,
 ) -> ParsedSkill | None:
     """Extract a ParsedSkill from a @tool decorated function."""
     has_tool_dec = any(
@@ -210,7 +216,11 @@ def _parse_function_tool(
 
 
 def _build_skill(
-    name: str, description: str, body: str, path: Path, source: str,
+    name: str,
+    description: str,
+    body: str,
+    path: Path,
+    source: str,
 ) -> ParsedSkill:
     """Construct a ParsedSkill from extracted CrewAI tool metadata."""
     return ParsedSkill(

@@ -105,24 +105,18 @@ class TestClaudeSkillsParser:
         """Parser rejects .claude/skills/ when it contains no .md files."""
         assert parser.can_parse(empty_claude_dir) is False
 
-    def test_parses_skill_name(
-        self, parser: ClaudeSkillsParser, claude_skill_dir: Path
-    ) -> None:
+    def test_parses_skill_name(self, parser: ClaudeSkillsParser, claude_skill_dir: Path) -> None:
         """Extracts the skill name from YAML frontmatter."""
         skills = parser.parse(claude_skill_dir)
         assert len(skills) == 1
         assert skills[0].name == "deploy-helper"
 
-    def test_extracts_description(
-        self, parser: ClaudeSkillsParser, claude_skill_dir: Path
-    ) -> None:
+    def test_extracts_description(self, parser: ClaudeSkillsParser, claude_skill_dir: Path) -> None:
         """Extracts the description from YAML frontmatter."""
         skills = parser.parse(claude_skill_dir)
         assert "deployment" in skills[0].description.lower()
 
-    def test_extracts_urls(
-        self, parser: ClaudeSkillsParser, claude_skill_dir: Path
-    ) -> None:
+    def test_extracts_urls(self, parser: ClaudeSkillsParser, claude_skill_dir: Path) -> None:
         """Extracts all URLs from the skill content."""
         skills = parser.parse(claude_skill_dir)
         urls = skills[0].urls
@@ -130,9 +124,7 @@ class TestClaudeSkillsParser:
         assert any("internal.corp.net" in u for u in urls)
         assert any("webhook.site" in u for u in urls)
 
-    def test_extracts_env_vars(
-        self, parser: ClaudeSkillsParser, claude_skill_dir: Path
-    ) -> None:
+    def test_extracts_env_vars(self, parser: ClaudeSkillsParser, claude_skill_dir: Path) -> None:
         """Extracts environment variable references (ALL_CAPS patterns)."""
         skills = parser.parse(claude_skill_dir)
         env_vars = skills[0].env_vars_referenced
@@ -149,24 +141,18 @@ class TestClaudeSkillsParser:
         assert any("kubectl" in cmd for cmd in shell_cmds)
         assert any("export" in cmd for cmd in shell_cmds)
 
-    def test_extracts_code_blocks(
-        self, parser: ClaudeSkillsParser, claude_skill_dir: Path
-    ) -> None:
+    def test_extracts_code_blocks(self, parser: ClaudeSkillsParser, claude_skill_dir: Path) -> None:
         """Extracts all fenced code blocks from the Markdown content."""
         skills = parser.parse(claude_skill_dir)
         code_blocks = skills[0].code_blocks
         assert len(code_blocks) >= 2  # bash block + python block
 
-    def test_format_is_correct(
-        self, parser: ClaudeSkillsParser, claude_skill_dir: Path
-    ) -> None:
+    def test_format_is_correct(self, parser: ClaudeSkillsParser, claude_skill_dir: Path) -> None:
         """Parsed skills must have format='claude'."""
         skills = parser.parse(claude_skill_dir)
         assert skills[0].format == "claude"
 
-    def test_source_path_is_set(
-        self, parser: ClaudeSkillsParser, claude_skill_dir: Path
-    ) -> None:
+    def test_source_path_is_set(self, parser: ClaudeSkillsParser, claude_skill_dir: Path) -> None:
         """source_path points to the actual .md file on disk."""
         skills = parser.parse(claude_skill_dir)
         assert skills[0].source_path.exists()
@@ -179,9 +165,7 @@ class TestClaudeSkillsParser:
         skills = parser.parse(claude_skill_dir)
         assert "Deploy Helper" in skills[0].raw_content
 
-    def test_handles_empty_dir(
-        self, parser: ClaudeSkillsParser, empty_claude_dir: Path
-    ) -> None:
+    def test_handles_empty_dir(self, parser: ClaudeSkillsParser, empty_claude_dir: Path) -> None:
         """Parsing an empty skills directory returns an empty list."""
         skills = parser.parse(empty_claude_dir)
         assert skills == []

@@ -47,7 +47,9 @@ from skillfortify.parsers.composio_extractors import (
 
 
 def _parse_custom_action(
-    node: ast.FunctionDef, source: str, file_path: Path,
+    node: ast.FunctionDef,
+    source: str,
+    file_path: Path,
 ) -> ParsedSkill | None:
     """Extract a ParsedSkill from a Composio @action decorated function.
 
@@ -70,9 +72,8 @@ def _parse_custom_action(
             toolname = node.name
         elif isinstance(decorator, ast.Call):
             func = decorator.func
-            is_action_call = (
-                (isinstance(func, ast.Name) and func.id == "action")
-                or (isinstance(func, ast.Attribute) and func.attr == "action")
+            is_action_call = (isinstance(func, ast.Name) and func.id == "action") or (
+                isinstance(func, ast.Attribute) and func.attr == "action"
             )
             if is_action_call:
                 toolname = _extract_toolname_kwarg(decorator, node.name)
@@ -122,7 +123,11 @@ def _build_capabilities(source: str) -> list[str]:
 
 
 def _build_skill(
-    name: str, description: str, body: str, path: Path, source: str,
+    name: str,
+    description: str,
+    body: str,
+    path: Path,
+    source: str,
 ) -> ParsedSkill:
     """Construct a ParsedSkill from extracted Composio tool metadata.
 

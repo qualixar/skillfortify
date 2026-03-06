@@ -78,8 +78,9 @@ class TestFieldValidation:
     @pytest.mark.parametrize("profile", IDE_PROFILES, ids=lambda p: p.short_name)
     def test_short_name_is_lowercase(self, profile: IDEProfile) -> None:
         """Short names must be lowercase for consistent CLI output."""
-        assert profile.short_name == profile.short_name.lower() or \
-            "-" in profile.short_name  # Allow hyphens like "vscode-linux"
+        assert (
+            profile.short_name == profile.short_name.lower() or "-" in profile.short_name
+        )  # Allow hyphens like "vscode-linux"
 
     @pytest.mark.parametrize("profile", IDE_PROFILES, ids=lambda p: p.short_name)
     def test_short_name_no_spaces(self, profile: IDEProfile) -> None:
@@ -137,16 +138,14 @@ class TestUniqueness:
         """Every short_name must be unique across all profiles."""
         short_names = [p.short_name for p in IDE_PROFILES]
         assert len(short_names) == len(set(short_names)), (
-            f"Duplicate short_names found: "
-            f"{[n for n in short_names if short_names.count(n) > 1]}"
+            f"Duplicate short_names found: {[n for n in short_names if short_names.count(n) > 1]}"
         )
 
     def test_no_duplicate_display_names(self) -> None:
         """Every display name must be unique across all profiles."""
         names = [p.name for p in IDE_PROFILES]
         assert len(names) == len(set(names)), (
-            f"Duplicate names found: "
-            f"{[n for n in names if names.count(n) > 1]}"
+            f"Duplicate names found: {[n for n in names if names.count(n) > 1]}"
         )
 
 

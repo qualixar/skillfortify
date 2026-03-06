@@ -60,40 +60,40 @@ class TestRenderSingleSkill:
     """Render a single skill that passes analysis."""
 
     def test_safe_skill_counts(
-        self, safe_result: AnalysisResult, safe_skill: ParsedSkill,
+        self,
+        safe_result: AnalysisResult,
+        safe_skill: ParsedSkill,
     ) -> None:
-        data = extract_json_payload(
-            DashboardGenerator().render([safe_result], [safe_skill])
-        )
+        data = extract_json_payload(DashboardGenerator().render([safe_result], [safe_skill]))
         assert data["summary"]["total_skills"] == 1
         assert data["summary"]["safe_count"] == 1
         assert data["summary"]["unsafe_count"] == 0
 
     def test_safe_skill_no_findings(
-        self, safe_result: AnalysisResult, safe_skill: ParsedSkill,
+        self,
+        safe_result: AnalysisResult,
+        safe_skill: ParsedSkill,
     ) -> None:
-        data = extract_json_payload(
-            DashboardGenerator().render([safe_result], [safe_skill])
-        )
+        data = extract_json_payload(DashboardGenerator().render([safe_result], [safe_skill]))
         assert data["findings"] == []
 
     def test_safe_skill_capabilities_present(
-        self, safe_result: AnalysisResult, safe_skill: ParsedSkill,
+        self,
+        safe_result: AnalysisResult,
+        safe_skill: ParsedSkill,
     ) -> None:
-        data = extract_json_payload(
-            DashboardGenerator().render([safe_result], [safe_skill])
-        )
+        data = extract_json_payload(DashboardGenerator().render([safe_result], [safe_skill]))
         assert len(data["capabilities"]) == 1
         cap = data["capabilities"][0]
         assert cap["skill_name"] == "weather-api"
         assert cap["capabilities"]["network"] == "READ"
 
     def test_framework_coverage_single(
-        self, safe_result: AnalysisResult, safe_skill: ParsedSkill,
+        self,
+        safe_result: AnalysisResult,
+        safe_skill: ParsedSkill,
     ) -> None:
-        data = extract_json_payload(
-            DashboardGenerator().render([safe_result], [safe_skill])
-        )
+        data = extract_json_payload(DashboardGenerator().render([safe_result], [safe_skill]))
         assert len(data["framework_coverage"]) == 1
         assert data["framework_coverage"][0]["framework"] == "mcp_server"
 
@@ -142,15 +142,11 @@ class TestRenderMultipleSkills:
         assert "HIGH" in severities
 
     def test_framework_coverage_multi(
-        self, multi_framework_skills: list[ParsedSkill],
+        self,
+        multi_framework_skills: list[ParsedSkill],
     ) -> None:
-        results = [
-            AnalysisResult(skill_name=s.name, is_safe=True)
-            for s in multi_framework_skills
-        ]
-        data = extract_json_payload(
-            DashboardGenerator().render(results, multi_framework_skills)
-        )
+        results = [AnalysisResult(skill_name=s.name, is_safe=True) for s in multi_framework_skills]
+        data = extract_json_payload(DashboardGenerator().render(results, multi_framework_skills))
         fw_names = {fc["framework"] for fc in data["framework_coverage"]}
         assert fw_names == {"claude", "mcp_server", "langchain"}
         assert data["framework_coverage"][0]["framework"] == "claude"
@@ -161,11 +157,10 @@ class TestRenderAllSeverities:
     """All four severity levels appear in the report."""
 
     def test_all_severities_counted(
-        self, all_severity_results: list[AnalysisResult],
+        self,
+        all_severity_results: list[AnalysisResult],
     ) -> None:
-        data = extract_json_payload(
-            DashboardGenerator().render(all_severity_results, [])
-        )
+        data = extract_json_payload(DashboardGenerator().render(all_severity_results, []))
         assert data["summary"]["critical_count"] == 1
         assert data["summary"]["high_count"] == 1
         assert data["summary"]["medium_count"] == 1
@@ -231,11 +226,11 @@ class TestDataEmbedding:
     """JSON payload is correctly embedded and parseable."""
 
     def test_payload_has_all_sections(
-        self, safe_result: AnalysisResult, safe_skill: ParsedSkill,
+        self,
+        safe_result: AnalysisResult,
+        safe_skill: ParsedSkill,
     ) -> None:
-        data = extract_json_payload(
-            DashboardGenerator().render([safe_result], [safe_skill])
-        )
+        data = extract_json_payload(DashboardGenerator().render([safe_result], [safe_skill]))
         for key in ("summary", "findings", "capabilities", "framework_coverage"):
             assert key in data
 
@@ -246,31 +241,35 @@ class TestDataEmbedding:
 
     def test_evidence_truncation(self) -> None:
         finding = Finding(
-            skill_name="test", severity=Severity.HIGH, message="test",
-            attack_class="test", finding_type="pattern_match",
+            skill_name="test",
+            severity=Severity.HIGH,
+            message="test",
+            attack_class="test",
+            finding_type="pattern_match",
             evidence="x" * 200,
         )
         result = AnalysisResult(
-            skill_name="test", is_safe=False, findings=[finding],
+            skill_name="test",
+            is_safe=False,
+            findings=[finding],
         )
         data = extract_json_payload(DashboardGenerator().render([result], []))
         assert len(data["findings"][0]["evidence"]) <= 120
 
     def test_finding_format_lookup(
-        self, unsafe_result: AnalysisResult, unsafe_skill: ParsedSkill,
+        self,
+        unsafe_result: AnalysisResult,
+        unsafe_skill: ParsedSkill,
     ) -> None:
-        data = extract_json_payload(
-            DashboardGenerator().render([unsafe_result], [unsafe_skill])
-        )
+        data = extract_json_payload(DashboardGenerator().render([unsafe_result], [unsafe_skill]))
         for f in data["findings"]:
             assert f["format"] == "claude"
 
     def test_missing_skill_defaults_unknown(
-        self, unsafe_result: AnalysisResult,
+        self,
+        unsafe_result: AnalysisResult,
     ) -> None:
-        data = extract_json_payload(
-            DashboardGenerator().render([unsafe_result], [])
-        )
+        data = extract_json_payload(DashboardGenerator().render([unsafe_result], []))
         for f in data["findings"]:
             assert f["format"] == "unknown"
 

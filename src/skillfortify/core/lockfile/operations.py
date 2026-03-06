@@ -124,8 +124,7 @@ def _validate(self: Any) -> list[str]:
         for dep_name in skill.dependencies:
             if dep_name not in self._skills:
                 errors.append(
-                    f"Skill {name!r} depends on {dep_name!r} which is "
-                    f"not in the lockfile"
+                    f"Skill {name!r} depends on {dep_name!r} which is not in the lockfile"
                 )
 
     # 2. Circular dependency detection (DFS-based cycle detection)
@@ -140,10 +139,7 @@ def _validate(self: Any) -> list[str]:
             if dep_name not in color:
                 continue  # Already reported as missing dependency
             if color[dep_name] == GRAY:
-                errors.append(
-                    f"Circular dependency detected involving "
-                    f"{u!r} and {dep_name!r}"
-                )
+                errors.append(f"Circular dependency detected involving {u!r} and {dep_name!r}")
                 return True
             if color[dep_name] == WHITE:
                 if _dfs(dep_name):
@@ -158,10 +154,7 @@ def _validate(self: Any) -> list[str]:
     # 3. Integrity format
     for name, skill in self._skills.items():
         if skill.integrity and not _INTEGRITY_RE.match(skill.integrity):
-            errors.append(
-                f"Skill {name!r} has invalid integrity hash format: "
-                f"{skill.integrity!r}"
-            )
+            errors.append(f"Skill {name!r} has invalid integrity hash format: {skill.integrity!r}")
 
     # 4. Metadata consistency
     if self._metadata.total_skills != len(self._skills):
@@ -207,33 +200,41 @@ def _diff(self: Any, other: Any) -> dict[str, Any]:
         new = other._skills[name]
 
         if old.version != new.version:
-            changes.append({
-                "name": name,
-                "field": "version",
-                "old": old.version,
-                "new": new.version,
-            })
+            changes.append(
+                {
+                    "name": name,
+                    "field": "version",
+                    "old": old.version,
+                    "new": new.version,
+                }
+            )
         if old.integrity != new.integrity:
-            changes.append({
-                "name": name,
-                "field": "integrity",
-                "old": old.integrity,
-                "new": new.integrity,
-            })
+            changes.append(
+                {
+                    "name": name,
+                    "field": "integrity",
+                    "old": old.integrity,
+                    "new": new.integrity,
+                }
+            )
         if sorted(old.capabilities) != sorted(new.capabilities):
-            changes.append({
-                "name": name,
-                "field": "capabilities",
-                "old": sorted(old.capabilities),
-                "new": sorted(new.capabilities),
-            })
+            changes.append(
+                {
+                    "name": name,
+                    "field": "capabilities",
+                    "old": sorted(old.capabilities),
+                    "new": sorted(new.capabilities),
+                }
+            )
         if old.trust_score != new.trust_score:
-            changes.append({
-                "name": name,
-                "field": "trust_score",
-                "old": old.trust_score,
-                "new": new.trust_score,
-            })
+            changes.append(
+                {
+                    "name": name,
+                    "field": "trust_score",
+                    "old": old.trust_score,
+                    "new": new.trust_score,
+                }
+            )
 
     return {
         "added": added,

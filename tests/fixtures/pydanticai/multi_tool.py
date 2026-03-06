@@ -5,8 +5,8 @@ import requests
 import os
 
 agent = Agent(
-    'anthropic:claude-3-5-sonnet',
-    system_prompt='You are a research assistant.',
+    "anthropic:claude-3-5-sonnet",
+    system_prompt="You are a research assistant.",
 )
 
 

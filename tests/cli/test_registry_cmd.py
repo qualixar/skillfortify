@@ -149,9 +149,7 @@ class TestRegistryScanCommand:
         """JSON output is valid JSON with expected structure."""
         stats = _mock_stats("MCP Registry")
         with _patch_get_scanner([_safe_result()], stats):
-            result = runner.invoke(
-                cli, ["registry-scan", "mcp", "--format", "json"]
-            )
+            result = runner.invoke(cli, ["registry-scan", "mcp", "--format", "json"])
         data = json.loads(result.output)
         assert "stats" in data
         assert "results" in data
@@ -166,9 +164,7 @@ class TestRegistryScanCommand:
 
     def test_safe_exit_code(self, runner: CliRunner) -> None:
         """Exit code 0 when all entries safe."""
-        stats = RegistryStats(
-            registry_name="Test", total_entries=1, scanned=1, safe=1
-        )
+        stats = RegistryStats(registry_name="Test", total_entries=1, scanned=1, safe=1)
         with _patch_get_scanner([_safe_result()], stats):
             result = runner.invoke(cli, ["registry-scan", "mcp"])
         assert result.exit_code == 0
@@ -177,18 +173,14 @@ class TestRegistryScanCommand:
         """--limit option is accepted."""
         stats = _mock_stats()
         with _patch_get_scanner([], stats):
-            result = runner.invoke(
-                cli, ["registry-scan", "mcp", "--limit", "25"]
-            )
+            result = runner.invoke(cli, ["registry-scan", "mcp", "--limit", "25"])
         assert result.exit_code == 0
 
     def test_keyword_option(self, runner: CliRunner) -> None:
         """--keyword option is accepted."""
         stats = _mock_stats()
         with _patch_get_scanner([], stats):
-            result = runner.invoke(
-                cli, ["registry-scan", "pypi", "--keyword", "mcp-server"]
-            )
+            result = runner.invoke(cli, ["registry-scan", "pypi", "--keyword", "mcp-server"])
         assert result.exit_code == 0
 
     def test_invalid_registry(self, runner: CliRunner) -> None:
@@ -200,9 +192,7 @@ class TestRegistryScanCommand:
         """JSON output includes finding details."""
         stats = _mock_stats()
         with _patch_get_scanner([_unsafe_result()], stats):
-            result = runner.invoke(
-                cli, ["registry-scan", "npm", "--format", "json"]
-            )
+            result = runner.invoke(cli, ["registry-scan", "npm", "--format", "json"])
         data = json.loads(result.output)
         assert len(data["results"]) == 1
         assert data["results"][0]["findings_count"] == 1

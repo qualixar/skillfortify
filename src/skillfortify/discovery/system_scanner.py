@@ -154,8 +154,10 @@ class SystemScanner:
         skill_dirs = list(dict.fromkeys(skill_dirs))
 
         return DiscoveredIDE(
-            profile=profile, path=found_path,
-            mcp_configs=mcp_configs, skill_dirs=skill_dirs,
+            profile=profile,
+            path=found_path,
+            mcp_configs=mcp_configs,
+            skill_dirs=skill_dirs,
         )
 
     def _discover_unknown_ides(self, home_dir: Path) -> list[DiscoveredIDE]:
@@ -186,10 +188,14 @@ class SystemScanner:
                     short_name=entry.name.lstrip("."),
                     dot_dirs=[entry.name],
                 )
-                discovered.append(DiscoveredIDE(
-                    profile=synthetic, path=entry,
-                    mcp_configs=mcp_configs, skill_dirs=skill_dirs,
-                ))
+                discovered.append(
+                    DiscoveredIDE(
+                        profile=synthetic,
+                        path=entry,
+                        mcp_configs=mcp_configs,
+                        skill_dirs=skill_dirs,
+                    )
+                )
         return discovered
 
     def scan_system(self, home: Path | None = None) -> SystemScanResult:
@@ -217,12 +223,16 @@ class SystemScanner:
                 logger.warning("Failed to analyze: %s", skill.name, exc_info=True)
 
         return SystemScanResult(
-            ides_found=ides, total_skills=len(all_skills),
-            skills=all_skills, results=all_results,
+            ides_found=ides,
+            total_skills=len(all_skills),
+            skills=all_skills,
+            results=all_results,
         )
 
     def _parse_ide_skills(
-        self, ide: DiscoveredIDE, registry: ParserRegistry,
+        self,
+        ide: DiscoveredIDE,
+        registry: ParserRegistry,
     ) -> list[ParsedSkill]:
         """Parse all skills from a discovered IDE."""
         skills: list[ParsedSkill] = []

@@ -53,6 +53,7 @@ _HEAD_BYTES = 4096
 # Filesystem helpers                                                           #
 # --------------------------------------------------------------------------- #
 
+
 def _has_sdk_imports(text: str) -> bool:
     """Return True if *text* contains Anthropic Agent SDK import markers."""
     return any(marker in text for marker in _IMPORT_MARKERS)
@@ -81,6 +82,7 @@ def _has_sdk_dependency(path: Path) -> bool:
 # --------------------------------------------------------------------------- #
 # Public parser class                                                          #
 # --------------------------------------------------------------------------- #
+
 
 class AnthropicSDKParser(SkillParser):
     """Parser for Anthropic Agent SDK tool definitions.

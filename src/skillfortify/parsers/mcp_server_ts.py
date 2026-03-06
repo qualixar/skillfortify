@@ -22,10 +22,8 @@ import re
 # ── Compiled patterns ──────────────────────────────────────────────────────
 
 _TS_MCP_IMPORT_PATTERNS = (
-    re.compile(
-        r'''import\s+\{[^}]*Server[^}]*\}\s+from\s+["']@modelcontextprotocol/sdk'''
-    ),
-    re.compile(r'''require\s*\(\s*["']@modelcontextprotocol/sdk'''),
+    re.compile(r"""import\s+\{[^}]*Server[^}]*\}\s+from\s+["']@modelcontextprotocol/sdk"""),
+    re.compile(r"""require\s*\(\s*["']@modelcontextprotocol/sdk"""),
 )
 
 _TS_TOOL_PATTERN = re.compile(r"""\w+\.tool\s*\(\s*["']([^"']+)["']""")
@@ -50,6 +48,7 @@ _SENSITIVE_ENV_PATTERNS = re.compile(
 
 
 # ── Public functions ───────────────────────────────────────────────────────
+
 
 def has_ts_mcp_import(content: str) -> bool:
     """Return True if content has a TS/JS MCP SDK import or require."""

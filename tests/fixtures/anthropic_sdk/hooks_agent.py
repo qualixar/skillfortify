@@ -4,6 +4,7 @@ Used by test_anthropic_sdk.py to verify extraction of:
 - Hook subclass definitions with before/after_tool_call methods
 - Agent construction with hooks
 """
+
 from claude_agent_sdk import Agent
 from claude_agent_sdk.hooks import Hook
 from claude_agent_sdk.tools import tool

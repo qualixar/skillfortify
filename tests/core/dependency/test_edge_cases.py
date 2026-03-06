@@ -73,9 +73,7 @@ class TestEdgeCases:
     def test_missing_required_skill(self) -> None:
         """Requiring a skill not in the graph fails."""
         g = AgentDependencyGraph()
-        resolver = DependencyResolver(
-            g, requirements={"missing": VersionConstraint(">=1.0.0")}
-        )
+        resolver = DependencyResolver(g, requirements={"missing": VersionConstraint(">=1.0.0")})
         result = resolver.resolve()
         assert result.success is False
         assert any("missing" in msg for msg in result.conflicts)
@@ -84,9 +82,7 @@ class TestEdgeCases:
         """Requiring a version that doesn't exist fails."""
         g = AgentDependencyGraph()
         g.add_skill(_make_node("lib", "1.0.0"))
-        resolver = DependencyResolver(
-            g, requirements={"lib": VersionConstraint(">=5.0.0")}
-        )
+        resolver = DependencyResolver(g, requirements={"lib": VersionConstraint(">=5.0.0")})
         result = resolver.resolve()
         assert result.success is False
         assert any("lib" in msg for msg in result.conflicts)

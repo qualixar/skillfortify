@@ -5,6 +5,7 @@ Used by test_openai_agents.py to verify extraction of:
 - MCPServerHTTP url
 - Agent with mcp_servers list
 """
+
 from agents import Agent
 from agents.mcp import MCPServerStdio, MCPServerHTTP
 

@@ -148,18 +148,12 @@ class VersionConstraint:
             # same major.minor and >= target.
             if target[0] == 0:
                 return (
-                    ver_tuple[0] == target[0]
-                    and ver_tuple[1] == target[1]
-                    and ver_tuple >= target
+                    ver_tuple[0] == target[0] and ver_tuple[1] == target[1] and ver_tuple >= target
                 )
             return ver_tuple[0] == target[0] and ver_tuple >= target
         elif op == "~":
             # Tilde: same major.minor, patch >= target patch.
-            return (
-                ver_tuple[0] == target[0]
-                and ver_tuple[1] == target[1]
-                and ver_tuple >= target
-            )
+            return ver_tuple[0] == target[0] and ver_tuple[1] == target[1] and ver_tuple >= target
         else:  # pragma: no cover
             raise ValueError(f"Unknown operator: {op!r}")
 

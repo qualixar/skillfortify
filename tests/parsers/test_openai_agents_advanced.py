@@ -22,6 +22,7 @@ _FIXTURES = Path(__file__).resolve().parent.parent / "fixtures" / "openai_agents
 # Fixtures                                                                     #
 # --------------------------------------------------------------------------- #
 
+
 @pytest.fixture
 def parser() -> OpenAIAgentsParser:
     """Fresh parser instance."""
@@ -67,11 +68,14 @@ def unsafe_dir(tmp_path: Path) -> Path:
 # MCP server tests                                                             #
 # --------------------------------------------------------------------------- #
 
+
 class TestMcpServers:
     """Validate extraction of MCP server connections."""
 
     def test_extracts_stdio_server(
-        self, parser: OpenAIAgentsParser, mcp_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        mcp_dir: Path,
     ) -> None:
         skills = parser.parse(mcp_dir)
         stdio = [s for s in skills if s.name == "uvx"]
@@ -80,7 +84,9 @@ class TestMcpServers:
         assert any("mcp:MCPServerStdio" in cap for cap in caps)
 
     def test_extracts_http_server_url(
-        self, parser: OpenAIAgentsParser, mcp_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        mcp_dir: Path,
     ) -> None:
         skills = parser.parse(mcp_dir)
         all_urls: list[str] = []
@@ -89,7 +95,9 @@ class TestMcpServers:
         assert any("mcp.internal.corp.net" in url for url in all_urls)
 
     def test_mcp_agent_has_mcp_access(
-        self, parser: OpenAIAgentsParser, mcp_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        mcp_dir: Path,
     ) -> None:
         skills = parser.parse(mcp_dir)
         agent = [s for s in skills if s.name == "mcp_agent"]
@@ -97,7 +105,9 @@ class TestMcpServers:
         assert "mcp_access" in agent[0].declared_capabilities
 
     def test_http_server_named_by_url(
-        self, parser: OpenAIAgentsParser, mcp_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        mcp_dir: Path,
     ) -> None:
         skills = parser.parse(mcp_dir)
         http = [s for s in skills if "mcp.internal.corp.net" in s.name]
@@ -108,29 +118,38 @@ class TestMcpServers:
 # Hosted tools tests                                                           #
 # --------------------------------------------------------------------------- #
 
+
 class TestHostedTools:
     """Validate detection of hosted tool imports."""
 
     def test_detects_web_search_tool(
-        self, parser: OpenAIAgentsParser, hosted_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        hosted_dir: Path,
     ) -> None:
         names = {s.name for s in parser.parse(hosted_dir)}
         assert "WebSearchTool" in names
 
     def test_detects_file_search_tool(
-        self, parser: OpenAIAgentsParser, hosted_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        hosted_dir: Path,
     ) -> None:
         names = {s.name for s in parser.parse(hosted_dir)}
         assert "FileSearchTool" in names
 
     def test_detects_code_interpreter_tool(
-        self, parser: OpenAIAgentsParser, hosted_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        hosted_dir: Path,
     ) -> None:
         names = {s.name for s in parser.parse(hosted_dir)}
         assert "CodeInterpreterTool" in names
 
     def test_hosted_tool_has_capability(
-        self, parser: OpenAIAgentsParser, hosted_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        hosted_dir: Path,
     ) -> None:
         web = [s for s in parser.parse(hosted_dir) if s.name == "WebSearchTool"]
         assert web
@@ -141,32 +160,41 @@ class TestHostedTools:
 # Handoff tests                                                                #
 # --------------------------------------------------------------------------- #
 
+
 class TestHandoffs:
     """Validate detection of agent-to-agent handoff patterns."""
 
     def test_triage_has_handoff_capability(
-        self, parser: OpenAIAgentsParser, handoff_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        handoff_dir: Path,
     ) -> None:
         triage = [s for s in parser.parse(handoff_dir) if s.name == "triage_agent"]
         assert triage
         assert "agent_handoff" in triage[0].declared_capabilities
 
     def test_specialist_has_handoff_description(
-        self, parser: OpenAIAgentsParser, handoff_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        handoff_dir: Path,
     ) -> None:
         spec = [s for s in parser.parse(handoff_dir) if s.name == "order_specialist"]
         assert spec
         assert "order" in spec[0].description.lower()
 
     def test_both_agents_extracted(
-        self, parser: OpenAIAgentsParser, handoff_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        handoff_dir: Path,
     ) -> None:
         names = {s.name for s in parser.parse(handoff_dir)}
         assert "triage_agent" in names
         assert "order_specialist" in names
 
     def test_function_tool_in_handoff_file(
-        self, parser: OpenAIAgentsParser, handoff_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        handoff_dir: Path,
     ) -> None:
         names = {s.name for s in parser.parse(handoff_dir)}
         assert "lookup_order" in names
@@ -176,25 +204,32 @@ class TestHandoffs:
 # Guardrail tests                                                              #
 # --------------------------------------------------------------------------- #
 
+
 class TestGuardrails:
     """Validate detection of guardrail patterns."""
 
     def test_agent_has_input_guardrail(
-        self, parser: OpenAIAgentsParser, guardrails_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        guardrails_dir: Path,
     ) -> None:
         agent = [s for s in parser.parse(guardrails_dir) if s.name == "guarded_agent"]
         assert agent
         assert "input_guardrail" in agent[0].declared_capabilities
 
     def test_agent_has_output_guardrail(
-        self, parser: OpenAIAgentsParser, guardrails_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        guardrails_dir: Path,
     ) -> None:
         agent = [s for s in parser.parse(guardrails_dir) if s.name == "guarded_agent"]
         assert agent
         assert "output_guardrail" in agent[0].declared_capabilities
 
     def test_guardrail_function_tool_extracted(
-        self, parser: OpenAIAgentsParser, guardrails_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        guardrails_dir: Path,
     ) -> None:
         names = {s.name for s in parser.parse(guardrails_dir)}
         assert "search_docs" in names
@@ -204,11 +239,14 @@ class TestGuardrails:
 # Unsafe pattern detection tests                                               #
 # --------------------------------------------------------------------------- #
 
+
 class TestUnsafePatterns:
     """Validate detection of shell commands, env vars, and URLs."""
 
     def test_extracts_env_vars(
-        self, parser: OpenAIAgentsParser, unsafe_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        unsafe_dir: Path,
     ) -> None:
         diag = [s for s in parser.parse(unsafe_dir) if s.name == "run_diagnostic"]
         assert diag
@@ -216,21 +254,27 @@ class TestUnsafePatterns:
         assert "EXTERNAL_API_KEY" in diag[0].env_vars_referenced
 
     def test_extracts_shell_commands(
-        self, parser: OpenAIAgentsParser, unsafe_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        unsafe_dir: Path,
     ) -> None:
         diag = [s for s in parser.parse(unsafe_dir) if s.name == "run_diagnostic"]
         assert diag
         assert any("curl" in cmd for cmd in diag[0].shell_commands)
 
     def test_extracts_external_urls(
-        self, parser: OpenAIAgentsParser, unsafe_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        unsafe_dir: Path,
     ) -> None:
         fetch = [s for s in parser.parse(unsafe_dir) if s.name == "fetch_remote"]
         assert fetch
         assert any("internal.corp.net" in url for url in fetch[0].urls)
 
     def test_extracts_os_system_commands(
-        self, parser: OpenAIAgentsParser, unsafe_dir: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        unsafe_dir: Path,
     ) -> None:
         fetch = [s for s in parser.parse(unsafe_dir) if s.name == "fetch_remote"]
         assert fetch
@@ -241,16 +285,21 @@ class TestUnsafePatterns:
 # Edge cases and robustness tests                                              #
 # --------------------------------------------------------------------------- #
 
+
 class TestEdgeCases:
     """Robustness: empty dirs, malformed files, no-match content."""
 
     def test_empty_dir_returns_empty(
-        self, parser: OpenAIAgentsParser, tmp_path: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        tmp_path: Path,
     ) -> None:
         assert parser.parse(tmp_path) == []
 
     def test_syntax_error_uses_fallback(
-        self, parser: OpenAIAgentsParser, tmp_path: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        tmp_path: Path,
     ) -> None:
         """Files with syntax errors should not crash the parser."""
         bad = tmp_path / "bad.py"
@@ -259,13 +308,17 @@ class TestEdgeCases:
         assert isinstance(skills, list)
 
     def test_non_python_files_ignored(
-        self, parser: OpenAIAgentsParser, tmp_path: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        tmp_path: Path,
     ) -> None:
         (tmp_path / "config.yaml").write_text("from agents import Agent\n")
         assert parser.can_parse(tmp_path) is False
 
     def test_unreadable_file_skipped(
-        self, parser: OpenAIAgentsParser, tmp_path: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        tmp_path: Path,
     ) -> None:
         bad = tmp_path / "locked.py"
         bad.write_text("from agents import Agent\n")
@@ -276,7 +329,9 @@ class TestEdgeCases:
             bad.chmod(0o644)
 
     def test_multiple_files_aggregated(
-        self, parser: OpenAIAgentsParser, tmp_path: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        tmp_path: Path,
     ) -> None:
         shutil.copy(_FIXTURES / "basic_agent.py", tmp_path / "a.py")
         shutil.copy(_FIXTURES / "handoff_agent.py", tmp_path / "b.py")
@@ -285,7 +340,9 @@ class TestEdgeCases:
         assert "lookup_order" in names
 
     def test_agents_subdir_discovered(
-        self, parser: OpenAIAgentsParser, tmp_path: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        tmp_path: Path,
     ) -> None:
         sub = tmp_path / "agents"
         sub.mkdir()
@@ -293,7 +350,9 @@ class TestEdgeCases:
         assert any(s.name == "get_weather" for s in parser.parse(tmp_path))
 
     def test_src_subdir_discovered(
-        self, parser: OpenAIAgentsParser, tmp_path: Path,
+        self,
+        parser: OpenAIAgentsParser,
+        tmp_path: Path,
     ) -> None:
         sub = tmp_path / "src"
         sub.mkdir()

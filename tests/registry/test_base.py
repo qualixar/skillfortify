@@ -37,9 +37,7 @@ class _MockScanner(RegistryScanner):
     def registry_name(self) -> str:
         return "MockRegistry"
 
-    async def fetch_entries(
-        self, *, limit: int = 100, keyword: str = ""
-    ) -> list[RegistryEntry]:
+    async def fetch_entries(self, *, limit: int = 100, keyword: str = "") -> list[RegistryEntry]:
         result = self._entries[:limit]
         if keyword:
             result = [e for e in result if keyword.lower() in e.name.lower()]
@@ -194,10 +192,7 @@ class TestRegistryScanner:
 
     def test_scan_registry_respects_limit(self) -> None:
         """fetch_entries limit is passed through."""
-        entries = [
-            RegistryEntry(name=f"pkg-{i}", url=f"https://{i}.com")
-            for i in range(10)
-        ]
+        entries = [RegistryEntry(name=f"pkg-{i}", url=f"https://{i}.com") for i in range(10)]
         scanner = _MockScanner(entries=entries)
         results, stats = asyncio.run(scanner.scan_registry(limit=3))
         assert len(results) == 3
@@ -210,8 +205,6 @@ class TestRegistryScanner:
             RegistryEntry(name="langchain-tool-b", url="https://b.com"),
         ]
         scanner = _MockScanner(entries=entries)
-        results, stats = asyncio.run(
-            scanner.scan_registry(keyword="mcp")
-        )
+        results, stats = asyncio.run(scanner.scan_registry(keyword="mcp"))
         assert len(results) == 1
         assert results[0].skill_name == "mcp-server-a"

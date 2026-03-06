@@ -126,7 +126,9 @@ class DifyPluginParser(SkillParser):
         return results
 
     def _skills_from_manifest(
-        self, data: dict[str, Any], file_path: Path,
+        self,
+        data: dict[str, Any],
+        file_path: Path,
     ) -> list[ParsedSkill]:
         """Build ParsedSkill instances from a validated manifest.
 
@@ -160,21 +162,23 @@ class DifyPluginParser(SkillParser):
 
         combined_env = sorted(set(all_env_vars + all_creds))
 
-        return [ParsedSkill(
-            name=plugin_name,
-            version=plugin_version,
-            source_path=file_path,
-            format="dify",
-            description=plugin_description,
-            instructions="",
-            declared_capabilities=[str(data.get("type", "tool"))],
-            dependencies=all_deps,
-            code_blocks=[],
-            urls=all_urls,
-            env_vars_referenced=combined_env,
-            shell_commands=all_shell,
-            raw_content=raw_content,
-        )]
+        return [
+            ParsedSkill(
+                name=plugin_name,
+                version=plugin_version,
+                source_path=file_path,
+                format="dify",
+                description=plugin_description,
+                instructions="",
+                declared_capabilities=[str(data.get("type", "tool"))],
+                dependencies=all_deps,
+                code_blocks=[],
+                urls=all_urls,
+                env_vars_referenced=combined_env,
+                shell_commands=all_shell,
+                raw_content=raw_content,
+            )
+        ]
 
     def _parse_dify_dir(self, path: Path) -> list[ParsedSkill]:
         """Parse YAML files inside a .dify/ directory.
@@ -223,7 +227,9 @@ class DifyPluginParser(SkillParser):
         return results
 
     def _skill_from_provider(
-        self, data: dict[str, Any], file_path: Path,
+        self,
+        data: dict[str, Any],
+        file_path: Path,
     ) -> ParsedSkill | None:
         """Build a ParsedSkill from a provider config file.
 
@@ -247,9 +253,7 @@ class DifyPluginParser(SkillParser):
         description_raw = identity.get("description", "")
         if isinstance(description_raw, dict):
             description = str(
-                description_raw.get(
-                    "en_US", next(iter(description_raw.values()), "")
-                )
+                description_raw.get("en_US", next(iter(description_raw.values()), ""))
             )
         elif isinstance(description_raw, str):
             description = description_raw

@@ -28,18 +28,14 @@ def runner() -> CliRunner:
 class TestScanErrorHandling:
     """Tests for ``skillfortify scan`` error paths."""
 
-    def test_nonexistent_path_graceful_error(
-        self, runner: CliRunner
-    ) -> None:
+    def test_nonexistent_path_graceful_error(self, runner: CliRunner) -> None:
         """scan with non-existent path should produce an error, exit != 0."""
         result = runner.invoke(cli, ["scan", "/nonexistent/path/xyz"])
         # Click's exists=True on Path argument catches this before our code.
         assert result.exit_code == 2
         assert "Error" in result.output or "does not exist" in result.output
 
-    def test_scan_no_arguments_runs_system_scan(
-        self, runner: CliRunner
-    ) -> None:
+    def test_scan_no_arguments_runs_system_scan(self, runner: CliRunner) -> None:
         """scan with no arguments triggers system-wide auto-discovery.
 
         Exit code 2 is expected when no AI tools/skills are found on the
@@ -57,24 +53,17 @@ class TestScanErrorHandling:
 class TestVerifyErrorHandling:
     """Tests for ``skillfortify verify`` error paths."""
 
-    def test_nonexistent_file_graceful_error(
-        self, runner: CliRunner
-    ) -> None:
+    def test_nonexistent_file_graceful_error(self, runner: CliRunner) -> None:
         """verify with a non-existent file should produce a graceful error."""
         result = runner.invoke(cli, ["verify", "/nonexistent/file.md"])
         assert result.exit_code == 2
-        assert (
-            "Error" in result.output
-            or "does not exist" in result.output
-        )
+        assert "Error" in result.output or "does not exist" in result.output
 
 
 class TestLockErrorHandling:
     """Tests for ``skillfortify lock`` error paths."""
 
-    def test_lock_empty_directory_exits_code_2(
-        self, runner: CliRunner, tmp_path: Path
-    ) -> None:
+    def test_lock_empty_directory_exits_code_2(self, runner: CliRunner, tmp_path: Path) -> None:
         """lock on an empty directory should report no skills and exit 2."""
         result = runner.invoke(cli, ["lock", str(tmp_path)])
         assert result.exit_code == 2
@@ -84,9 +73,7 @@ class TestLockErrorHandling:
 class TestSbomErrorHandling:
     """Tests for ``skillfortify sbom`` error paths."""
 
-    def test_sbom_permission_denied_on_output(
-        self, runner: CliRunner, tmp_path: Path
-    ) -> None:
+    def test_sbom_permission_denied_on_output(self, runner: CliRunner, tmp_path: Path) -> None:
         """sbom with permission-denied output path should show an error.
 
         We create a read-only directory and try to write a file into it.
@@ -95,9 +82,7 @@ class TestSbomErrorHandling:
         # Create a Claude skill so sbom has something to process.
         skills_dir = tmp_path / ".claude" / "skills"
         skills_dir.mkdir(parents=True)
-        (skills_dir / "test.md").write_text(
-            "---\nname: test\n---\nA test skill.\n"
-        )
+        (skills_dir / "test.md").write_text("---\nname: test\n---\nA test skill.\n")
 
         # Create a read-only directory for the output.
         readonly_dir = tmp_path / "readonly"

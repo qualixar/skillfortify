@@ -84,7 +84,8 @@ def _has_sk_imports(text: str) -> bool:
 
 
 def _extract_kernel_function_skills(
-    source: str, file_path: Path,
+    source: str,
+    file_path: Path,
 ) -> list[ParsedSkill]:
     """Parse a Python file for classes with @kernel_function methods.
 
@@ -102,7 +103,9 @@ def _extract_kernel_function_skills(
 
 
 def _parse_plugin_class(
-    class_node: ast.ClassDef, source: str, file_path: Path,
+    class_node: ast.ClassDef,
+    source: str,
+    file_path: Path,
 ) -> list[ParsedSkill]:
     """Extract ParsedSkill entries from a class with @kernel_function methods."""
     results: list[ParsedSkill] = []
@@ -114,14 +117,16 @@ def _parse_plugin_class(
         description = _extract_decorator_description(item)
         docstring = ast.get_docstring(item) or ""
         body_text = ast.get_source_segment(source, item) or ""
-        results.append(_build_skill(
-            name=item.name,
-            description=description or docstring,
-            class_name=class_node.name,
-            body=body_text,
-            file_path=file_path,
-            source=source,
-        ))
+        results.append(
+            _build_skill(
+                name=item.name,
+                description=description or docstring,
+                class_name=class_node.name,
+                body=body_text,
+                file_path=file_path,
+                source=source,
+            )
+        )
     return results
 
 
@@ -153,8 +158,12 @@ def _extract_decorator_description(node: ast.FunctionDef) -> str:
 
 
 def _build_skill(
-    name: str, description: str, class_name: str,
-    body: str, file_path: Path, source: str,
+    name: str,
+    description: str,
+    class_name: str,
+    body: str,
+    file_path: Path,
+    source: str,
 ) -> ParsedSkill:
     """Construct a ParsedSkill from extracted Semantic Kernel metadata."""
     full_description = f"[{class_name}] {description}" if class_name else description
@@ -178,10 +187,16 @@ def _regex_fallback(source: str, file_path: Path) -> list[ParsedSkill]:
     results: list[ParsedSkill] = []
     pattern = re.compile(r"@kernel_function[^\n]*\n\s*def\s+(\w+)", re.MULTILINE)
     for match in pattern.finditer(source):
-        results.append(_build_skill(
-            name=match.group(1), description="", class_name="",
-            body=source, file_path=file_path, source=source,
-        ))
+        results.append(
+            _build_skill(
+                name=match.group(1),
+                description="",
+                class_name="",
+                body=source,
+                file_path=file_path,
+                source=source,
+            )
+        )
     return results
 
 

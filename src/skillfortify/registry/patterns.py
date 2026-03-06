@@ -40,8 +40,16 @@ CRED_HARVEST_PATTERNS: list[re.Pattern[str]] = [
 
 # Typosquatting indicators (common name mutations)
 TYPOSQUAT_INDICATORS: list[str] = [
-    "offical", "0fficial", "orginal", "modlecontext", "mcpp-",
-    "servr", "sever-", "claud-", "cladue", "openaai",
+    "offical",
+    "0fficial",
+    "orginal",
+    "modlecontext",
+    "mcpp-",
+    "servr",
+    "sever-",
+    "claud-",
+    "cladue",
+    "openaai",
 ]
 
 # npm preinstall / postinstall abuse
@@ -104,40 +112,48 @@ def check_suspicious_content(text: str) -> list[PatternMatch]:
     for pat in EXFIL_PATTERNS:
         m = pat.search(text)
         if m:
-            matches.append(PatternMatch(
-                category="data_exfiltration",
-                description="Potential data exfiltration pattern detected",
-                evidence=m.group(0)[:120],
-                is_critical=True,
-            ))
+            matches.append(
+                PatternMatch(
+                    category="data_exfiltration",
+                    description="Potential data exfiltration pattern detected",
+                    evidence=m.group(0)[:120],
+                    is_critical=True,
+                )
+            )
 
     for pat in PRIV_ESC_PATTERNS:
         m = pat.search(text)
         if m:
-            matches.append(PatternMatch(
-                category="privilege_escalation",
-                description="Dangerous system access pattern detected",
-                evidence=m.group(0)[:120],
-                is_critical=True,
-            ))
+            matches.append(
+                PatternMatch(
+                    category="privilege_escalation",
+                    description="Dangerous system access pattern detected",
+                    evidence=m.group(0)[:120],
+                    is_critical=True,
+                )
+            )
 
     for pat in CRED_HARVEST_PATTERNS:
         m = pat.search(text)
         if m:
-            matches.append(PatternMatch(
-                category="credential_harvesting",
-                description="Credential or secret access pattern detected",
-                evidence=m.group(0)[:120],
-            ))
+            matches.append(
+                PatternMatch(
+                    category="credential_harvesting",
+                    description="Credential or secret access pattern detected",
+                    evidence=m.group(0)[:120],
+                )
+            )
 
     for pat in BROAD_PERMISSION_PATTERNS:
         m = pat.search(text)
         if m:
-            matches.append(PatternMatch(
-                category="excessive_permissions",
-                description="Overly broad permission request detected",
-                evidence=m.group(0)[:120],
-            ))
+            matches.append(
+                PatternMatch(
+                    category="excessive_permissions",
+                    description="Overly broad permission request detected",
+                    evidence=m.group(0)[:120],
+                )
+            )
 
     return matches
 
@@ -155,12 +171,14 @@ def check_typosquatting(name: str) -> list[PatternMatch]:
     lower_name = name.lower()
     for indicator in TYPOSQUAT_INDICATORS:
         if indicator in lower_name:
-            matches.append(PatternMatch(
-                category="typosquatting",
-                description=f"Name contains typosquatting indicator: {indicator}",
-                evidence=name,
-                is_critical=True,
-            ))
+            matches.append(
+                PatternMatch(
+                    category="typosquatting",
+                    description=f"Name contains typosquatting indicator: {indicator}",
+                    evidence=name,
+                    is_critical=True,
+                )
+            )
     return matches
 
 
@@ -178,12 +196,14 @@ def check_npm_scripts(scripts: dict[str, str]) -> list[PatternMatch]:
     for pat in NPM_SCRIPT_DANGERS:
         m = pat.search(text)
         if m:
-            matches.append(PatternMatch(
-                category="malicious_lifecycle_script",
-                description="Suspicious npm lifecycle script detected",
-                evidence=m.group(0)[:120],
-                is_critical=True,
-            ))
+            matches.append(
+                PatternMatch(
+                    category="malicious_lifecycle_script",
+                    description="Suspicious npm lifecycle script detected",
+                    evidence=m.group(0)[:120],
+                    is_critical=True,
+                )
+            )
     return matches
 
 

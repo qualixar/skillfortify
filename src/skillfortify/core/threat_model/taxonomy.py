@@ -100,9 +100,7 @@ class AttackClass(Enum):
 
 # Phase applicability map (module-level constant for O(1) lookup).
 _ATTACK_PHASE_MAP: dict[AttackClass, frozenset[SupplyChainPhase]] = {
-    AttackClass.DATA_EXFILTRATION: frozenset(
-        {SupplyChainPhase.EXECUTE, SupplyChainPhase.PERSIST}
-    ),
+    AttackClass.DATA_EXFILTRATION: frozenset({SupplyChainPhase.EXECUTE, SupplyChainPhase.PERSIST}),
     AttackClass.PRIVILEGE_ESCALATION: frozenset(
         {SupplyChainPhase.CONFIGURE, SupplyChainPhase.EXECUTE}
     ),

@@ -28,9 +28,9 @@ Usage::
 from __future__ import annotations
 
 # Zero-width characters for binary encoding
-ZW_SPACE = "\u200b"   # Zero-width space = 0
+ZW_SPACE = "\u200b"  # Zero-width space = 0
 ZW_JOINER = "\u200d"  # Zero-width joiner = 1
-ZW_SEP = "\ufeff"     # Byte order mark = separator
+ZW_SEP = "\ufeff"  # Byte order mark = separator
 
 
 def encode_watermark(text: str, tool_id: str) -> str:
@@ -80,9 +80,9 @@ def decode_watermark(text: str) -> str:
     end = text.find(ZW_SEP, start + 1)
     if end == -1:
         return ""
-    encoded = text[start + 1:end]
+    encoded = text[start + 1 : end]
     binary = "".join("0" if c == ZW_SPACE else "1" for c in encoded)
-    chars = [binary[i:i + 8] for i in range(0, len(binary), 8)]
+    chars = [binary[i : i + 8] for i in range(0, len(binary), 8)]
     return "".join(chr(int(b, 2)) for b in chars if len(b) == 8)
 
 

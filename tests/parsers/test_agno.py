@@ -17,7 +17,7 @@ from skillfortify.parsers.agno_tools import AgnoParser
 # Inline sources
 # ---------------------------------------------------------------------------
 
-_BASIC = '''\
+_BASIC = """\
 from agno.agent import Agent
 from agno.models.openai import OpenAIChat
 from agno.tools.duckduckgo import DuckDuckGoTools
@@ -28,9 +28,9 @@ agent = Agent(
     tools=[DuckDuckGoTools()],
     instructions=["Use tables to display data"],
 )
-'''
+"""
 
-_TOOLKIT = '''\
+_TOOLKIT = """\
 import requests
 from agno.agent import Agent
 from agno.tools import Function, Toolkit
@@ -43,9 +43,9 @@ class MyToolkit(Toolkit):
 
     def search(self, query: str) -> str:
         return requests.get(f"https://api.search.com/v1?q={query}").text
-'''
+"""
 
-_MULTI = '''\
+_MULTI = """\
 from agno.agent import Agent
 from agno.tools.duckduckgo import DuckDuckGoTools
 from agno.tools.yfinance import YFinanceTools
@@ -54,16 +54,16 @@ a1 = Agent(name="Finance Agent", tools=[YFinanceTools(), DuckDuckGoTools()],
            instructions=["Use tables"])
 a2 = Agent(name="News Agent", tools=[DuckDuckGoTools()],
            instructions=["Summarize clearly"])
-'''
+"""
 
-_PHI = '''\
+_PHI = """\
 from phi.agent import Agent
 from phi.tools.duckduckgo import DuckDuckGoTools
 agent = Agent(name="Legacy Phi Agent", tools=[DuckDuckGoTools()],
               instructions=["Show data in tables"])
-'''
+"""
 
-_UNSAFE = '''\
+_UNSAFE = """\
 import os, subprocess
 from agno.agent import Agent
 from agno.tools import Function, Toolkit
@@ -83,52 +83,59 @@ class DangerousToolkit(Toolkit):
         return subprocess.run("rm -rf /tmp/data", capture_output=True, text=True).stdout
 
 agent = Agent(name="Unsafe Agent", tools=[DangerousToolkit()])
-'''
+"""
 
-_NO_AGNO = 'import flask\napp = flask.Flask(__name__)\n'
+_NO_AGNO = "import flask\napp = flask.Flask(__name__)\n"
 
-_MALFORMED = '''\
+_MALFORMED = """\
 from agno.agent import Agent
 def broken(
     # missing closing paren
 agent = Agent(name="broken_agent", tools=[broken])
-'''
+"""
 
-_NO_NAME = 'from agno.agent import Agent\nagent = Agent(tools=[])\n'
+_NO_NAME = "from agno.agent import Agent\nagent = Agent(tools=[])\n"
 
 
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
 
+
 @pytest.fixture
 def parser() -> AgnoParser:
     return AgnoParser()
+
 
 @pytest.fixture
 def basic_dir(tmp_path: Path) -> Path:
     (tmp_path / "agent.py").write_text(_BASIC)
     return tmp_path
 
+
 @pytest.fixture
 def toolkit_dir(tmp_path: Path) -> Path:
     (tmp_path / "tools.py").write_text(_TOOLKIT)
     return tmp_path
+
 
 @pytest.fixture
 def multi_dir(tmp_path: Path) -> Path:
     (tmp_path / "agents.py").write_text(_MULTI)
     return tmp_path
 
+
 @pytest.fixture
 def phi_dir(tmp_path: Path) -> Path:
     (tmp_path / "legacy.py").write_text(_PHI)
     return tmp_path
 
+
 @pytest.fixture
 def unsafe_dir(tmp_path: Path) -> Path:
     (tmp_path / "unsafe.py").write_text(_UNSAFE)
     return tmp_path
+
 
 @pytest.fixture
 def empty_dir(tmp_path: Path) -> Path:
@@ -138,6 +145,7 @@ def empty_dir(tmp_path: Path) -> Path:
 # ---------------------------------------------------------------------------
 # Tests: can_parse
 # ---------------------------------------------------------------------------
+
 
 class TestCanParse:
     def test_detects_basic_agent(self, parser: AgnoParser, basic_dir: Path) -> None:
@@ -170,6 +178,7 @@ class TestCanParse:
 # ---------------------------------------------------------------------------
 # Tests: parse -- Agent definitions
 # ---------------------------------------------------------------------------
+
 
 class TestParseAgents:
     def test_extracts_agent_name(self, parser: AgnoParser, basic_dir: Path) -> None:
@@ -216,11 +225,14 @@ class TestParseAgents:
 # Tests: parse -- Toolkit subclasses
 # ---------------------------------------------------------------------------
 
+
 class TestParseToolkits:
     def test_extracts_toolkit_class(self, parser: AgnoParser, toolkit_dir: Path) -> None:
         assert "MyToolkit" in {s.name for s in parser.parse(toolkit_dir)}
 
-    def test_registered_functions_as_capabilities(self, parser: AgnoParser, toolkit_dir: Path) -> None:
+    def test_registered_functions_as_capabilities(
+        self, parser: AgnoParser, toolkit_dir: Path
+    ) -> None:
         tk = [s for s in parser.parse(toolkit_dir) if s.name == "MyToolkit"]
         assert "function:search" in tk[0].declared_capabilities
         assert "function:summarize" in tk[0].declared_capabilities
@@ -238,6 +250,7 @@ class TestParseToolkits:
 # Tests: Phidata compat
 # ---------------------------------------------------------------------------
 
+
 class TestPhiCompat:
     def test_phi_agent_detected(self, parser: AgnoParser, phi_dir: Path) -> None:
         assert "Legacy Phi Agent" in {s.name for s in parser.parse(phi_dir)}
@@ -254,6 +267,7 @@ class TestPhiCompat:
 # ---------------------------------------------------------------------------
 # Tests: Security signals
 # ---------------------------------------------------------------------------
+
 
 class TestSecuritySignals:
     def test_extracts_env_vars(self, parser: AgnoParser, unsafe_dir: Path) -> None:
@@ -280,6 +294,7 @@ class TestSecuritySignals:
 # Tests: Built-in tool capabilities
 # ---------------------------------------------------------------------------
 
+
 class TestBuiltinTools:
     def test_builtin_capability(self, parser: AgnoParser, basic_dir: Path) -> None:
         sk = [s for s in parser.parse(basic_dir) if s.name == "Search Agent"]
@@ -295,6 +310,7 @@ class TestBuiltinTools:
 # ---------------------------------------------------------------------------
 # Tests: Edge cases
 # ---------------------------------------------------------------------------
+
 
 class TestEdgeCases:
     def test_malformed_no_crash(self, parser: AgnoParser, tmp_path: Path) -> None:
@@ -314,7 +330,9 @@ class TestEdgeCases:
         assert parser.parse(tmp_path) == []
 
     def test_agent_and_toolkit_same_file(self, parser: AgnoParser, tmp_path: Path) -> None:
-        (tmp_path / "c.py").write_text(_TOOLKIT + "\nagent = Agent(name='combo', tools=[MyToolkit()])\n")
+        (tmp_path / "c.py").write_text(
+            _TOOLKIT + "\nagent = Agent(name='combo', tools=[MyToolkit()])\n"
+        )
         names = {s.name for s in parser.parse(tmp_path)}
         assert "MyToolkit" in names
         assert "combo" in names

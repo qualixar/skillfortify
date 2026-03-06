@@ -168,6 +168,7 @@ class TestFromResolution:
 
     def test_from_resolution_basic(self) -> None:
         """from_resolution creates a lockfile from a simple resolution."""
+
         @dataclass
         class FakeResolution:
             success: bool = True
@@ -185,6 +186,7 @@ class TestFromResolution:
 
     def test_from_resolution_failed_raises(self) -> None:
         """from_resolution raises ValueError for a failed resolution."""
+
         @dataclass
         class FakeResolution:
             success: bool = False
@@ -200,6 +202,7 @@ class TestFromResolution:
 
     def test_from_resolution_with_trust_scores(self) -> None:
         """from_resolution populates trust_score and trust_level when provided."""
+
         @dataclass
         class FakeResolution:
             success: bool = True
@@ -226,19 +229,23 @@ class TestFromResolution:
         )
 
         graph = AgentDependencyGraph()
-        graph.add_skill(SkillNode(
-            name="main-skill",
-            version="1.0.0",
-            dependencies=[
-                SkillDependency("helper", VersionConstraint(">=1.0.0")),
-            ],
-            capabilities={"network:READ", "filesystem:READ"},
-        ))
-        graph.add_skill(SkillNode(
-            name="helper",
-            version="1.2.0",
-            capabilities={"network:READ"},
-        ))
+        graph.add_skill(
+            SkillNode(
+                name="main-skill",
+                version="1.0.0",
+                dependencies=[
+                    SkillDependency("helper", VersionConstraint(">=1.0.0")),
+                ],
+                capabilities={"network:READ", "filesystem:READ"},
+            )
+        )
+        graph.add_skill(
+            SkillNode(
+                name="helper",
+                version="1.2.0",
+                capabilities={"network:READ"},
+            )
+        )
 
         @dataclass
         class FakeResolution:

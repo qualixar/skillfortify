@@ -30,9 +30,7 @@ from skillfortify.core.trust import (
 # Hypothesis strategies for property-based testing
 # ---------------------------------------------------------------------------
 
-unit_floats = st.floats(
-    min_value=0.0, max_value=1.0, allow_nan=False, allow_infinity=False
-)
+unit_floats = st.floats(min_value=0.0, max_value=1.0, allow_nan=False, allow_infinity=False)
 
 trust_signals_strategy = st.builds(
     TrustSignals,
@@ -42,9 +40,7 @@ trust_signals_strategy = st.builds(
     historical=unit_floats,
 )
 
-positive_deltas = st.floats(
-    min_value=0.0, max_value=1.0, allow_nan=False, allow_infinity=False
-)
+positive_deltas = st.floats(min_value=0.0, max_value=1.0, allow_nan=False, allow_infinity=False)
 
 
 # ===========================================================================
@@ -58,9 +54,7 @@ class TestTrustDecay:
     def test_no_elapsed_time_no_decay(self) -> None:
         """Zero elapsed time produces no decay."""
         engine = TrustEngine(decay_rate=0.01)
-        signals = TrustSignals(
-            provenance=0.8, behavioral=0.8, community=0.8, historical=0.8
-        )
+        signals = TrustSignals(provenance=0.8, behavioral=0.8, community=0.8, historical=0.8)
         score = engine.compute_score("skill", "1.0.0", signals)
 
         now = datetime(2026, 2, 26, tzinfo=timezone.utc)
@@ -70,9 +64,7 @@ class TestTrustDecay:
     def test_decay_after_69_days_halves_trust(self) -> None:
         """At lambda=0.01, trust halves after ~69.3 days (ln(2)/0.01)."""
         engine = TrustEngine(decay_rate=0.01)
-        signals = TrustSignals(
-            provenance=1.0, behavioral=1.0, community=1.0, historical=1.0
-        )
+        signals = TrustSignals(provenance=1.0, behavioral=1.0, community=1.0, historical=1.0)
         score = engine.compute_score("skill", "1.0.0", signals)
 
         half_life_days = math.log(2) / 0.01  # ~69.3 days
@@ -85,9 +77,7 @@ class TestTrustDecay:
     def test_decay_after_230_days_drops_to_ten_percent(self) -> None:
         """After ~230 days (lambda=0.01), trust drops to ~10%."""
         engine = TrustEngine(decay_rate=0.01)
-        signals = TrustSignals(
-            provenance=1.0, behavioral=1.0, community=1.0, historical=1.0
-        )
+        signals = TrustSignals(provenance=1.0, behavioral=1.0, community=1.0, historical=1.0)
         score = engine.compute_score("skill", "1.0.0", signals)
 
         last_update = datetime(2026, 1, 1, tzinfo=timezone.utc)
@@ -100,25 +90,19 @@ class TestTrustDecay:
     def test_future_update_no_decay(self) -> None:
         """If last_update is in the future, no decay is applied."""
         engine = TrustEngine(decay_rate=0.01)
-        signals = TrustSignals(
-            provenance=0.8, behavioral=0.8, community=0.8, historical=0.8
-        )
+        signals = TrustSignals(provenance=0.8, behavioral=0.8, community=0.8, historical=0.8)
         score = engine.compute_score("skill", "1.0.0", signals)
 
         now = datetime(2026, 2, 26, tzinfo=timezone.utc)
         future = now + timedelta(days=10)
-        decayed = engine.apply_decay(
-            score, last_update=future, current_time=now
-        )
+        decayed = engine.apply_decay(score, last_update=future, current_time=now)
 
         assert decayed.effective_score == pytest.approx(score.effective_score)
 
     def test_decay_changes_level(self) -> None:
         """Sufficient decay can downgrade the trust level."""
         engine = TrustEngine(decay_rate=0.01)
-        signals = TrustSignals(
-            provenance=1.0, behavioral=1.0, community=1.0, historical=1.0
-        )
+        signals = TrustSignals(provenance=1.0, behavioral=1.0, community=1.0, historical=1.0)
         score = engine.compute_score("skill", "1.0.0", signals)
         assert score.level == TrustLevel.FORMALLY_VERIFIED
 
@@ -130,9 +114,7 @@ class TestTrustDecay:
     def test_zero_decay_rate_no_decay(self) -> None:
         """A decay rate of 0.0 means trust never decays."""
         engine = TrustEngine(decay_rate=0.0)
-        signals = TrustSignals(
-            provenance=0.8, behavioral=0.8, community=0.8, historical=0.8
-        )
+        signals = TrustSignals(provenance=0.8, behavioral=0.8, community=0.8, historical=0.8)
         score = engine.compute_score("skill", "1.0.0", signals)
 
         last_update = datetime(2020, 1, 1, tzinfo=timezone.utc)
@@ -153,45 +135,35 @@ class TestEvidenceUpdateAndMonotonicity:
     def test_positive_evidence_increases_provenance(self) -> None:
         """Adding provenance evidence increases the signal value."""
         engine = TrustEngine()
-        current = TrustSignals(
-            provenance=0.3, behavioral=0.5, community=0.5, historical=0.5
-        )
+        current = TrustSignals(provenance=0.3, behavioral=0.5, community=0.5, historical=0.5)
         updated = engine.update_with_evidence(current, {"provenance": 0.2})
         assert updated.provenance == pytest.approx(0.5)
 
     def test_evidence_clamped_to_one(self) -> None:
         """Evidence that would exceed 1.0 is clamped."""
         engine = TrustEngine()
-        current = TrustSignals(
-            provenance=0.9, behavioral=0.5, community=0.5, historical=0.5
-        )
+        current = TrustSignals(provenance=0.9, behavioral=0.5, community=0.5, historical=0.5)
         updated = engine.update_with_evidence(current, {"provenance": 0.5})
         assert updated.provenance == pytest.approx(1.0)
 
     def test_negative_evidence_raises(self) -> None:
         """Negative evidence delta is rejected (would violate Theorem 5)."""
         engine = TrustEngine()
-        current = TrustSignals(
-            provenance=0.5, behavioral=0.5, community=0.5, historical=0.5
-        )
+        current = TrustSignals(provenance=0.5, behavioral=0.5, community=0.5, historical=0.5)
         with pytest.raises(ValueError, match="non-negative"):
             engine.update_with_evidence(current, {"provenance": -0.1})
 
     def test_unknown_signal_name_raises(self) -> None:
         """Evidence for an unknown signal name is rejected."""
         engine = TrustEngine()
-        current = TrustSignals(
-            provenance=0.5, behavioral=0.5, community=0.5, historical=0.5
-        )
+        current = TrustSignals(provenance=0.5, behavioral=0.5, community=0.5, historical=0.5)
         with pytest.raises(ValueError, match="Unknown signal name"):
             engine.update_with_evidence(current, {"nonexistent": 0.1})
 
     def test_monotonicity_manual_all_signals(self) -> None:
         """Theorem 5: increasing any signal never decreases the trust score."""
         engine = TrustEngine()
-        base = TrustSignals(
-            provenance=0.3, behavioral=0.4, community=0.2, historical=0.5
-        )
+        base = TrustSignals(provenance=0.3, behavioral=0.4, community=0.2, historical=0.5)
         base_score = engine.compute_intrinsic(base)
 
         for signal_name in (
@@ -210,9 +182,7 @@ class TestEvidenceUpdateAndMonotonicity:
     def test_monotonicity_multiple_evidence_at_once(self) -> None:
         """Theorem 5: adding evidence to multiple signals simultaneously."""
         engine = TrustEngine()
-        base = TrustSignals(
-            provenance=0.2, behavioral=0.3, community=0.1, historical=0.4
-        )
+        base = TrustSignals(provenance=0.2, behavioral=0.3, community=0.1, historical=0.4)
         base_score = engine.compute_intrinsic(base)
 
         updated = engine.update_with_evidence(
@@ -228,9 +198,7 @@ class TestEvidenceUpdateAndMonotonicity:
 
     @given(signals=trust_signals_strategy, delta=positive_deltas)
     @settings(max_examples=100)
-    def test_monotonicity_property_provenance(
-        self, signals: TrustSignals, delta: float
-    ) -> None:
+    def test_monotonicity_property_provenance(self, signals: TrustSignals, delta: float) -> None:
         """Property-based Theorem 5: increasing provenance never reduces score."""
         engine = TrustEngine()
         base_score = engine.compute_intrinsic(signals)

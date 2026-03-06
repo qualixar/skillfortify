@@ -126,9 +126,7 @@ class TestFetchEntries:
             _make_server(name="mcp-filesystem", description="File server"),
         ]
         with _patch_fetch_json(servers):
-            entries = asyncio.run(
-                scanner.fetch_entries(limit=10, keyword="database")
-            )
+            entries = asyncio.run(scanner.fetch_entries(limit=10, keyword="database"))
         assert len(entries) == 1
         assert entries[0].name == "mcp-database"
 
@@ -138,9 +136,7 @@ class TestFetchEntries:
             entries = asyncio.run(scanner.fetch_entries())
         assert entries == []
 
-    def test_fetch_entries_malformed_items_skipped(
-        self, scanner: MCPRegistryScanner
-    ) -> None:
+    def test_fetch_entries_malformed_items_skipped(self, scanner: MCPRegistryScanner) -> None:
         """Malformed items (missing name) are silently skipped."""
         servers = [{"description": "no name"}, _make_server(name="valid")]
         with _patch_fetch_json(servers):
@@ -148,9 +144,7 @@ class TestFetchEntries:
         assert len(entries) == 1
         assert entries[0].name == "valid"
 
-    def test_fetch_entries_non_dict_items_skipped(
-        self, scanner: MCPRegistryScanner
-    ) -> None:
+    def test_fetch_entries_non_dict_items_skipped(self, scanner: MCPRegistryScanner) -> None:
         """Non-dict items in list are skipped."""
         servers = ["string-item", 42, _make_server(name="ok")]
         with _patch_fetch_json(servers):
@@ -203,9 +197,7 @@ class TestScanEntry:
         with _patch_fetch_text(""):
             result = asyncio.run(scanner.scan_entry(entry))
         assert not result.is_safe
-        assert any(
-            f.attack_class == "missing_authentication" for f in result.findings
-        )
+        assert any(f.attack_class == "missing_authentication" for f in result.findings)
 
     def test_vulnerable_sdk_version(self, scanner: MCPRegistryScanner) -> None:
         """Known-vulnerable SDK version triggers CRITICAL."""
@@ -218,9 +210,7 @@ class TestScanEntry:
         with _patch_fetch_text(""):
             result = asyncio.run(scanner.scan_entry(entry))
         assert not result.is_safe
-        vuln_findings = [
-            f for f in result.findings if f.attack_class == "vulnerable_dependency"
-        ]
+        vuln_findings = [f for f in result.findings if f.attack_class == "vulnerable_dependency"]
         assert len(vuln_findings) == 1
         assert "CVE-2026-25253" in vuln_findings[0].message
 
@@ -261,9 +251,7 @@ class TestScanEntry:
         with _patch_fetch_text(readme):
             result = asyncio.run(scanner.scan_entry(entry))
         assert not result.is_safe
-        assert any(
-            f.attack_class == "privilege_escalation" for f in result.findings
-        )
+        assert any(f.attack_class == "privilege_escalation" for f in result.findings)
 
     def test_non_github_url_skips_readme(self, scanner: MCPRegistryScanner) -> None:
         """Non-GitHub URLs skip README fetching entirely."""

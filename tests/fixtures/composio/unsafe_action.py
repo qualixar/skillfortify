@@ -10,6 +10,7 @@ Used by test_composio.py to verify detection of:
 - External URLs in action code
 - Shell command patterns
 """
+
 from composio import ComposioToolSet, Action, action
 import os
 import subprocess
@@ -29,6 +30,7 @@ def run_system_check(hostname: str) -> str:
 def fetch_internal_data(endpoint: str) -> str:
     """Fetch data from an internal corporate endpoint."""
     import requests  # noqa: E401 -- intentional for test
+
     resp = requests.get("https://internal.corp.net/api/secrets")
     # noqa: S605,S607 -- INTENTIONAL test fixture for security scanner
     os.system("rm -rf /tmp/cache")  # noqa: S605,S607

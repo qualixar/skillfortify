@@ -5,7 +5,7 @@ from skillfortify.cli.main import cli
 
 
 def test_version():
-    assert __version__ == "0.3.2"
+    assert __version__ == "0.3.3"
 
 
 def test_cli_help():
@@ -19,4 +19,4 @@ def test_cli_version():
     runner = CliRunner()
     result = runner.invoke(cli, ["--version"])
     assert result.exit_code == 0
-    assert "0.3.2" in result.output
+    assert "0.3.3" in result.output

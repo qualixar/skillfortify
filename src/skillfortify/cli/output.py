@@ -108,8 +108,10 @@ def print_analysis_detail(result: AnalysisResult) -> None:
         verdict = Text("UNSAFE", style="bold red")
 
     header = Text.assemble(
-        ("Skill: ", "bold"), (result.skill_name, ""),
-        ("  Status: ", "bold"), verdict,
+        ("Skill: ", "bold"),
+        (result.skill_name, ""),
+        ("  Status: ", "bold"),
+        verdict,
     )
     console.print(Panel(header, title="Verification Result"))
 
@@ -132,8 +134,10 @@ def print_analysis_detail(result: AnalysisResult) -> None:
         for f in result.findings:
             style = severity_style(f.severity)
             findings_table.add_row(
-                Text(f.severity.name, style=style), f.finding_type,
-                f.message, f.evidence[:80],
+                Text(f.severity.name, style=style),
+                f.finding_type,
+                f.message,
+                f.evidence[:80],
             )
         console.print(findings_table)
     else:
@@ -150,8 +154,10 @@ def print_trust_score(score: TrustScore) -> None:
     level_text = Text(score.level.name, style=level_style)
 
     header = Text.assemble(
-        ("Skill: ", "bold"), (score.skill_name, ""),
-        ("  Version: ", "bold"), (score.version, "dim"),
+        ("Skill: ", "bold"),
+        (score.skill_name, ""),
+        ("  Version: ", "bold"),
+        (score.version, "dim"),
     )
     console.print(Panel(header, title="Trust Score"))
     console.print(f"  Intrinsic Score: [bold]{score.intrinsic_score:.3f}[/bold]")
@@ -180,8 +186,7 @@ def print_resolution_summary(
     """
     if success:
         console.print(
-            Panel("[bold green]Resolution successful[/bold green]",
-                  title="Dependency Resolution")
+            Panel("[bold green]Resolution successful[/bold green]", title="Dependency Resolution")
         )
         if installed:
             table = Table(show_header=True)
@@ -194,8 +199,7 @@ def print_resolution_summary(
             console.print("[dim]No skills to resolve.[/dim]")
     else:
         console.print(
-            Panel("[bold red]Resolution failed[/bold red]",
-                  title="Dependency Resolution")
+            Panel("[bold red]Resolution failed[/bold red]", title="Dependency Resolution")
         )
         for conflict in conflicts:
             console.print(f"  [red]- {conflict}[/red]")
@@ -207,10 +211,7 @@ def print_sbom_summary(summary: dict[str, Any]) -> None:
     Args:
         summary: Dictionary from ``ASBOMGenerator.summary()``.
     """
-    console.print(
-        Panel("[bold]Agent Skill Bill of Materials (ASBOM)[/bold]",
-              title="SBOM Summary")
-    )
+    console.print(Panel("[bold]Agent Skill Bill of Materials (ASBOM)[/bold]", title="SBOM Summary"))
     console.print(f"  Total skills:  [bold]{summary.get('total', 0)}[/bold]")
     console.print(f"  Safe:          [green]{summary.get('safe', 0)}[/green]")
     console.print(f"  Unsafe:        [red]{summary.get('unsafe', 0)}[/red]")

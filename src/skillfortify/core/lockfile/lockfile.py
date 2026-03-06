@@ -179,9 +179,7 @@ class Lockfile:
             "resolution_strategy": self._metadata.resolution_strategy,
         }
         if self._metadata.allowed_capabilities is not None:
-            metadata_dict["allowed_capabilities"] = sorted(
-                self._metadata.allowed_capabilities
-            )
+            metadata_dict["allowed_capabilities"] = sorted(self._metadata.allowed_capabilities)
 
         result = {
             "lockfile_version": self.LOCKFILE_VERSION,
@@ -194,6 +192,7 @@ class Lockfile:
         }
         if self._sign_output:
             from skillfortify import __version__
+
             signer = QualixarSigner("skillfortify", __version__)
             result = signer.sign(result)
         return result

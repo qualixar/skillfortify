@@ -61,12 +61,15 @@ def _get_scanner(registry: str) -> RegistryScanner:
 
     if registry == "mcp":
         from skillfortify.registry.mcp_registry import MCPRegistryScanner
+
         return MCPRegistryScanner()
     elif registry == "pypi":
         from skillfortify.registry.pypi_scanner import PyPIScanner
+
         return PyPIScanner()
     elif registry == "npm":
         from skillfortify.registry.npm_scanner import NpmScanner
+
         return NpmScanner()
     else:
         click.echo(f"Unknown registry: {registry}", err=True)
@@ -81,6 +84,7 @@ def _format_text_output(results: list, stats: object) -> None:
         stats: RegistryStats object.
     """
     from skillfortify.cli.output import print_scan_results
+
     print_scan_results(results)
     click.echo(f"\nRegistry: {stats.registry_name}")  # type: ignore[attr-defined]
     click.echo(
@@ -100,6 +104,7 @@ def _format_json_output(results: list, stats: object) -> None:
         stats: RegistryStats object.
     """
     from dataclasses import asdict
+
     output = {
         "stats": asdict(stats),  # type: ignore[arg-type]
         "results": [
@@ -128,7 +133,8 @@ def _format_json_output(results: list, stats: object) -> None:
 @click.option("--limit", default=50, type=int, help="Max entries to scan (default 50).")
 @click.option("--keyword", default="", help="Search keyword to filter packages.")
 @click.option(
-    "--format", "output_format",
+    "--format",
+    "output_format",
     type=click.Choice(["text", "json"]),
     default="text",
     help="Output format (default: text).",
@@ -152,9 +158,7 @@ def registry_scan_command(
         skillfortify registry-scan npm --format json
     """
     scanner = _get_scanner(registry)
-    results, stats = _run_async(
-        scanner.scan_registry(limit=limit, keyword=keyword)
-    )
+    results, stats = _run_async(scanner.scan_registry(limit=limit, keyword=keyword))
 
     if output_format == "json":
         _format_json_output(results, stats)

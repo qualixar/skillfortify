@@ -5,6 +5,7 @@ Used by test_composio.py to verify extraction of:
 - Multiple get_tools calls with different apps
 - Implied OAuth capabilities from App integrations
 """
+
 from composio import ComposioToolSet, App
 
 

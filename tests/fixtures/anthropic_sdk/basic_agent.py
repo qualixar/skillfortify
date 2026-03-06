@@ -5,6 +5,7 @@ Used by test_anthropic_sdk.py to verify extraction of:
 - Agent(...) instantiations with model, tools, instructions
 - URLs and import extraction
 """
+
 from claude_agent_sdk import Agent
 from claude_agent_sdk.tools import tool
 import requests
@@ -14,6 +15,7 @@ import requests
 def search_files(query: str, directory: str = ".") -> str:
     """Search for files matching a query in a directory."""
     import subprocess
+
     result = subprocess.run(["grep", "-r", query, directory], capture_output=True)
     return result.stdout.decode()
 

@@ -50,7 +50,8 @@ def _has_llama_imports(text: str) -> bool:
 
 
 def _extract_tools_from_source(
-    source: str, file_path: Path,
+    source: str,
+    file_path: Path,
 ) -> list[ParsedSkill]:
     """Parse a Python source file and extract LlamaIndex definitions.
 
@@ -86,7 +87,8 @@ def _extract_tools_from_source(
 
 
 def _regex_fallback(
-    source: str, file_path: Path,
+    source: str,
+    file_path: Path,
 ) -> list[ParsedSkill]:
     """Regex fallback for files that fail AST parsing.
 

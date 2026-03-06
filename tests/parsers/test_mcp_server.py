@@ -94,9 +94,7 @@ class TestCanParse:
     ) -> None:
         assert parser.can_parse(basic_server_dir) is True
 
-    def test_detects_ts_mcp_server(
-        self, parser: McpServerParser, ts_server_dir: Path
-    ) -> None:
+    def test_detects_ts_mcp_server(self, parser: McpServerParser, ts_server_dir: Path) -> None:
         assert parser.can_parse(ts_server_dir) is True
 
     def test_detects_package_json_mcp(
@@ -104,38 +102,24 @@ class TestCanParse:
     ) -> None:
         assert parser.can_parse(package_json_dir) is True
 
-    def test_rejects_empty_dir(
-        self, parser: McpServerParser, tmp_path: Path
-    ) -> None:
+    def test_rejects_empty_dir(self, parser: McpServerParser, tmp_path: Path) -> None:
         assert parser.can_parse(tmp_path) is False
 
-    def test_rejects_non_mcp_python(
-        self, parser: McpServerParser, tmp_path: Path
-    ) -> None:
+    def test_rejects_non_mcp_python(self, parser: McpServerParser, tmp_path: Path) -> None:
         (tmp_path / "server.py").write_text("print('hello')\n")
         assert parser.can_parse(tmp_path) is False
 
-    def test_rejects_file_not_dir(
-        self, parser: McpServerParser, tmp_path: Path
-    ) -> None:
+    def test_rejects_file_not_dir(self, parser: McpServerParser, tmp_path: Path) -> None:
         filepath = tmp_path / "server.py"
         filepath.write_text("from mcp.server import Server\n")
         assert parser.can_parse(filepath) is False
 
-    def test_detects_pyproject_with_mcp(
-        self, parser: McpServerParser, tmp_path: Path
-    ) -> None:
-        (tmp_path / "pyproject.toml").write_text(
-            '[project]\ndependencies = ["mcp>=1.0"]\n'
-        )
+    def test_detects_pyproject_with_mcp(self, parser: McpServerParser, tmp_path: Path) -> None:
+        (tmp_path / "pyproject.toml").write_text('[project]\ndependencies = ["mcp>=1.0"]\n')
         assert parser.can_parse(tmp_path) is True
 
-    def test_rejects_pyproject_without_mcp(
-        self, parser: McpServerParser, tmp_path: Path
-    ) -> None:
-        (tmp_path / "pyproject.toml").write_text(
-            '[project]\ndependencies = ["flask>=3.0"]\n'
-        )
+    def test_rejects_pyproject_without_mcp(self, parser: McpServerParser, tmp_path: Path) -> None:
+        (tmp_path / "pyproject.toml").write_text('[project]\ndependencies = ["flask>=3.0"]\n')
         assert parser.can_parse(tmp_path) is False
 
 
@@ -147,16 +131,12 @@ class TestCanParse:
 class TestParsePython:
     """Validate parsing of Python MCP server source files."""
 
-    def test_returns_parsed_skill(
-        self, parser: McpServerParser, basic_server_dir: Path
-    ) -> None:
+    def test_returns_parsed_skill(self, parser: McpServerParser, basic_server_dir: Path) -> None:
         skills = parser.parse(basic_server_dir)
         assert len(skills) == 1
         assert isinstance(skills[0], ParsedSkill)
 
-    def test_format_is_mcp_server(
-        self, parser: McpServerParser, basic_server_dir: Path
-    ) -> None:
+    def test_format_is_mcp_server(self, parser: McpServerParser, basic_server_dir: Path) -> None:
         skill = parser.parse(basic_server_dir)[0]
         assert skill.format == "mcp_server"
 
@@ -271,35 +251,25 @@ class TestParsePython:
 class TestParseTypeScript:
     """Validate parsing of TypeScript MCP server source files."""
 
-    def test_returns_parsed_skill(
-        self, parser: McpServerParser, ts_server_dir: Path
-    ) -> None:
+    def test_returns_parsed_skill(self, parser: McpServerParser, ts_server_dir: Path) -> None:
         skills = parser.parse(ts_server_dir)
         assert len(skills) == 1
         assert isinstance(skills[0], ParsedSkill)
 
-    def test_format_is_mcp_server(
-        self, parser: McpServerParser, ts_server_dir: Path
-    ) -> None:
+    def test_format_is_mcp_server(self, parser: McpServerParser, ts_server_dir: Path) -> None:
         skill = parser.parse(ts_server_dir)[0]
         assert skill.format == "mcp_server"
 
-    def test_extracts_tool_names(
-        self, parser: McpServerParser, ts_server_dir: Path
-    ) -> None:
+    def test_extracts_tool_names(self, parser: McpServerParser, ts_server_dir: Path) -> None:
         skill = parser.parse(ts_server_dir)[0]
         assert "greet" in skill.description
         assert "fetch_data" in skill.description
 
-    def test_detects_env_vars(
-        self, parser: McpServerParser, ts_server_dir: Path
-    ) -> None:
+    def test_detects_env_vars(self, parser: McpServerParser, ts_server_dir: Path) -> None:
         skill = parser.parse(ts_server_dir)[0]
         assert "API_SECRET_KEY" in skill.env_vars_referenced
 
-    def test_detects_network_capability(
-        self, parser: McpServerParser, ts_server_dir: Path
-    ) -> None:
+    def test_detects_network_capability(self, parser: McpServerParser, ts_server_dir: Path) -> None:
         skill = parser.parse(ts_server_dir)[0]
         assert "network:read" in skill.declared_capabilities
 

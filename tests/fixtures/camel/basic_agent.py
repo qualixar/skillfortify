@@ -1,4 +1,5 @@
 """Basic CAMEL-AI ChatAgent with a single tool."""
+
 from camel.agents import ChatAgent
 from camel.toolkits import FunctionTool, SearchToolkit
 from camel.models import ModelFactory

@@ -152,7 +152,9 @@ class TestMcpConfigParser:
         skills = parser.parse(mcp_config_dir)
         fs_skill = next(s for s in skills if s.name == "filesystem")
         assert any("npx" in cmd for cmd in fs_skill.shell_commands)
-        assert any("@modelcontextprotocol/server-filesystem" in cmd for cmd in fs_skill.shell_commands)
+        assert any(
+            "@modelcontextprotocol/server-filesystem" in cmd for cmd in fs_skill.shell_commands
+        )
 
     def test_format_is_correct(self, parser: McpConfigParser, mcp_config_dir: Path) -> None:
         """Parsed skills must have format='mcp'."""
@@ -197,6 +199,5 @@ class TestMcpConfigParser:
         skills = parser.parse(mcp_config_dir)
         fs_skill = next(s for s in skills if s.name == "filesystem")
         assert any(
-            "@modelcontextprotocol/server-filesystem" in dep
-            for dep in fs_skill.dependencies
+            "@modelcontextprotocol/server-filesystem" in dep for dep in fs_skill.dependencies
         )

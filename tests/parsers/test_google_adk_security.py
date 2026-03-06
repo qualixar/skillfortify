@@ -44,7 +44,7 @@ agent = Agent(
 )
 '''
 
-_MCP_TOOLSET_SOURCE = '''\
+_MCP_TOOLSET_SOURCE = """\
 from google.adk import Agent
 from google.adk.tools.mcp_tool import MCPToolset
 
@@ -61,9 +61,9 @@ agent = Agent(
     instruction="Manage files via MCP",
     tools=[mcp_tools],
 )
-'''
+"""
 
-_OPENAPI_TOOLSET_SOURCE = '''\
+_OPENAPI_TOOLSET_SOURCE = """\
 from google.adk import Agent
 from google.adk.tools.openapi_tool import OpenAPIToolset
 
@@ -78,7 +78,7 @@ agent = Agent(
     instruction="Interact with APIs",
     tools=[openapi_tools],
 )
-'''
+"""
 
 _URL_HEAVY_SOURCE = '''\
 from google.adk import Agent
@@ -138,7 +138,9 @@ class TestURLExtraction:
     """Validate extraction of URLs from tool function bodies."""
 
     def test_extracts_urls_from_unsafe_agent(
-        self, parser: GoogleADKParser, tmp_path: Path,
+        self,
+        parser: GoogleADKParser,
+        tmp_path: Path,
     ) -> None:
         """Detects URLs in function tool bodies."""
         (tmp_path / "unsafe.py").write_text(_UNSAFE_AGENT_SOURCE)
@@ -147,7 +149,9 @@ class TestURLExtraction:
         assert any("evil.example.com" in url for url in exfil_skills[0].urls)
 
     def test_extracts_multiple_urls(
-        self, parser: GoogleADKParser, tmp_path: Path,
+        self,
+        parser: GoogleADKParser,
+        tmp_path: Path,
     ) -> None:
         """Extracts all URLs from a function with multiple API calls."""
         (tmp_path / "urls.py").write_text(_URL_HEAVY_SOURCE)
@@ -167,7 +171,9 @@ class TestEnvVarExtraction:
     """Validate extraction of environment variable references."""
 
     def test_extracts_env_vars(
-        self, parser: GoogleADKParser, tmp_path: Path,
+        self,
+        parser: GoogleADKParser,
+        tmp_path: Path,
     ) -> None:
         """Detects os.environ and os.getenv references."""
         (tmp_path / "unsafe.py").write_text(_UNSAFE_AGENT_SOURCE)
@@ -178,7 +184,9 @@ class TestEnvVarExtraction:
         assert "SECRET_API_KEY" in env_vars
 
     def test_extracts_multiple_env_vars(
-        self, parser: GoogleADKParser, tmp_path: Path,
+        self,
+        parser: GoogleADKParser,
+        tmp_path: Path,
     ) -> None:
         """Extracts all env var references from a tool function."""
         (tmp_path / "secrets.py").write_text(_MULTI_ENV_SOURCE)
@@ -199,7 +207,9 @@ class TestShellCommandExtraction:
     """Validate extraction of shell commands from subprocess calls."""
 
     def test_extracts_shell_commands(
-        self, parser: GoogleADKParser, tmp_path: Path,
+        self,
+        parser: GoogleADKParser,
+        tmp_path: Path,
     ) -> None:
         """Detects subprocess.run shell command arguments."""
         (tmp_path / "unsafe.py").write_text(_UNSAFE_AGENT_SOURCE)
@@ -217,7 +227,9 @@ class TestMCPToolset:
     """Validate extraction of MCPToolset connections."""
 
     def test_mcp_toolset_detected(
-        self, parser: GoogleADKParser, tmp_path: Path,
+        self,
+        parser: GoogleADKParser,
+        tmp_path: Path,
     ) -> None:
         """Detects MCPToolset connections."""
         (tmp_path / "mcp.py").write_text(_MCP_TOOLSET_SOURCE)
@@ -226,7 +238,9 @@ class TestMCPToolset:
         assert len(mcp_skills) == 1
 
     def test_mcp_toolset_captures_command(
-        self, parser: GoogleADKParser, tmp_path: Path,
+        self,
+        parser: GoogleADKParser,
+        tmp_path: Path,
     ) -> None:
         """Captures MCP connection command in capabilities."""
         (tmp_path / "mcp.py").write_text(_MCP_TOOLSET_SOURCE)
@@ -236,7 +250,9 @@ class TestMCPToolset:
         assert any("npx" in cap for cap in caps)
 
     def test_mcp_toolset_description(
-        self, parser: GoogleADKParser, tmp_path: Path,
+        self,
+        parser: GoogleADKParser,
+        tmp_path: Path,
     ) -> None:
         """MCPToolset description includes connection command info."""
         (tmp_path / "mcp.py").write_text(_MCP_TOOLSET_SOURCE)
@@ -254,7 +270,9 @@ class TestOpenAPIToolset:
     """Validate extraction of OpenAPIToolset references."""
 
     def test_openapi_toolset_detected(
-        self, parser: GoogleADKParser, tmp_path: Path,
+        self,
+        parser: GoogleADKParser,
+        tmp_path: Path,
     ) -> None:
         """Detects OpenAPIToolset references."""
         (tmp_path / "openapi.py").write_text(_OPENAPI_TOOLSET_SOURCE)
@@ -263,7 +281,9 @@ class TestOpenAPIToolset:
         assert len(api_skills) == 1
 
     def test_openapi_toolset_capabilities(
-        self, parser: GoogleADKParser, tmp_path: Path,
+        self,
+        parser: GoogleADKParser,
+        tmp_path: Path,
     ) -> None:
         """OpenAPIToolset has openapi:external_api capability."""
         (tmp_path / "openapi.py").write_text(_OPENAPI_TOOLSET_SOURCE)
@@ -272,7 +292,9 @@ class TestOpenAPIToolset:
         assert "openapi:external_api" in api_skills[0].declared_capabilities
 
     def test_openapi_toolset_description(
-        self, parser: GoogleADKParser, tmp_path: Path,
+        self,
+        parser: GoogleADKParser,
+        tmp_path: Path,
     ) -> None:
         """OpenAPIToolset description includes spec type."""
         (tmp_path / "openapi.py").write_text(_OPENAPI_TOOLSET_SOURCE)

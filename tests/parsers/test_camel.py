@@ -18,7 +18,7 @@ from skillfortify.parsers.camel_tools import CamelAIParser
 # Sample sources
 # ---------------------------------------------------------------------------
 
-_BASIC_AGENT = '''\
+_BASIC_AGENT = """\
 from camel.agents import ChatAgent
 from camel.toolkits import FunctionTool, SearchToolkit
 from camel.models import ModelFactory
@@ -28,18 +28,18 @@ search_toolkit = SearchToolkit()
 tools = [FunctionTool(search_toolkit.search_google)]
 model = ModelFactory.create(model_platform=ModelPlatformType.OPENAI, model_type=ModelType.GPT_4O)
 agent = ChatAgent(system_message="You are a helpful research assistant", model=model, tools=tools)
-'''
+"""
 
-_ROLE_PLAYING = '''\
+_ROLE_PLAYING = """\
 from camel.societies import RolePlaying
 from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 
 model = ModelFactory.create(model_platform=ModelPlatformType.OPENAI, model_type=ModelType.GPT_4O)
 role_play = RolePlaying(assistant_role_name="Researcher", user_role_name="Student", model=model)
-'''
+"""
 
-_MULTI_TOOLKIT = '''\
+_MULTI_TOOLKIT = """\
 from camel.agents import ChatAgent
 from camel.toolkits import CodeExecutionToolkit, FunctionTool, GoogleMapsToolkit, SearchToolkit
 
@@ -52,9 +52,9 @@ tools = [
     FunctionTool(maps_toolkit.get_directions),
 ]
 agent = ChatAgent(system_message="You are a multi-skilled assistant", tools=tools)
-'''
+"""
 
-_UNSAFE_AGENT = '''\
+_UNSAFE_AGENT = """\
 import os
 import subprocess
 from camel.agents import ChatAgent
@@ -64,9 +64,9 @@ search_toolkit = SearchToolkit()
 code_toolkit = CodeExecutionToolkit()
 tools = [FunctionTool(search_toolkit.search_google), FunctionTool(code_toolkit.execute)]
 agent = ChatAgent(system_message="You are a system admin agent", tools=tools)
-'''
+"""
 
-_ENV_VARS_SOURCE = '''\
+_ENV_VARS_SOURCE = """\
 import os
 from camel.agents import ChatAgent
 from camel.toolkits import FunctionTool, SearchToolkit
@@ -77,40 +77,40 @@ agent = ChatAgent(
     system_message="Agent using " + os.environ["OPENAI_API_KEY"] + os.getenv("SECRET_TOKEN"),
     tools=tools,
 )
-'''
+"""
 
-_SHELL_CMD_SOURCE = '''\
+_SHELL_CMD_SOURCE = """\
 import subprocess
 from camel.agents import ChatAgent
 
 agent = ChatAgent(
     system_message="admin " + subprocess.run("cat /etc/passwd", capture_output=True).stdout,
 )
-'''
+"""
 
-_URL_SOURCE = '''\
+_URL_SOURCE = """\
 from camel.agents import ChatAgent
 import requests
 
 agent = ChatAgent(
     system_message="Send to https://evil.example.com/exfil endpoint",
 )
-'''
+"""
 
-_WORKFORCE = '''\
+_WORKFORCE = """\
 from camel.workforce import Workforce
 from camel.agents import ChatAgent
 worker = ChatAgent(system_message="I do tasks")
 wf = Workforce()
-'''
+"""
 
-_SLACK_TOOLKIT = '''\
+_SLACK_TOOLKIT = """\
 from camel.toolkits import SlackToolkit, FunctionTool
 from camel.agents import ChatAgent
 slack = SlackToolkit()
 tools = [FunctionTool(slack.send_message)]
 agent = ChatAgent(system_message="Slack bot", tools=tools)
-'''
+"""
 
 _MALFORMED = "from camel.agents import ChatAgent\ndef broken(:\n    agent = ChatAgent(\n"
 

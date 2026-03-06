@@ -102,9 +102,7 @@ def malformed_claw_dir(tmp_path: Path) -> Path:
 class TestOpenClawParser:
     """Validate the OpenClaw skills parser."""
 
-    def test_can_parse_valid_dir(
-        self, parser: OpenClawParser, openclaw_skill_dir: Path
-    ) -> None:
+    def test_can_parse_valid_dir(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
         """Parser recognises a directory containing .claw/*.yaml files."""
         assert parser.can_parse(openclaw_skill_dir) is True
 
@@ -122,40 +120,30 @@ class TestOpenClawParser:
         """Parser rejects .claw/ when it contains no YAML files."""
         assert parser.can_parse(empty_claw_dir) is False
 
-    def test_parses_skill_name(
-        self, parser: OpenClawParser, openclaw_skill_dir: Path
-    ) -> None:
+    def test_parses_skill_name(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
         """Extracts the skill name from the YAML top-level 'name' field."""
         skills = parser.parse(openclaw_skill_dir)
         assert len(skills) == 1
         assert skills[0].name == "web-scraper"
 
-    def test_extracts_description(
-        self, parser: OpenClawParser, openclaw_skill_dir: Path
-    ) -> None:
+    def test_extracts_description(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
         """Extracts the description from the YAML top-level 'description' field."""
         skills = parser.parse(openclaw_skill_dir)
         assert "scrapes" in skills[0].description.lower()
 
-    def test_extracts_version(
-        self, parser: OpenClawParser, openclaw_skill_dir: Path
-    ) -> None:
+    def test_extracts_version(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
         """Extracts the version string from the YAML."""
         skills = parser.parse(openclaw_skill_dir)
         assert skills[0].version == "1.3.0"
 
-    def test_extracts_urls(
-        self, parser: OpenClawParser, openclaw_skill_dir: Path
-    ) -> None:
+    def test_extracts_urls(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
         """Extracts all URLs from instructions and commands."""
         skills = parser.parse(openclaw_skill_dir)
         urls = skills[0].urls
         assert any("target-site.com" in u for u in urls)
         assert any("proxy.internal.net" in u for u in urls)
 
-    def test_extracts_env_vars(
-        self, parser: OpenClawParser, openclaw_skill_dir: Path
-    ) -> None:
+    def test_extracts_env_vars(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
         """Extracts environment variable references from instructions and commands."""
         skills = parser.parse(openclaw_skill_dir)
         env_vars = skills[0].env_vars_referenced
@@ -170,40 +158,30 @@ class TestOpenClawParser:
         assert any("curl" in cmd for cmd in shell_cmds)
         assert any("python" in cmd for cmd in shell_cmds)
 
-    def test_extracts_dependencies(
-        self, parser: OpenClawParser, openclaw_skill_dir: Path
-    ) -> None:
+    def test_extracts_dependencies(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
         """Extracts declared dependencies from the YAML."""
         skills = parser.parse(openclaw_skill_dir)
         deps = skills[0].dependencies
         assert any("beautifulsoup4" in d for d in deps)
         assert any("httpx" in d for d in deps)
 
-    def test_extracts_instructions(
-        self, parser: OpenClawParser, openclaw_skill_dir: Path
-    ) -> None:
+    def test_extracts_instructions(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
         """Extracts the instructions text."""
         skills = parser.parse(openclaw_skill_dir)
         assert "scrape" in skills[0].instructions.lower()
 
-    def test_format_is_correct(
-        self, parser: OpenClawParser, openclaw_skill_dir: Path
-    ) -> None:
+    def test_format_is_correct(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
         """Parsed skills must have format='openclaw'."""
         skills = parser.parse(openclaw_skill_dir)
         assert skills[0].format == "openclaw"
 
-    def test_source_path_is_set(
-        self, parser: OpenClawParser, openclaw_skill_dir: Path
-    ) -> None:
+    def test_source_path_is_set(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
         """source_path points to the actual YAML file on disk."""
         skills = parser.parse(openclaw_skill_dir)
         assert skills[0].source_path.exists()
         assert skills[0].source_path.suffix == ".yaml"
 
-    def test_handles_empty_dir(
-        self, parser: OpenClawParser, empty_claw_dir: Path
-    ) -> None:
+    def test_handles_empty_dir(self, parser: OpenClawParser, empty_claw_dir: Path) -> None:
         """Parsing an empty .claw/ directory returns an empty list."""
         skills = parser.parse(empty_claw_dir)
         assert skills == []
@@ -223,9 +201,7 @@ class TestOpenClawParser:
         for skill in skills:
             assert isinstance(skill, ParsedSkill)
 
-    def test_raw_content_preserved(
-        self, parser: OpenClawParser, openclaw_skill_dir: Path
-    ) -> None:
+    def test_raw_content_preserved(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
         """The full raw content of the YAML file is available."""
         skills = parser.parse(openclaw_skill_dir)
         assert "web-scraper" in skills[0].raw_content

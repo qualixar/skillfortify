@@ -26,24 +26,18 @@ class TestTrustSignalsValidation:
 
     def test_valid_signals_pass_validation(self) -> None:
         """Signals in [0, 1] pass validation without error."""
-        signals = TrustSignals(
-            provenance=0.5, behavioral=1.0, community=0.0, historical=0.7
-        )
+        signals = TrustSignals(provenance=0.5, behavioral=1.0, community=0.0, historical=0.7)
         signals.validate()  # Should not raise
 
     def test_negative_signal_raises(self) -> None:
         """A negative signal value must be rejected."""
-        signals = TrustSignals(
-            provenance=-0.1, behavioral=0.5, community=0.5, historical=0.5
-        )
+        signals = TrustSignals(provenance=-0.1, behavioral=0.5, community=0.5, historical=0.5)
         with pytest.raises(ValueError, match="provenance.*must be in.*0.*1"):
             signals.validate()
 
     def test_signal_above_one_raises(self) -> None:
         """A signal value > 1.0 must be rejected."""
-        signals = TrustSignals(
-            provenance=0.5, behavioral=1.1, community=0.5, historical=0.5
-        )
+        signals = TrustSignals(provenance=0.5, behavioral=1.1, community=0.5, historical=0.5)
         with pytest.raises(ValueError, match="behavioral.*must be in.*0.*1"):
             signals.validate()
 
@@ -58,16 +52,12 @@ class TestTrustSignalsValidation:
 
     def test_all_ones_valid(self) -> None:
         """Maximum trust across all signals is valid."""
-        signals = TrustSignals(
-            provenance=1.0, behavioral=1.0, community=1.0, historical=1.0
-        )
+        signals = TrustSignals(provenance=1.0, behavioral=1.0, community=1.0, historical=1.0)
         signals.validate()
 
     def test_as_dict_returns_correct_values(self) -> None:
         """as_dict should return all four signal values by name."""
-        signals = TrustSignals(
-            provenance=0.1, behavioral=0.2, community=0.3, historical=0.4
-        )
+        signals = TrustSignals(provenance=0.1, behavioral=0.2, community=0.3, historical=0.4)
         d = signals.as_dict()
         assert d == {
             "provenance": 0.1,
@@ -92,25 +82,19 @@ class TestTrustWeightsValidation:
 
     def test_weights_not_summing_to_one_raises(self) -> None:
         """Weights that don't sum to 1.0 must be rejected."""
-        weights = TrustWeights(
-            provenance=0.5, behavioral=0.5, community=0.5, historical=0.5
-        )
+        weights = TrustWeights(provenance=0.5, behavioral=0.5, community=0.5, historical=0.5)
         with pytest.raises(ValueError, match="sum to 1.0"):
             weights.validate()
 
     def test_negative_weight_raises(self) -> None:
         """A negative weight must be rejected (violates monotonicity)."""
-        weights = TrustWeights(
-            provenance=-0.1, behavioral=0.4, community=0.4, historical=0.3
-        )
+        weights = TrustWeights(provenance=-0.1, behavioral=0.4, community=0.4, historical=0.3)
         with pytest.raises(ValueError, match="non-negative"):
             weights.validate()
 
     def test_custom_valid_weights(self) -> None:
         """Custom weights summing to 1.0 should pass validation."""
-        weights = TrustWeights(
-            provenance=0.1, behavioral=0.5, community=0.2, historical=0.2
-        )
+        weights = TrustWeights(provenance=0.1, behavioral=0.5, community=0.2, historical=0.2)
         weights.validate()
 
 
@@ -139,11 +123,7 @@ class TestComponentWiseComparison:
 
     def test_component_wise_ge(self) -> None:
         """component_wise_ge correctly compares signal vectors."""
-        low = TrustSignals(
-            provenance=0.1, behavioral=0.2, community=0.3, historical=0.4
-        )
-        high = TrustSignals(
-            provenance=0.5, behavioral=0.6, community=0.7, historical=0.8
-        )
+        low = TrustSignals(provenance=0.1, behavioral=0.2, community=0.3, historical=0.4)
+        high = TrustSignals(provenance=0.5, behavioral=0.6, community=0.7, historical=0.8)
         assert high.component_wise_ge(low)
         assert not low.component_wise_ge(high)

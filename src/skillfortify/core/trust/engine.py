@@ -74,9 +74,7 @@ class TrustEngine:
         self._weights = weights or TrustWeights()
         self._weights.validate()
         if decay_rate < 0.0:
-            raise ValueError(
-                f"Decay rate must be non-negative, got {decay_rate}"
-            )
+            raise ValueError(f"Decay rate must be non-negative, got {decay_rate}")
         self._decay_rate = decay_rate
 
     @property
@@ -152,9 +150,7 @@ class TrustEngine:
         effective = intrinsic
 
         if dependency_scores:
-            min_dep_trust = min(
-                d.effective_score for d in dependency_scores
-            )
+            min_dep_trust = min(d.effective_score for d in dependency_scores)
             effective = intrinsic * min_dep_trust
 
         # Clamp to [0, 1]
@@ -221,9 +217,7 @@ class TrustEngine:
         See :func:`skillfortify.core.trust.propagation.apply_decay`
         for full documentation.
         """
-        return _propagation.apply_decay(
-            self, score, last_update, current_time
-        )
+        return _propagation.apply_decay(self, score, last_update, current_time)
 
     # -- Evidence update (delegated to propagation module) --
 

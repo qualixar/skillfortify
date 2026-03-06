@@ -135,9 +135,7 @@ class DependencyResolver:
 
     def _encode_sat(
         self,
-    ) -> tuple[
-        list[list[int]], dict[tuple[str, str], int], dict[int, tuple[str, str]]
-    ]:
+    ) -> tuple[list[list[int]], dict[tuple[str, str], int], dict[int, tuple[str, str]]]:
         """Encode the dependency resolution problem as a SAT formula.
 
         Returns:
@@ -154,7 +152,7 @@ class DependencyResolver:
         inv_map: dict[int, tuple[str, str]] = {}
         next_var = 1
 
-        for (name, version) in graph._nodes:
+        for name, version in graph._nodes:
             var_map[(name, version)] = next_var
             inv_map[next_var] = (name, version)
             next_var += 1
@@ -236,13 +234,9 @@ class DependencyResolver:
             for req_name, req_constraint in self._requirements.items():
                 versions = graph.get_versions(req_name)
                 if not versions:
-                    msgs.append(
-                        f"Skill {req_name!r} is not available in the graph"
-                    )
+                    msgs.append(f"Skill {req_name!r} is not available in the graph")
                 else:
-                    satisfying = [
-                        v for v in versions if req_constraint.satisfies(v)
-                    ]
+                    satisfying = [v for v in versions if req_constraint.satisfies(v)]
                     if not satisfying:
                         msgs.append(
                             f"No version of {req_name!r} satisfies "
@@ -254,9 +248,7 @@ class DependencyResolver:
         for (name, version), node in graph._nodes.items():
             for dep in node.dependencies:
                 dep_versions = graph.get_versions(dep.skill_name)
-                satisfying = [
-                    v for v in dep_versions if dep.constraint.satisfies(v)
-                ]
+                satisfying = [v for v in dep_versions if dep.constraint.satisfies(v)]
                 if not satisfying:
                     msgs.append(
                         f"{name}@{version} requires {dep.skill_name} "

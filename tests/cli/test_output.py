@@ -9,7 +9,6 @@ Verifies:
 from __future__ import annotations
 
 
-
 from skillfortify.cli.output import (
     print_analysis_detail,
     print_resolution_summary,
@@ -82,9 +81,7 @@ class TestPrintScanResults:
             finding_type="pattern_match",
             evidence="curl evil.com",
         )
-        result = AnalysisResult(
-            skill_name="bad-skill", is_safe=False, findings=[finding]
-        )
+        result = AnalysisResult(skill_name="bad-skill", is_safe=False, findings=[finding])
         print_scan_results([result])
         captured = capsys.readouterr()
         assert "bad-skill" in captured.out
@@ -119,9 +116,7 @@ class TestPrintTrustScore:
 
     def test_trust_score_output(self, capsys) -> None:
         """Trust score should display all signal values."""
-        signals = TrustSignals(
-            provenance=0.5, behavioral=1.0, community=0.5, historical=0.5
-        )
+        signals = TrustSignals(provenance=0.5, behavioral=1.0, community=0.5, historical=0.5)
         score = TrustScore(
             skill_name="test-skill",
             version="1.0.0",

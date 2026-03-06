@@ -57,8 +57,14 @@ _ROW_FMT = "{num:>{wn}}  {name:<{wna}}  {fmt:<{wf}}  {det:<{wd}}"
 def _format_row(num: str, name: str, fmt: str, det: str) -> str:
     """Render a single table row, right-stripped for clean output."""
     return _ROW_FMT.format(
-        num=num, name=name, fmt=fmt, det=det,
-        wn=_W_NUM, wna=_W_NAME, wf=_W_FMT, wd=_W_DET,
+        num=num,
+        name=name,
+        fmt=fmt,
+        det=det,
+        wn=_W_NUM,
+        wna=_W_NAME,
+        wf=_W_FMT,
+        wd=_W_DET,
     ).rstrip()
 
 
@@ -69,10 +75,7 @@ def format_frameworks_table() -> str:
         Multi-line string ready for terminal output.  Never raises.
     """
     lines: list[str] = []
-    lines.append(
-        f"SkillFortify v{__version__} -- {len(_FRAMEWORKS)} "
-        f"Supported Agent Frameworks"
-    )
+    lines.append(f"SkillFortify v{__version__} -- {len(_FRAMEWORKS)} Supported Agent Frameworks")
     lines.append("")
 
     # Column headers
@@ -93,9 +96,7 @@ def format_frameworks_table() -> str:
         lines.append(_format_row(str(idx), name, fmt, det))
 
     lines.append("")
-    lines.append(
-        "  Run: skillfortify scan <path> to auto-detect and analyze."
-    )
+    lines.append("  Run: skillfortify scan <path> to auto-detect and analyze.")
     return "\n".join(lines)
 
 

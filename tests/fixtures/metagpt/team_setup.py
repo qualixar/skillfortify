@@ -6,6 +6,7 @@ Used by test_metagpt.py to verify extraction of:
 - Role-action wiring
 - run_project call
 """
+
 from metagpt.roles import Role
 from metagpt.actions import Action
 from metagpt.team import Team

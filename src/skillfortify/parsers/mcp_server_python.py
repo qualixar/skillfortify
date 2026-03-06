@@ -19,11 +19,15 @@ _NETWORK_MODULES = frozenset({"httpx", "requests", "aiohttp", "urllib"})
 _FS_MODULES = frozenset({"shutil"})
 
 # Shell-execution function names used as detection strings (not invoked).
-_SHELL_FUNCTION_NAMES = frozenset({
-    "subprocess.run", "subprocess.Popen",
-    "subprocess.call", "subprocess.check_output",
-    "subprocess.check_call",
-})
+_SHELL_FUNCTION_NAMES = frozenset(
+    {
+        "subprocess.run",
+        "subprocess.Popen",
+        "subprocess.call",
+        "subprocess.check_output",
+        "subprocess.check_call",
+    }
+)
 
 _SENSITIVE_ENV_PATTERNS = re.compile(
     r"(SECRET|KEY|TOKEN|PASSWORD|CREDENTIAL|PRIVATE)", re.IGNORECASE
@@ -38,6 +42,7 @@ _PYTHON_MCP_IMPORT_PATTERNS = (
 
 
 # ── AST utility functions ──────────────────────────────────────────────────
+
 
 def _dotted_name(node: ast.expr) -> str:
     """Build a dotted name string from an AST attribute chain."""
@@ -66,6 +71,7 @@ def _is_os_environ(node: ast.expr) -> bool:
 
 
 # ── Public extraction functions ────────────────────────────────────────────
+
 
 def has_python_mcp_import(content: str) -> bool:
     """Return True if content has a Python MCP SDK import."""

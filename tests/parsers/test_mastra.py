@@ -82,7 +82,8 @@ const secretTool = createTool({
 _SHELL_IMPORT = "import { " + "exec } from 'child" + "_process';"
 _SHELL_SRC = (
     "import { createTool } from '@mastra/core/tools';\n"
-    + _SHELL_IMPORT + "\n\n"
+    + _SHELL_IMPORT
+    + "\n\n"
     + "const dangerTool = createTool({\n"
     + "  id: 'shell-runner',\n"
     + "  description: 'Run arbitrary commands',\n"
@@ -117,31 +118,39 @@ const broken = createTool({
   description: 'This has malformed syntax',
 """
 
-_PKG_JSON_MASTRA = json.dumps({"name": "test-mastra",
-    "dependencies": {"@mastra/core": "^0.5.0", "zod": "^3.22.0"},
-    "devDependencies": {"typescript": "^5.3.0"}})
-_PKG_JSON_NO_MASTRA = json.dumps({"name": "test-other",
-    "dependencies": {"express": "^4.18.0"}})
+_PKG_JSON_MASTRA = json.dumps(
+    {
+        "name": "test-mastra",
+        "dependencies": {"@mastra/core": "^0.5.0", "zod": "^3.22.0"},
+        "devDependencies": {"typescript": "^5.3.0"},
+    }
+)
+_PKG_JSON_NO_MASTRA = json.dumps({"name": "test-other", "dependencies": {"express": "^4.18.0"}})
 # ── Fixtures ──────────────────────────────────────────────────────────────
+
 
 @pytest.fixture
 def parser() -> MastraParser:
     return MastraParser()
+
 
 @pytest.fixture
 def basic_tool_dir(tmp_path: Path) -> Path:
     (tmp_path / "tool.ts").write_text(_BASIC_TOOL_SRC)
     return tmp_path
 
+
 @pytest.fixture
 def agent_dir(tmp_path: Path) -> Path:
     (tmp_path / "agent.ts").write_text(_AGENT_SRC)
     return tmp_path
 
+
 @pytest.fixture
 def config_dir(tmp_path: Path) -> Path:
     (tmp_path / "mastra.config.ts").write_text(_BASIC_TOOL_SRC)
     return tmp_path
+
 
 @pytest.fixture
 def pkg_json_dir(tmp_path: Path) -> Path:
@@ -149,17 +158,21 @@ def pkg_json_dir(tmp_path: Path) -> Path:
     (tmp_path / "index.ts").write_text(_BASIC_TOOL_SRC)
     return tmp_path
 
+
 @pytest.fixture
 def fixture_dir(tmp_path: Path) -> Path:
     dest = tmp_path / "mastra"
     shutil.copytree(_FIXTURES, dest)
     return dest
 
+
 @pytest.fixture
 def empty_dir(tmp_path: Path) -> Path:
     return tmp_path
 
+
 # ── Detection tests ───────────────────────────────────────────────────────
+
 
 class TestMastraCanParse:
     """Validate MastraParser.can_parse() detection logic."""
@@ -199,6 +212,7 @@ class TestMastraCanParse:
 
 # ── Tool extraction tests ─────────────────────────────────────────────────
 
+
 class TestMastraToolParsing:
     """Validate extraction of createTool() definitions."""
 
@@ -220,7 +234,9 @@ class TestMastraToolParsing:
         for skill in parser.parse(basic_tool_dir):
             assert skill.format == "mastra"
 
-    def test_returns_parsed_skill_instances(self, parser: MastraParser, basic_tool_dir: Path) -> None:
+    def test_returns_parsed_skill_instances(
+        self, parser: MastraParser, basic_tool_dir: Path
+    ) -> None:
         for skill in parser.parse(basic_tool_dir):
             assert isinstance(skill, ParsedSkill)
 
@@ -243,6 +259,7 @@ class TestMastraToolParsing:
 
 
 # ── Agent extraction tests ────────────────────────────────────────────────
+
 
 class TestMastraAgentParsing:
     """Validate extraction of new Agent() definitions."""
@@ -269,6 +286,7 @@ class TestMastraAgentParsing:
 
 
 # ── Security metadata extraction tests ────────────────────────────────────
+
 
 class TestMastraSecurityExtraction:
     """Validate URL, env var, shell command, and capability extraction."""
@@ -326,6 +344,7 @@ class TestMastraSecurityExtraction:
 
 # ── Dependency extraction tests ───────────────────────────────────────────
 
+
 class TestMastraDependencies:
     """Validate npm dependency extraction from package.json."""
 
@@ -349,6 +368,7 @@ class TestMastraDependencies:
 
 
 # ── Edge case and robustness tests ────────────────────────────────────────
+
 
 class TestMastraEdgeCases:
     """Validate graceful handling of malformed and edge-case inputs."""

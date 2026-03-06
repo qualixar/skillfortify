@@ -22,6 +22,7 @@ _FIXTURES = Path(__file__).resolve().parent.parent / "fixtures" / "anthropic_sdk
 # Fixtures                                                                     #
 # --------------------------------------------------------------------------- #
 
+
 @pytest.fixture
 def parser() -> AnthropicSDKParser:
     """Fresh parser instance."""
@@ -62,6 +63,7 @@ def unsafe_dir(tmp_path: Path) -> Path:
 # can_parse tests                                                              #
 # --------------------------------------------------------------------------- #
 
+
 class TestCanParse:
     """Validate the can_parse probe method."""
 
@@ -91,7 +93,9 @@ class TestCanParse:
         assert parser.can_parse(tmp_path) is True
 
     def test_finds_files_in_agents_subdir(
-        self, parser: AnthropicSDKParser, tmp_path: Path,
+        self,
+        parser: AnthropicSDKParser,
+        tmp_path: Path,
     ) -> None:
         (tmp_path / "agents").mkdir()
         shutil.copy(_FIXTURES / "basic_agent.py", tmp_path / "agents" / "main.py")
@@ -107,6 +111,7 @@ class TestCanParse:
 # --------------------------------------------------------------------------- #
 # @tool extraction tests                                                       #
 # --------------------------------------------------------------------------- #
+
 
 class TestToolExtraction:
     """Validate extraction of @tool decorated functions."""
@@ -137,7 +142,9 @@ class TestToolExtraction:
         assert tool_skills and "claude_agent_sdk" in tool_skills[0].raw_content
 
     def test_returns_parsed_skill_instances(
-        self, parser: AnthropicSDKParser, basic_dir: Path,
+        self,
+        parser: AnthropicSDKParser,
+        basic_dir: Path,
     ) -> None:
         for skill in parser.parse(basic_dir):
             assert isinstance(skill, ParsedSkill)
@@ -152,6 +159,7 @@ class TestToolExtraction:
 # --------------------------------------------------------------------------- #
 # Agent instantiation tests                                                    #
 # --------------------------------------------------------------------------- #
+
 
 class TestAgentInstantiation:
     """Validate extraction of Agent(...) calls."""
@@ -183,6 +191,7 @@ class TestAgentInstantiation:
 # MCPServer extraction tests                                                   #
 # --------------------------------------------------------------------------- #
 
+
 class TestMCPServers:
     """Validate extraction of MCPServer(...) instantiations."""
 
@@ -205,6 +214,7 @@ class TestMCPServers:
 # --------------------------------------------------------------------------- #
 # Hook extraction tests                                                        #
 # --------------------------------------------------------------------------- #
+
 
 class TestHookExtraction:
     """Validate extraction of Hook subclass definitions."""
@@ -232,18 +242,24 @@ class TestHookExtraction:
 # Sub-agent extraction tests                                                   #
 # --------------------------------------------------------------------------- #
 
+
 class TestSubAgents:
     """Validate extraction of sub-agent delegation patterns."""
 
     def test_extracts_all_agents(
-        self, parser: AnthropicSDKParser, sub_agents_dir: Path,
+        self,
+        parser: AnthropicSDKParser,
+        sub_agents_dir: Path,
     ) -> None:
-        names = {s.name for s in parser.parse(sub_agents_dir)
-                 if "model:" in str(s.declared_capabilities)}
+        names = {
+            s.name for s in parser.parse(sub_agents_dir) if "model:" in str(s.declared_capabilities)
+        }
         assert {"researcher", "writer", "coordinator"} <= names
 
     def test_coordinator_references_sub_agents(
-        self, parser: AnthropicSDKParser, sub_agents_dir: Path,
+        self,
+        parser: AnthropicSDKParser,
+        sub_agents_dir: Path,
     ) -> None:
         coord = [s for s in parser.parse(sub_agents_dir) if s.name == "coordinator"]
         assert coord
@@ -251,16 +267,22 @@ class TestSubAgents:
         assert "tool:researcher" in caps and "tool:writer" in caps
 
     def test_each_agent_has_model(
-        self, parser: AnthropicSDKParser, sub_agents_dir: Path,
+        self,
+        parser: AnthropicSDKParser,
+        sub_agents_dir: Path,
     ) -> None:
         skills = parser.parse(sub_agents_dir)
         researcher = [s for s in skills if s.name == "researcher"]
         coord = [s for s in skills if s.name == "coordinator"]
-        assert researcher and "model:claude-haiku-4-5-20251001" in researcher[0].declared_capabilities
+        assert (
+            researcher and "model:claude-haiku-4-5-20251001" in researcher[0].declared_capabilities
+        )
         assert coord and "model:claude-sonnet-4-20250514" in coord[0].declared_capabilities
 
     def test_tool_function_extracted(
-        self, parser: AnthropicSDKParser, sub_agents_dir: Path,
+        self,
+        parser: AnthropicSDKParser,
+        sub_agents_dir: Path,
     ) -> None:
         assert "web_search" in {s.name for s in parser.parse(sub_agents_dir)}
 
@@ -268,6 +290,7 @@ class TestSubAgents:
 # --------------------------------------------------------------------------- #
 # Unsafe pattern detection tests                                               #
 # --------------------------------------------------------------------------- #
+
 
 class TestUnsafePatterns:
     """Validate detection of dangerous patterns in tool code."""
@@ -298,6 +321,7 @@ class TestUnsafePatterns:
 # Edge case and robustness tests                                               #
 # --------------------------------------------------------------------------- #
 
+
 class TestEdgeCases:
     """Validate robustness on malformed and edge-case inputs."""
 
@@ -318,8 +342,7 @@ class TestEdgeCases:
 
     def test_no_agent_name_skipped(self, parser: AnthropicSDKParser, tmp_path: Path) -> None:
         (tmp_path / "anon.py").write_text(
-            "from claude_agent_sdk import Agent\n"
-            'agent = Agent(model="claude-sonnet-4-20250514")\n',
+            'from claude_agent_sdk import Agent\nagent = Agent(model="claude-sonnet-4-20250514")\n',
         )
         names = [s.name for s in parser.parse(tmp_path)]
         assert all(n != "" for n in names)

@@ -160,14 +160,10 @@ def update_with_evidence(
 
     for name, evidence_delta in positive_evidence.items():
         if name not in valid_names:
-            raise ValueError(
-                f"Unknown signal name '{name}'. "
-                f"Valid names: {sorted(valid_names)}"
-            )
+            raise ValueError(f"Unknown signal name '{name}'. Valid names: {sorted(valid_names)}")
         if evidence_delta < 0.0:
             raise ValueError(
-                f"Positive evidence delta must be non-negative for '{name}', "
-                f"got {evidence_delta}"
+                f"Positive evidence delta must be non-negative for '{name}', got {evidence_delta}"
             )
         current_dict[name] = min(1.0, current_dict[name] + evidence_delta)
 

@@ -5,6 +5,7 @@ Used by test_composio.py to verify extraction of:
 - Docstrings from custom actions
 - URLs and dependencies from custom action bodies
 """
+
 from composio import action
 import requests
 
@@ -12,9 +13,7 @@ import requests
 @action(toolname="weather_lookup")
 def get_current_weather(city: str) -> str:
     """Fetch current weather data for a given city."""
-    return requests.get(
-        f"https://api.openweathermap.org/data/2.5/weather?q={city}"
-    ).text
+    return requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={city}").text
 
 
 @action(toolname="stock_price")

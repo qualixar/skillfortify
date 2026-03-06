@@ -84,13 +84,20 @@ def _has_pydanticai_imports(text: str) -> bool:
 
 
 def _build_skill(
-    name: str, description: str, body: str,
-    path: Path, source: str, capabilities: list[str] | None = None,
+    name: str,
+    description: str,
+    body: str,
+    path: Path,
+    source: str,
+    capabilities: list[str] | None = None,
 ) -> ParsedSkill:
     """Construct a ParsedSkill from extracted PydanticAI metadata."""
     return ParsedSkill(
-        name=name, version="unknown", source_path=path,
-        format=FORMAT_NAME, description=description,
+        name=name,
+        version="unknown",
+        source_path=path,
+        format=FORMAT_NAME,
+        description=description,
         declared_capabilities=capabilities or [],
         code_blocks=[body] if body else [],
         urls=_extract_urls(body),
@@ -121,7 +128,9 @@ def _is_agent_tool_decorator(decorator: ast.expr) -> str | None:
 
 
 def _parse_tool_function(
-    node: ast.FunctionDef, source: str, file_path: Path,
+    node: ast.FunctionDef,
+    source: str,
+    file_path: Path,
 ) -> ParsedSkill | None:
     """Extract a ParsedSkill from an @agent.tool / @agent.tool_plain func."""
     tool_type: str | None = None
@@ -146,7 +155,9 @@ def _is_agent_constructor(call: ast.Call) -> bool:
 
 
 def _parse_agent_call(
-    call: ast.Call, source: str, file_path: Path,
+    call: ast.Call,
+    source: str,
+    file_path: Path,
 ) -> ParsedSkill | None:
     """Parse an Agent(...) constructor call and extract metadata."""
     model = ""

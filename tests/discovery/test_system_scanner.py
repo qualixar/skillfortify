@@ -211,8 +211,10 @@ class TestPlatformFiltering:
         """Profiles with platform='all' match any platform."""
         scanner = SystemScanner()
         profile = IDEProfile(
-            name="Test", short_name="test",
-            dot_dirs=[".test"], platform="all",
+            name="Test",
+            short_name="test",
+            dot_dirs=[".test"],
+            platform="all",
         )
         assert scanner._profile_matches_platform(profile) is True
 
@@ -221,8 +223,10 @@ class TestPlatformFiltering:
         scanner = SystemScanner()
         fake_platform = "windows" if scanner._current_platform() != "windows" else "linux"
         profile = IDEProfile(
-            name="Test", short_name="test",
-            dot_dirs=[".test"], platform=fake_platform,
+            name="Test",
+            short_name="test",
+            dot_dirs=[".test"],
+            platform=fake_platform,
         )
         assert scanner._profile_matches_platform(profile) is False
 
@@ -230,7 +234,9 @@ class TestPlatformFiltering:
         """Profiles for the current platform are included."""
         scanner = SystemScanner()
         profile = IDEProfile(
-            name="Test", short_name="test",
-            dot_dirs=[".test"], platform=scanner._current_platform(),
+            name="Test",
+            short_name="test",
+            dot_dirs=[".test"],
+            platform=scanner._current_platform(),
         )
         assert scanner._profile_matches_platform(profile) is True

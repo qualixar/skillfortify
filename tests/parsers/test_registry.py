@@ -120,9 +120,7 @@ class TestParserRegistry:
         assert len(skills) == 1
         assert skills[0].format == "dummy"
 
-    def test_discover_count_matches_sum_of_individual_parsers(
-        self, multi_format_dir: Path
-    ) -> None:
+    def test_discover_count_matches_sum_of_individual_parsers(self, multi_format_dir: Path) -> None:
         """Total discovered skills equals the sum from each parser independently."""
         registry = default_registry()
         total = registry.discover(multi_format_dir)

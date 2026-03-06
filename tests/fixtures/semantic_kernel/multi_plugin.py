@@ -4,7 +4,6 @@ Fixture exercises multi-class extraction, kernel.add_plugin calls,
 and prompt template detection.
 """
 
-
 from semantic_kernel import Kernel
 from semantic_kernel.functions import kernel_function
 from semantic_kernel.prompt_template import PromptTemplateConfig
@@ -38,6 +37,4 @@ kernel.add_plugin(MathPlugin(), plugin_name="math")
 kernel.add_plugin(TextPlugin(), plugin_name="text")
 
 # Prompt function registration.
-summary_config = PromptTemplateConfig(
-    template="Summarize the following: {{$input}}"
-)
+summary_config = PromptTemplateConfig(template="Summarize the following: {{$input}}")

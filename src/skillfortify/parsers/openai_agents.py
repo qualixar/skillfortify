@@ -60,6 +60,7 @@ _HEAD_BYTES = 4096
 # Filesystem helpers                                                           #
 # --------------------------------------------------------------------------- #
 
+
 def _has_agents_imports(text: str) -> bool:
     """Return True if *text* contains OpenAI Agents SDK import markers."""
     return any(marker in text for marker in _AGENTS_IMPORT_MARKERS)
@@ -88,6 +89,7 @@ def _has_agents_dependency(path: Path) -> bool:
 # --------------------------------------------------------------------------- #
 # Public parser class                                                          #
 # --------------------------------------------------------------------------- #
+
 
 class OpenAIAgentsParser(SkillParser):
     """Parser for OpenAI Agents SDK tool definitions.

@@ -33,8 +33,7 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 
 MCP_REGISTRY_API: str = (
-    "https://raw.githubusercontent.com/"
-    "modelcontextprotocol/servers/main/data/servers.json"
+    "https://raw.githubusercontent.com/modelcontextprotocol/servers/main/data/servers.json"
 )
 
 VULNERABLE_SDK_VERSIONS: dict[str, str] = {
@@ -59,9 +58,7 @@ class MCPRegistryScanner(RegistryScanner):
         """Return the human-readable registry name."""
         return "MCP Registry"
 
-    async def fetch_entries(
-        self, *, limit: int = 100, keyword: str = ""
-    ) -> list[RegistryEntry]:
+    async def fetch_entries(self, *, limit: int = 100, keyword: str = "") -> list[RegistryEntry]:
         """Fetch MCP server entries from the registry.
 
         Args:
@@ -76,7 +73,7 @@ class MCPRegistryScanner(RegistryScanner):
             data = data.get("servers", []) if isinstance(data, dict) else []
 
         entries: list[RegistryEntry] = []
-        for item in data[:limit * 2]:
+        for item in data[: limit * 2]:
             entry = _parse_server_entry(item)
             if entry is None:
                 continue
@@ -146,12 +143,16 @@ def _auth_findings(entry: RegistryEntry) -> list[Finding]:
     desc_lower = entry.description.lower()
     for indicator in MCP_NO_AUTH_INDICATORS:
         if indicator in desc_lower:
-            return [Finding(
-                skill_name=entry.name, severity=Severity.HIGH,
-                message="Server may lack authentication",
-                attack_class="missing_authentication",
-                finding_type="pattern_match", evidence=indicator,
-            )]
+            return [
+                Finding(
+                    skill_name=entry.name,
+                    severity=Severity.HIGH,
+                    message="Server may lack authentication",
+                    attack_class="missing_authentication",
+                    finding_type="pattern_match",
+                    evidence=indicator,
+                )
+            ]
     return []
 
 
@@ -160,12 +161,16 @@ def _sdk_version_findings(entry: RegistryEntry) -> list[Finding]:
     version = entry.version.strip()
     if version in VULNERABLE_SDK_VERSIONS:
         cve_info = VULNERABLE_SDK_VERSIONS[version]
-        return [Finding(
-            skill_name=entry.name, severity=Severity.CRITICAL,
-            message=f"Uses vulnerable SDK version {version}: {cve_info}",
-            attack_class="vulnerable_dependency",
-            finding_type="version_check", evidence=f"version={version}",
-        )]
+        return [
+            Finding(
+                skill_name=entry.name,
+                severity=Severity.CRITICAL,
+                message=f"Uses vulnerable SDK version {version}: {cve_info}",
+                attack_class="vulnerable_dependency",
+                finding_type="version_check",
+                evidence=f"version={version}",
+            )
+        ]
     return []
 
 

@@ -174,7 +174,9 @@ class TestParseRegisterTool:
         assert len([s for s in skills if "[Tool]" in s.description]) == 2
 
     def test_tool_docstring_as_description(
-        self, parser: MetaGPTParser, tool_registry_dir: Path,
+        self,
+        parser: MetaGPTParser,
+        tool_registry_dir: Path,
     ) -> None:
         skills = parser.parse(tool_registry_dir)
         tool_skills = [s for s in skills if s.name == "search_web"]
@@ -237,7 +239,9 @@ class TestEdgeCases:
         assert isinstance(parser.parse(tmp_path), list)
 
     def test_returns_parsed_skill_instances(
-        self, parser: MetaGPTParser, basic_role_dir: Path,
+        self,
+        parser: MetaGPTParser,
+        basic_role_dir: Path,
     ) -> None:
         for skill in parser.parse(basic_role_dir):
             assert isinstance(skill, ParsedSkill)
@@ -265,7 +269,9 @@ class TestEdgeCases:
         assert "FallbackRole" in {s.name for s in parser.parse(tmp_path)}
 
     def test_regex_fallback_for_register_tool(
-        self, parser: MetaGPTParser, tmp_path: Path,
+        self,
+        parser: MetaGPTParser,
+        tmp_path: Path,
     ) -> None:
         (tmp_path / "fallback_tool.py").write_text(
             "from metagpt.tools.tool_registry import register_tool\n"

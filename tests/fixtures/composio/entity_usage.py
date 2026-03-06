@@ -6,6 +6,7 @@ Used by test_composio.py to verify extraction of:
 - Action references in execute_action calls
 - Environment variables for authentication
 """
+
 from composio import ComposioToolSet, Action, App
 import os
 

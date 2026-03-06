@@ -107,9 +107,7 @@ class AgentDependencyGraph:
         Returns:
             List of version strings sorted newest-first. Empty if skill unknown.
         """
-        versions = [
-            ver for (name, ver) in self._nodes if name == skill_name
-        ]
+        versions = [ver for (name, ver) in self._nodes if name == skill_name]
         versions.sort(key=_version_key, reverse=True)
         return versions
 
@@ -196,9 +194,7 @@ class AgentDependencyGraph:
 
         return cycles
 
-    def transitive_dependencies(
-        self, name: str, version: str
-    ) -> set[tuple[str, str]]:
+    def transitive_dependencies(self, name: str, version: str) -> set[tuple[str, str]]:
         """Compute the transitive closure of dependencies for a skill-version.
 
         Uses BFS over the dependency edges, resolving each dependency constraint

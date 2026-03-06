@@ -29,23 +29,17 @@ def runner() -> CliRunner:
 class TestScanEmptyDirectory:
     """Tests for scanning directories with no skills."""
 
-    def test_empty_dir_exits_with_code_2(
-        self, runner: CliRunner, empty_dir: Path
-    ) -> None:
+    def test_empty_dir_exits_with_code_2(self, runner: CliRunner, empty_dir: Path) -> None:
         """Scanning an empty directory should exit with code 2."""
         result = runner.invoke(cli, ["scan", str(empty_dir)])
         assert result.exit_code == 2
 
-    def test_empty_dir_shows_no_skills_message(
-        self, runner: CliRunner, empty_dir: Path
-    ) -> None:
+    def test_empty_dir_shows_no_skills_message(self, runner: CliRunner, empty_dir: Path) -> None:
         """Empty scan should display 'No skills found' message."""
         result = runner.invoke(cli, ["scan", str(empty_dir)])
         assert "No skills found" in result.output
 
-    def test_empty_dir_json_format(
-        self, runner: CliRunner, empty_dir: Path
-    ) -> None:
+    def test_empty_dir_json_format(self, runner: CliRunner, empty_dir: Path) -> None:
         """Empty scan with JSON format should output valid JSON."""
         result = runner.invoke(cli, ["scan", str(empty_dir), "--format", "json"])
         assert result.exit_code == 2
@@ -63,20 +57,14 @@ class TestScanCleanSkills:
         result = runner.invoke(cli, ["scan", str(clean_claude_skill_dir)])
         assert result.exit_code == 0
 
-    def test_clean_skill_text_output(
-        self, runner: CliRunner, clean_claude_skill_dir: Path
-    ) -> None:
+    def test_clean_skill_text_output(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """Clean scan text output should show SAFE status."""
         result = runner.invoke(cli, ["scan", str(clean_claude_skill_dir)])
         assert "SAFE" in result.output
 
-    def test_clean_skill_json_output(
-        self, runner: CliRunner, clean_claude_skill_dir: Path
-    ) -> None:
+    def test_clean_skill_json_output(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """Clean scan JSON output should show is_safe=true."""
-        result = runner.invoke(
-            cli, ["scan", str(clean_claude_skill_dir), "--format", "json"]
-        )
+        result = runner.invoke(cli, ["scan", str(clean_claude_skill_dir), "--format", "json"])
         assert result.exit_code == 0
         data = json.loads(result.output)
         assert len(data) == 1
@@ -105,9 +93,7 @@ class TestScanMaliciousSkills:
         self, runner: CliRunner, malicious_claude_skill_dir: Path
     ) -> None:
         """Malicious scan JSON output should contain findings."""
-        result = runner.invoke(
-            cli, ["scan", str(malicious_claude_skill_dir), "--format", "json"]
-        )
+        result = runner.invoke(cli, ["scan", str(malicious_claude_skill_dir), "--format", "json"])
         data = json.loads(result.output)
         assert len(data) == 1
         assert data[0]["is_safe"] is False
@@ -124,8 +110,14 @@ class TestScanSeverityThreshold:
         """Setting critical threshold should filter out non-critical findings."""
         result = runner.invoke(
             cli,
-            ["scan", str(malicious_claude_skill_dir),
-             "--severity-threshold", "critical", "--format", "json"],
+            [
+                "scan",
+                str(malicious_claude_skill_dir),
+                "--severity-threshold",
+                "critical",
+                "--format",
+                "json",
+            ],
         )
         data = json.loads(result.output)
         for skill in data:
@@ -147,12 +139,11 @@ class TestScanMultiFormat:
         data = json.loads(result.output)
         assert len(data) >= 2
 
-    def test_mcp_skill_scanned(
-        self, runner: CliRunner, clean_mcp_skill_dir: Path
-    ) -> None:
+    def test_mcp_skill_scanned(self, runner: CliRunner, clean_mcp_skill_dir: Path) -> None:
         """Scan should discover and analyze MCP server configurations."""
         result = runner.invoke(
-            cli, ["scan", str(clean_mcp_skill_dir), "--format", "json"],
+            cli,
+            ["scan", str(clean_mcp_skill_dir), "--format", "json"],
         )
         data = json.loads(result.output)
         assert len(data) >= 1

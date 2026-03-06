@@ -76,7 +76,11 @@ def _run_system_dashboard(
 
     out_path = Path(output) if output else Path.cwd() / _DEFAULT_OUTPUT
     _write_dashboard(
-        out_path, title, result.results, result.skills, open_browser,
+        out_path,
+        title,
+        result.results,
+        result.skills,
+        open_browser,
     )
 
 
@@ -123,19 +127,22 @@ def _write_dashboard(
     help="Scan all AI tools on this system (auto-discovery).",
 )
 @click.option(
-    "--output", "-o",
+    "--output",
+    "-o",
     type=click.Path(),
     default=None,
     help=f"Output HTML file path (default: {_DEFAULT_OUTPUT}).",
 )
 @click.option(
-    "--title", "-t",
+    "--title",
+    "-t",
     type=str,
     default="SkillFortify Security Report",
     help="Report title shown in the HTML header.",
 )
 @click.option(
-    "--open", "open_browser",
+    "--open",
+    "open_browser",
     is_flag=True,
     default=False,
     help="Open the report in the default browser after generation.",

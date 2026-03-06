@@ -176,10 +176,12 @@ class OpenClawParser(SkillParser):
             dependencies = [str(d) for d in deps_raw]
 
         # Combine all text sources for URL and env var extraction.
-        all_text = "\n".join([
-            instructions or "",
-            *command_text_parts,
-        ])
+        all_text = "\n".join(
+            [
+                instructions or "",
+                *command_text_parts,
+            ]
+        )
         urls = _extract_urls(all_text)
         env_vars = _extract_env_vars(all_text)
 

@@ -28,6 +28,7 @@ FORMAT_NAME = "agno"
 def _extract_urls(text: str) -> list[str]:
     return _URL_RE.findall(text)
 
+
 def _extract_env_vars(text: str) -> list[str]:
     found: set[str] = set()
     for m in _ENV_RE.finditer(text):
@@ -35,6 +36,7 @@ def _extract_env_vars(text: str) -> list[str]:
             if g:
                 found.add(g)
     return sorted(found)
+
 
 def _extract_shell_commands(text: str) -> list[str]:
     return _SHELL_RE.findall(text)
@@ -60,27 +62,41 @@ def _extract_imports(text: str) -> list[str]:
             imports.append(node.module.split(".")[0])
     return sorted(set(imports))
 
+
 def _has_agno_imports(text: str) -> bool:
     return any(m in text for m in _IMPORT_MARKERS)
 
 
 def _build_skill(
-    name: str, desc: str, body: str, path: Path, source: str,
+    name: str,
+    desc: str,
+    body: str,
+    path: Path,
+    source: str,
     caps: list[str] | None = None,
 ) -> ParsedSkill:
     return ParsedSkill(
-        name=name, version="unknown", source_path=path, format=FORMAT_NAME,
-        description=desc, declared_capabilities=caps or [],
-        code_blocks=[body] if body else [], urls=_extract_urls(body),
+        name=name,
+        version="unknown",
+        source_path=path,
+        format=FORMAT_NAME,
+        description=desc,
+        declared_capabilities=caps or [],
+        code_blocks=[body] if body else [],
+        urls=_extract_urls(body),
         env_vars_referenced=_extract_env_vars(source),
         shell_commands=_extract_shell_commands(body),
-        dependencies=_extract_imports(source), raw_content=source,
+        dependencies=_extract_imports(source),
+        raw_content=source,
     )
+
 
 def _is_agent_call(call: ast.Call) -> bool:
     f = call.func
     return (isinstance(f, ast.Name) and f.id == "Agent") or (
-        isinstance(f, ast.Attribute) and f.attr == "Agent")
+        isinstance(f, ast.Attribute) and f.attr == "Agent"
+    )
+
 
 def _kwarg_str(call: ast.Call, key: str) -> str:
     for kw in call.keywords:
@@ -88,14 +104,17 @@ def _kwarg_str(call: ast.Call, key: str) -> str:
             return str(kw.value.value)
     return ""
 
+
 def _kwarg_list_strings(call: ast.Call, key: str) -> list[str]:
     for kw in call.keywords:
         if kw.arg == key and isinstance(kw.value, ast.List):
             return [
-                str(e.value) for e in kw.value.elts
+                str(e.value)
+                for e in kw.value.elts
                 if isinstance(e, ast.Constant) and isinstance(e.value, str)
             ]
     return []
+
 
 def _list_element_names(lst: ast.List) -> list[str]:
     names: list[str] = []
@@ -112,11 +131,13 @@ def _list_element_names(lst: ast.List) -> list[str]:
                 names.append(f.attr)
     return names
 
+
 def _agent_tool_names(call: ast.Call) -> list[str]:
     for kw in call.keywords:
         if kw.arg == "tools" and isinstance(kw.value, ast.List):
             return _list_element_names(kw.value)
     return []
+
 
 def _builtin_tool_imports(source: str) -> list[str]:
     tools: list[str] = []
@@ -127,12 +148,11 @@ def _builtin_tool_imports(source: str) -> list[str]:
                 tools.append(n)
     return tools
 
+
 def _tools_to_caps(tool_names: list[str], builtins: list[str]) -> list[str]:
     bs = {t.lower() for t in builtins}
-    return [
-        f"builtin:{t}" if t in builtins or t.lower() in bs else f"tool:{t}"
-        for t in tool_names
-    ]
+    return [f"builtin:{t}" if t in builtins or t.lower() in bs else f"tool:{t}" for t in tool_names]
+
 
 def _parse_agent_call(call: ast.Call, source: str, fpath: Path) -> ParsedSkill:
     name = _kwarg_str(call, "name") or "unnamed_agent"
@@ -152,7 +172,8 @@ def _parse_toolkit_class(node: ast.ClassDef, source: str, fpath: Path) -> Parsed
     is_tk = any(
         (isinstance(b, ast.Name) and b.id == "Toolkit")
         or (isinstance(b, ast.Attribute) and b.attr == "Toolkit")
-        for b in node.bases)
+        for b in node.bases
+    )
     if not is_tk:
         return None
     names: list[str] = []
@@ -167,13 +188,15 @@ def _parse_toolkit_class(node: ast.ClassDef, source: str, fpath: Path) -> Parsed
                 continue
             af = arg.func
             if (isinstance(af, ast.Name) and af.id == "Function") or (
-                isinstance(af, ast.Attribute) and af.attr == "Function"):
+                isinstance(af, ast.Attribute) and af.attr == "Function"
+            ):
                 for kw in arg.keywords:
                     if kw.arg == "name" and isinstance(kw.value, ast.Constant):
                         names.append(str(kw.value.value))
     caps = [f"function:{fn}" for fn in names]
     body = ast.get_source_segment(source, node) or ""
     return _build_skill(node.name, "", body, fpath, source, caps)
+
 
 def _parse_agno_file(fpath: Path) -> list[ParsedSkill]:
     try:
@@ -193,6 +216,7 @@ def _parse_agno_file(fpath: Path) -> list[ParsedSkill]:
             if sk is not None:
                 results.append(sk)
     return results
+
 
 def _regex_fallback(source: str, fpath: Path) -> list[ParsedSkill]:
     results: list[ParsedSkill] = []

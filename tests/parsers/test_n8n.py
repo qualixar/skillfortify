@@ -5,6 +5,7 @@ each node represents an operation. The parser must extract all security-
 relevant metadata including HTTP URLs, code blocks, shell commands,
 credential references, webhook endpoints, and database connections.
 """
+
 from __future__ import annotations
 
 import json
@@ -101,7 +102,9 @@ class TestCanParse:
     def test_detects_workflow_json(self, parser: N8nWorkflowParser, basic_dir: Path) -> None:
         assert parser.can_parse(basic_dir) is True
 
-    def test_detects_named_workflow_json(self, parser: N8nWorkflowParser, basic_named_dir: Path) -> None:
+    def test_detects_named_workflow_json(
+        self, parser: N8nWorkflowParser, basic_named_dir: Path
+    ) -> None:
         assert parser.can_parse(basic_named_dir) is True
 
     def test_detects_n8n_dir(self, parser: N8nWorkflowParser, n8n_config_dir: Path) -> None:
@@ -113,7 +116,9 @@ class TestCanParse:
     def test_rejects_non_n8n_json(self, parser: N8nWorkflowParser, non_n8n_json_dir: Path) -> None:
         assert parser.can_parse(non_n8n_json_dir) is False
 
-    def test_rejects_malformed_json(self, parser: N8nWorkflowParser, malformed_json_dir: Path) -> None:
+    def test_rejects_malformed_json(
+        self, parser: N8nWorkflowParser, malformed_json_dir: Path
+    ) -> None:
         assert parser.can_parse(malformed_json_dir) is False
 
     def test_detects_http_workflow(self, parser: N8nWorkflowParser, http_dir: Path) -> None:
@@ -131,7 +136,9 @@ class TestParseBasic:
     def test_format_is_n8n(self, parser: N8nWorkflowParser, basic_dir: Path) -> None:
         assert parser.parse(basic_dir)[0].format == "n8n"
 
-    def test_returns_parsed_skill_instances(self, parser: N8nWorkflowParser, basic_dir: Path) -> None:
+    def test_returns_parsed_skill_instances(
+        self, parser: N8nWorkflowParser, basic_dir: Path
+    ) -> None:
         for skill in parser.parse(basic_dir):
             assert isinstance(skill, ParsedSkill)
 
@@ -141,12 +148,16 @@ class TestParseBasic:
     def test_raw_content_preserved(self, parser: N8nWorkflowParser, basic_dir: Path) -> None:
         assert "Basic Workflow" in parser.parse(basic_dir)[0].raw_content
 
-    def test_dependencies_contain_node_types(self, parser: N8nWorkflowParser, basic_dir: Path) -> None:
+    def test_dependencies_contain_node_types(
+        self, parser: N8nWorkflowParser, basic_dir: Path
+    ) -> None:
         deps = parser.parse(basic_dir)[0].dependencies
         assert "n8n-nodes-base.start" in deps
         assert "n8n-nodes-base.set" in deps
 
-    def test_description_contains_workflow_name(self, parser: N8nWorkflowParser, basic_dir: Path) -> None:
+    def test_description_contains_workflow_name(
+        self, parser: N8nWorkflowParser, basic_dir: Path
+    ) -> None:
         assert "Basic Workflow" in parser.parse(basic_dir)[0].description
 
 
@@ -181,17 +192,23 @@ class TestParseCode:
     def test_code_execution_capability(self, parser: N8nWorkflowParser, code_dir: Path) -> None:
         assert "code_execution" in parser.parse(code_dir)[0].declared_capabilities
 
-    def test_multiple_code_blocks_extracted(self, parser: N8nWorkflowParser, code_dir: Path) -> None:
+    def test_multiple_code_blocks_extracted(
+        self, parser: N8nWorkflowParser, code_dir: Path
+    ) -> None:
         assert len(parser.parse(code_dir)[0].code_blocks) >= 3
 
 
 class TestParseWebhook:
     """Validate webhook node extraction."""
 
-    def test_webhook_endpoint_capability(self, parser: N8nWorkflowParser, webhook_dir: Path) -> None:
+    def test_webhook_endpoint_capability(
+        self, parser: N8nWorkflowParser, webhook_dir: Path
+    ) -> None:
         assert "webhook_endpoint" in parser.parse(webhook_dir)[0].declared_capabilities
 
-    def test_webhook_node_in_dependencies(self, parser: N8nWorkflowParser, webhook_dir: Path) -> None:
+    def test_webhook_node_in_dependencies(
+        self, parser: N8nWorkflowParser, webhook_dir: Path
+    ) -> None:
         assert "n8n-nodes-base.webhook" in parser.parse(webhook_dir)[0].dependencies
 
 
@@ -201,13 +218,19 @@ class TestParseUnsafe:
     def test_extracts_malicious_urls(self, parser: N8nWorkflowParser, unsafe_dir: Path) -> None:
         assert any("evil.attacker.com" in u for u in parser.parse(unsafe_dir)[0].urls)
 
-    def test_extracts_shell_from_exec_node(self, parser: N8nWorkflowParser, unsafe_dir: Path) -> None:
+    def test_extracts_shell_from_exec_node(
+        self, parser: N8nWorkflowParser, unsafe_dir: Path
+    ) -> None:
         assert any("curl" in c for c in parser.parse(unsafe_dir)[0].shell_commands)
 
-    def test_extracts_shell_from_ssh_node(self, parser: N8nWorkflowParser, unsafe_dir: Path) -> None:
+    def test_extracts_shell_from_ssh_node(
+        self, parser: N8nWorkflowParser, unsafe_dir: Path
+    ) -> None:
         assert any("rm -rf" in c for c in parser.parse(unsafe_dir)[0].shell_commands)
 
-    def test_extracts_malicious_code_blocks(self, parser: N8nWorkflowParser, unsafe_dir: Path) -> None:
+    def test_extracts_malicious_code_blocks(
+        self, parser: N8nWorkflowParser, unsafe_dir: Path
+    ) -> None:
         assert any("readFileSync" in b for b in parser.parse(unsafe_dir)[0].code_blocks)
 
     def test_shell_access_capability(self, parser: N8nWorkflowParser, unsafe_dir: Path) -> None:
@@ -238,22 +261,34 @@ class TestParseUnsafe:
 class TestParseCredentials:
     """Validate extraction of credential references."""
 
-    def test_extracts_slack_credential(self, parser: N8nWorkflowParser, credentials_dir: Path) -> None:
+    def test_extracts_slack_credential(
+        self, parser: N8nWorkflowParser, credentials_dir: Path
+    ) -> None:
         assert "slackApi" in parser.parse(credentials_dir)[0].env_vars_referenced
 
-    def test_extracts_gmail_credential(self, parser: N8nWorkflowParser, credentials_dir: Path) -> None:
+    def test_extracts_gmail_credential(
+        self, parser: N8nWorkflowParser, credentials_dir: Path
+    ) -> None:
         assert "gmailOAuth2" in parser.parse(credentials_dir)[0].env_vars_referenced
 
-    def test_extracts_aws_credential(self, parser: N8nWorkflowParser, credentials_dir: Path) -> None:
+    def test_extracts_aws_credential(
+        self, parser: N8nWorkflowParser, credentials_dir: Path
+    ) -> None:
         assert "aws" in parser.parse(credentials_dir)[0].env_vars_referenced
 
-    def test_extracts_mysql_credential(self, parser: N8nWorkflowParser, credentials_dir: Path) -> None:
+    def test_extracts_mysql_credential(
+        self, parser: N8nWorkflowParser, credentials_dir: Path
+    ) -> None:
         assert "mySql" in parser.parse(credentials_dir)[0].env_vars_referenced
 
-    def test_extracts_credential_names(self, parser: N8nWorkflowParser, credentials_dir: Path) -> None:
+    def test_extracts_credential_names(
+        self, parser: N8nWorkflowParser, credentials_dir: Path
+    ) -> None:
         assert "AWS Production" in parser.parse(credentials_dir)[0].env_vars_referenced
 
-    def test_database_access_capability(self, parser: N8nWorkflowParser, credentials_dir: Path) -> None:
+    def test_database_access_capability(
+        self, parser: N8nWorkflowParser, credentials_dir: Path
+    ) -> None:
         assert "database_access" in parser.parse(credentials_dir)[0].declared_capabilities
 
 
@@ -263,10 +298,14 @@ class TestEdgeCases:
     def test_empty_dir_returns_empty(self, parser: N8nWorkflowParser, tmp_path: Path) -> None:
         assert parser.parse(tmp_path) == []
 
-    def test_malformed_json_returns_empty(self, parser: N8nWorkflowParser, malformed_json_dir: Path) -> None:
+    def test_malformed_json_returns_empty(
+        self, parser: N8nWorkflowParser, malformed_json_dir: Path
+    ) -> None:
         assert parser.parse(malformed_json_dir) == []
 
-    def test_non_n8n_json_returns_empty(self, parser: N8nWorkflowParser, non_n8n_json_dir: Path) -> None:
+    def test_non_n8n_json_returns_empty(
+        self, parser: N8nWorkflowParser, non_n8n_json_dir: Path
+    ) -> None:
         assert parser.parse(non_n8n_json_dir) == []
 
     def test_no_crash_on_binary_file(self, parser: N8nWorkflowParser, tmp_path: Path) -> None:
@@ -283,17 +322,24 @@ class TestEdgeCases:
         assert parser.parse(tmp_path) == []
 
     def test_nodes_with_non_dict_entries(self, parser: N8nWorkflowParser, tmp_path: Path) -> None:
-        data = {"name": "Mixed", "nodes": ["x", 42, {"type": "n8n-nodes-base.start", "parameters": {}}]}
+        data = {
+            "name": "Mixed",
+            "nodes": ["x", 42, {"type": "n8n-nodes-base.start", "parameters": {}}],
+        }
         (tmp_path / "mixed.json").write_text(json.dumps(data))
         skills = parser.parse(tmp_path)
         assert len(skills) == 1 and skills[0].name == "Mixed"
 
-    def test_workflow_json_suffix_preferred(self, parser: N8nWorkflowParser, tmp_path: Path) -> None:
+    def test_workflow_json_suffix_preferred(
+        self, parser: N8nWorkflowParser, tmp_path: Path
+    ) -> None:
         data = {"name": "Named", "nodes": [{"type": "n8n-nodes-base.start", "parameters": {}}]}
         (tmp_path / "my.workflow.json").write_text(json.dumps(data))
         assert parser.parse(tmp_path)[0].name == "Named"
 
-    def test_no_duplicate_when_workflow_suffix(self, parser: N8nWorkflowParser, tmp_path: Path) -> None:
+    def test_no_duplicate_when_workflow_suffix(
+        self, parser: N8nWorkflowParser, tmp_path: Path
+    ) -> None:
         data = {"name": "Dedup", "nodes": [{"type": "n8n-nodes-base.start", "parameters": {}}]}
         (tmp_path / "test.workflow.json").write_text(json.dumps(data))
         assert len(parser.parse(tmp_path)) == 1
@@ -309,7 +355,11 @@ class TestEdgeCases:
         assert len(parser.parse(tmp_path)) == 1
 
     def test_version_from_versionid(self, parser: N8nWorkflowParser, tmp_path: Path) -> None:
-        data = {"name": "V", "versionId": "abc-123", "nodes": [{"type": "n8n-nodes-base.start", "parameters": {}}]}
+        data = {
+            "name": "V",
+            "versionId": "abc-123",
+            "nodes": [{"type": "n8n-nodes-base.start", "parameters": {}}],
+        }
         (tmp_path / "v.json").write_text(json.dumps(data))
         assert parser.parse(tmp_path)[0].version == "abc-123"
 

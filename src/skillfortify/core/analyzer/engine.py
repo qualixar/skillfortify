@@ -125,12 +125,8 @@ class StaticAnalyzer:
 
         # File operation patterns in instructions -> filesystem capability
         combined_text = f"{skill.instructions} {skill.description}"
-        has_file_write = any(
-            pat.search(combined_text) for pat in _FILE_WRITE_PATTERNS
-        )
-        has_file_read = any(
-            pat.search(combined_text) for pat in _FILE_READ_PATTERNS
-        )
+        has_file_write = any(pat.search(combined_text) for pat in _FILE_WRITE_PATTERNS)
+        has_file_read = any(pat.search(combined_text) for pat in _FILE_READ_PATTERNS)
 
         if has_file_write:
             caps.add(Capability("filesystem", AccessLevel.WRITE))
@@ -156,73 +152,81 @@ class StaticAnalyzer:
         for cmd in skill.shell_commands:
             for pattern, severity, attack_class, message in _DANGEROUS_SHELL_PATTERNS:
                 if pattern.search(cmd):
-                    findings.append(Finding(
-                        skill_name=skill.name,
-                        severity=severity,
-                        message=message,
-                        attack_class=attack_class,
-                        finding_type="pattern_match",
-                        evidence=cmd,
-                    ))
+                    findings.append(
+                        Finding(
+                            skill_name=skill.name,
+                            severity=severity,
+                            message=message,
+                            attack_class=attack_class,
+                            finding_type="pattern_match",
+                            evidence=cmd,
+                        )
+                    )
 
         # 2b: Code block patterns
         for block in skill.code_blocks:
             for pattern, severity, attack_class, message in _DANGEROUS_CODE_PATTERNS:
                 if pattern.search(block):
-                    findings.append(Finding(
-                        skill_name=skill.name,
-                        severity=severity,
-                        message=message,
-                        attack_class=attack_class,
-                        finding_type="pattern_match",
-                        evidence=block,
-                    ))
+                    findings.append(
+                        Finding(
+                            skill_name=skill.name,
+                            severity=severity,
+                            message=message,
+                            attack_class=attack_class,
+                            finding_type="pattern_match",
+                            evidence=block,
+                        )
+                    )
 
         # 2c: External URLs (not in allow-list)
         for url in skill.urls:
             if not _is_safe_url(url):
-                findings.append(Finding(
-                    skill_name=skill.name,
-                    severity=Severity.HIGH,
-                    message=f"External URL detected: {url}",
-                    attack_class="data_exfiltration",
-                    finding_type="pattern_match",
-                    evidence=url,
-                ))
+                findings.append(
+                    Finding(
+                        skill_name=skill.name,
+                        severity=Severity.HIGH,
+                        message=f"External URL detected: {url}",
+                        attack_class="data_exfiltration",
+                        finding_type="pattern_match",
+                        evidence=url,
+                    )
+                )
 
         # 2d: Sensitive environment variable access
         for env_var in skill.env_vars_referenced:
             if _is_sensitive_env_var(env_var):
-                findings.append(Finding(
-                    skill_name=skill.name,
-                    severity=Severity.HIGH,
-                    message=f"Sensitive environment variable accessed: {env_var}",
-                    attack_class="data_exfiltration",
-                    finding_type="pattern_match",
-                    evidence=env_var,
-                ))
+                findings.append(
+                    Finding(
+                        skill_name=skill.name,
+                        severity=Severity.HIGH,
+                        message=f"Sensitive environment variable accessed: {env_var}",
+                        attack_class="data_exfiltration",
+                        finding_type="pattern_match",
+                        evidence=env_var,
+                    )
+                )
 
         # 2e: Information flow: base64 encoding + network access
         # This combination suggests data exfiltration via encoding
-        has_base64 = any(
-            _BASE64_PATTERN.search(cmd) for cmd in skill.shell_commands
-        ) or any(
+        has_base64 = any(_BASE64_PATTERN.search(cmd) for cmd in skill.shell_commands) or any(
             _BASE64_PATTERN.search(block) for block in skill.code_blocks
         )
         has_external_urls = any(not _is_safe_url(url) for url in skill.urls)
 
         if has_base64 and has_external_urls:
-            findings.append(Finding(
-                skill_name=skill.name,
-                severity=Severity.CRITICAL,
-                message=(
-                    "Information flow concern: base64 encoding combined with "
-                    "external network access suggests data exfiltration"
-                ),
-                attack_class="data_exfiltration",
-                finding_type="info_flow",
-                evidence="base64 + external URL",
-            ))
+            findings.append(
+                Finding(
+                    skill_name=skill.name,
+                    severity=Severity.CRITICAL,
+                    message=(
+                        "Information flow concern: base64 encoding combined with "
+                        "external network access suggests data exfiltration"
+                    ),
+                    attack_class="data_exfiltration",
+                    finding_type="info_flow",
+                    evidence="base64 + external URL",
+                )
+            )
 
         return findings
 
@@ -261,19 +265,21 @@ class StaticAnalyzer:
 
         findings: list[Finding] = []
         for violation in violations:
-            findings.append(Finding(
-                skill_name=skill.name,
-                severity=Severity.HIGH,
-                message=(
-                    f"Capability violation: skill requires "
-                    f"{violation.resource}:{violation.access.name} "
-                    f"but only declares up to "
-                    f"{_declared_level_str(declared, violation.resource)}"
-                ),
-                attack_class="privilege_escalation",
-                finding_type="capability_violation",
-                evidence=f"inferred={violation.resource}:{violation.access.name}",
-            ))
+            findings.append(
+                Finding(
+                    skill_name=skill.name,
+                    severity=Severity.HIGH,
+                    message=(
+                        f"Capability violation: skill requires "
+                        f"{violation.resource}:{violation.access.name} "
+                        f"but only declares up to "
+                        f"{_declared_level_str(declared, violation.resource)}"
+                    ),
+                    attack_class="privilege_escalation",
+                    finding_type="capability_violation",
+                    evidence=f"inferred={violation.resource}:{violation.access.name}",
+                )
+            )
 
         return findings
 

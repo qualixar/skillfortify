@@ -24,7 +24,8 @@ from skillfortify.parsers.registry import default_registry
 @click.command("sbom")
 @click.argument("path", type=click.Path(exists=True, file_okay=False))
 @click.option(
-    "--output", "-o",
+    "--output",
+    "-o",
     type=click.Path(),
     default=None,
     help="Output path for ASBOM (default: <path>/asbom.cdx.json).",
@@ -85,6 +86,7 @@ def sbom_command(
 
     # Display summary
     from skillfortify.cli.output import print_sbom_summary
+
     summary = generator.summary()
     print_sbom_summary(summary)
     click.echo(f"\nASBOM written to: {out_path}")

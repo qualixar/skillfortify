@@ -102,9 +102,7 @@ class TestFetchEntries:
         """Fetching with a keyword returns matching packages."""
         data = {"objects": [_make_npm_search_result(name="mcp-server-test")]}
         with _patch_fetch_json_npm(data):
-            entries = asyncio.run(
-                scanner.fetch_entries(limit=10, keyword="mcp-server-test")
-            )
+            entries = asyncio.run(scanner.fetch_entries(limit=10, keyword="mcp-server-test"))
         assert len(entries) == 1
         assert entries[0].name == "mcp-server-test"
 
@@ -131,11 +129,7 @@ class TestFetchEntries:
 
     def test_fetch_respects_limit(self, scanner: NpmScanner) -> None:
         """Does not return more than 'limit' entries."""
-        data = {
-            "objects": [
-                _make_npm_search_result(name=f"pkg-{i}") for i in range(10)
-            ]
-        }
+        data = {"objects": [_make_npm_search_result(name=f"pkg-{i}") for i in range(10)]}
         with _patch_fetch_json_npm(data):
             entries = asyncio.run(scanner.fetch_entries(limit=3, keyword="pkg"))
         assert len(entries) <= 3
@@ -211,8 +205,7 @@ class TestScanEntry:
             result = asyncio.run(scanner.scan_entry(entry))
         assert not result.is_safe
         script_findings = [
-            f for f in result.findings
-            if f.attack_class == "malicious_lifecycle_script"
+            f for f in result.findings if f.attack_class == "malicious_lifecycle_script"
         ]
         assert len(script_findings) >= 1
 
@@ -238,8 +231,7 @@ class TestScanEntry:
         with _patch_fetch_json_npm(metadata):
             result = asyncio.run(scanner.scan_entry(entry))
         script_findings = [
-            f for f in result.findings
-            if f.attack_class == "malicious_lifecycle_script"
+            f for f in result.findings if f.attack_class == "malicious_lifecycle_script"
         ]
         assert len(script_findings) == 0
 
@@ -251,9 +243,7 @@ class TestScanEntry:
         metadata.pop("repository", None)
         with _patch_fetch_json_npm(metadata):
             result = asyncio.run(scanner.scan_entry(entry))
-        assert any(
-            f.attack_class == "missing_provenance" for f in result.findings
-        )
+        assert any(f.attack_class == "missing_provenance" for f in result.findings)
 
     def test_description_patterns_detected(self, scanner: NpmScanner) -> None:
         """Suspicious patterns in description are detected."""

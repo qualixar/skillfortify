@@ -46,16 +46,18 @@ from enum import IntEnum
 # CAPABILITY_UNIVERSE: The set of known resource types
 # ---------------------------------------------------------------------------
 
-CAPABILITY_UNIVERSE: frozenset[str] = frozenset({
-    "filesystem",
-    "network",
-    "environment",
-    "shell",
-    "skill_invoke",
-    "clipboard",
-    "browser",
-    "database",
-})
+CAPABILITY_UNIVERSE: frozenset[str] = frozenset(
+    {
+        "filesystem",
+        "network",
+        "environment",
+        "shell",
+        "skill_invoke",
+        "clipboard",
+        "browser",
+        "database",
+    }
+)
 """Known resource types in the agent skill ecosystem.
 
 Derived from empirical analysis of real-world agent skill registries:

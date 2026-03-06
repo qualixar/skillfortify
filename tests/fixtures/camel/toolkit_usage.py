@@ -1,4 +1,5 @@
 """CAMEL-AI project using multiple toolkits and FunctionTool wrapping."""
+
 from camel.agents import ChatAgent
 from camel.toolkits import (
     CodeExecutionToolkit,

@@ -123,7 +123,10 @@ class TestSystemScanResult:
     def test_empty_result(self) -> None:
         """An empty result should have all zero/empty fields."""
         result = SystemScanResult(
-            ides_found=[], total_skills=0, skills=[], results=[],
+            ides_found=[],
+            total_skills=0,
+            skills=[],
+            results=[],
         )
         assert result.ides_found == []
         assert result.total_skills == 0

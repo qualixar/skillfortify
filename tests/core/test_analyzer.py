@@ -168,9 +168,7 @@ class TestStaticAnalyzer:
         skill = make_skill(env_vars_referenced=["HOME"])
         result = analyzer.analyze(skill)
         assert result.inferred_capabilities is not None
-        assert result.inferred_capabilities.permits(
-            Capability("environment", AccessLevel.READ)
-        )
+        assert result.inferred_capabilities.permits(Capability("environment", AccessLevel.READ))
 
     def test_inferred_network_write_for_post(self, analyzer: StaticAnalyzer) -> None:
         """POST-like patterns in shell commands should infer network:WRITE."""
@@ -180,9 +178,7 @@ class TestStaticAnalyzer:
         )
         result = analyzer.analyze(skill)
         assert result.inferred_capabilities is not None
-        assert result.inferred_capabilities.permits(
-            Capability("network", AccessLevel.WRITE)
-        )
+        assert result.inferred_capabilities.permits(Capability("network", AccessLevel.WRITE))
 
     def test_inferred_filesystem_from_instructions(self, analyzer: StaticAnalyzer) -> None:
         """File operations mentioned in instructions should infer filesystem capability."""
@@ -191,9 +187,7 @@ class TestStaticAnalyzer:
         )
         result = analyzer.analyze(skill)
         assert result.inferred_capabilities is not None
-        assert result.inferred_capabilities.permits(
-            Capability("filesystem", AccessLevel.WRITE)
-        )
+        assert result.inferred_capabilities.permits(Capability("filesystem", AccessLevel.WRITE))
 
     # -- Phase 2: Dangerous Pattern Detection --
 
@@ -295,9 +289,7 @@ class TestStaticAnalyzer:
         )
         result = analyzer.analyze(skill)
         # No external URL findings (capability inference may still run)
-        exfil_findings = [
-            f for f in result.findings if f.attack_class == "data_exfiltration"
-        ]
+        exfil_findings = [f for f in result.findings if f.attack_class == "data_exfiltration"]
         assert exfil_findings == []
 
     def test_detects_env_var_access(self, analyzer: StaticAnalyzer) -> None:
@@ -332,9 +324,7 @@ class TestStaticAnalyzer:
         )
         result = analyzer.analyze(skill)
         assert result.is_safe is False
-        info_flow_findings = [
-            f for f in result.findings if f.finding_type == "info_flow"
-        ]
+        info_flow_findings = [f for f in result.findings if f.finding_type == "info_flow"]
         assert len(info_flow_findings) >= 1
         assert any(f.severity == Severity.CRITICAL for f in info_flow_findings)
 

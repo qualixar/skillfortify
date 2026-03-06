@@ -24,6 +24,7 @@ FIXTURES_DIR = Path(__file__).parent.parent / "fixtures" / "flowise"
 # Fixtures
 # ---------------------------------------------------------------------------
 
+
 @pytest.fixture
 def parser() -> FlowiseParser:
     """Return a fresh FlowiseParser instance."""
@@ -78,6 +79,7 @@ def flowise_subdir(tmp_path: Path) -> Path:
 # TestCanParse
 # ---------------------------------------------------------------------------
 
+
 class TestCanParse:
     """Validate the can_parse detection logic."""
 
@@ -105,7 +107,9 @@ class TestCanParse:
         (tmp_path / "bad.json").write_text("{nodes: [invalid")
         assert parser.can_parse(tmp_path) is False
 
-    def test_rejects_nodes_without_matching_type(self, parser: FlowiseParser, tmp_path: Path) -> None:
+    def test_rejects_nodes_without_matching_type(
+        self, parser: FlowiseParser, tmp_path: Path
+    ) -> None:
         (tmp_path / "n.json").write_text(json.dumps({"nodes": [{"id": "x"}], "edges": []}))
         assert parser.can_parse(tmp_path) is False
 
@@ -113,6 +117,7 @@ class TestCanParse:
 # ---------------------------------------------------------------------------
 # TestParseBasic
 # ---------------------------------------------------------------------------
+
 
 class TestParseBasic:
     """Validate basic chatflow parsing."""
@@ -143,6 +148,7 @@ class TestParseBasic:
 # TestParseCustomTool
 # ---------------------------------------------------------------------------
 
+
 class TestParseCustomTool:
     """Validate custom tool code extraction."""
 
@@ -156,7 +162,9 @@ class TestParseCustomTool:
         assert any("api.weather.com" in u for u in s.urls)
         assert "node-fetch" in s.dependencies
 
-    def test_capabilities_include_agent_and_tool(self, parser: FlowiseParser, custom_tool_dir: Path) -> None:
+    def test_capabilities_include_agent_and_tool(
+        self, parser: FlowiseParser, custom_tool_dir: Path
+    ) -> None:
         caps = parser.parse(custom_tool_dir)[0].declared_capabilities
         assert "ToolAgent" in caps
         assert "CustomTool" in caps
@@ -165,6 +173,7 @@ class TestParseCustomTool:
 # ---------------------------------------------------------------------------
 # TestParseApiKeys
 # ---------------------------------------------------------------------------
+
 
 class TestParseApiKeys:
     """Validate detection of hardcoded API keys in node inputs."""
@@ -182,6 +191,7 @@ class TestParseApiKeys:
 # ---------------------------------------------------------------------------
 # TestParseMultiTool
 # ---------------------------------------------------------------------------
+
 
 class TestParseMultiTool:
     """Validate multi-tool chatflow parsing."""
@@ -214,6 +224,7 @@ class TestParseMultiTool:
 # TestParseUnsafe
 # ---------------------------------------------------------------------------
 
+
 class TestParseUnsafe:
     """Validate detection of malicious patterns in unsafe flows."""
 
@@ -240,6 +251,7 @@ class TestParseUnsafe:
 # TestFlowiseSubdir
 # ---------------------------------------------------------------------------
 
+
 class TestFlowiseSubdir:
     """Validate .flowise/ directory scanning."""
 
@@ -253,6 +265,7 @@ class TestFlowiseSubdir:
 # ---------------------------------------------------------------------------
 # TestEdgeCases
 # ---------------------------------------------------------------------------
+
 
 class TestEdgeCases:
     """Validate edge case handling and robustness."""
@@ -281,25 +294,35 @@ class TestEdgeCases:
         assert parser.parse(tmp_path) == []
 
     def test_node_with_empty_data(self, parser: FlowiseParser, tmp_path: Path) -> None:
-        data = {"nodes": [
-            {"id": "x", "data": {"type": "ChatOpenAI", "inputs": {}}},
-            {"id": "y", "data": {}}, {"id": "z"},
-        ], "edges": []}
+        data = {
+            "nodes": [
+                {"id": "x", "data": {"type": "ChatOpenAI", "inputs": {}}},
+                {"id": "y", "data": {}},
+                {"id": "z"},
+            ],
+            "edges": [],
+        }
         (tmp_path / "p.json").write_text(json.dumps(data))
         assert len(parser.parse(tmp_path)) == 1
 
     def test_custom_tool_empty_js(self, parser: FlowiseParser, tmp_path: Path) -> None:
-        data = {"nodes": [
-            {"id": "t", "data": {"type": "CustomTool", "inputs": {"javascriptFunction": ""}}},
-            {"id": "c", "data": {"type": "ChatOpenAI", "inputs": {}}},
-        ], "edges": []}
+        data = {
+            "nodes": [
+                {"id": "t", "data": {"type": "CustomTool", "inputs": {"javascriptFunction": ""}}},
+                {"id": "c", "data": {"type": "ChatOpenAI", "inputs": {}}},
+            ],
+            "edges": [],
+        }
         (tmp_path / "ej.json").write_text(json.dumps(data))
         s = parser.parse(tmp_path)
         assert len(s) == 1
         assert s[0].code_blocks == []
 
     def test_inputs_as_non_dict(self, parser: FlowiseParser, tmp_path: Path) -> None:
-        data = {"nodes": [{"id": "a", "data": {"type": "ChatOpenAI", "inputs": "bad"}}], "edges": []}
+        data = {
+            "nodes": [{"id": "a", "data": {"type": "ChatOpenAI", "inputs": "bad"}}],
+            "edges": [],
+        }
         (tmp_path / "bi.json").write_text(json.dumps(data))
         assert len(parser.parse(tmp_path)) == 1
 

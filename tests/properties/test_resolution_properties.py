@@ -6,6 +6,7 @@ Verifies the formal guarantees of DependencyResolver (Theorem 4):
 - Conflict freedom: no conflicts present in the resolution
 - Determinism: same graph -> same resolution
 """
+
 from __future__ import annotations
 
 from hypothesis import given, settings
@@ -25,13 +26,26 @@ from skillfortify.core.dependency import (
 # Strategies for generating random ADGs
 # ---------------------------------------------------------------------------
 
-version_strings = st.sampled_from([
-    "1.0.0", "1.1.0", "1.2.0", "2.0.0", "2.1.0", "3.0.0",
-])
+version_strings = st.sampled_from(
+    [
+        "1.0.0",
+        "1.1.0",
+        "1.2.0",
+        "2.0.0",
+        "2.1.0",
+        "3.0.0",
+    ]
+)
 
-skill_names = st.sampled_from([
-    "alpha", "beta", "gamma", "delta", "epsilon",
-])
+skill_names = st.sampled_from(
+    [
+        "alpha",
+        "beta",
+        "gamma",
+        "delta",
+        "epsilon",
+    ]
+)
 
 
 @st.composite
@@ -39,9 +53,7 @@ def simple_adg(draw: st.DrawFn) -> AgentDependencyGraph:
     """Generate a simple ADG with 2-5 skills, each with 1-3 versions."""
     graph = AgentDependencyGraph()
     num_skills = draw(st.integers(min_value=2, max_value=4))
-    names = draw(
-        st.lists(skill_names, min_size=num_skills, max_size=num_skills, unique=True)
-    )
+    names = draw(st.lists(skill_names, min_size=num_skills, max_size=num_skills, unique=True))
 
     for name in names:
         num_versions = draw(st.integers(min_value=1, max_value=3))
@@ -84,9 +96,7 @@ class TestAtMostOne:
 
     @given(graph=simple_adg())
     @settings(max_examples=50)
-    def test_at_most_one_version_per_skill(
-        self, graph: AgentDependencyGraph
-    ) -> None:
+    def test_at_most_one_version_per_skill(self, graph: AgentDependencyGraph) -> None:
         """Each skill appears at most once in the resolution."""
         resolver = DependencyResolver(graph)
         resolution = resolver.resolve()
@@ -98,9 +108,7 @@ class TestAtMostOne:
 
     @given(graph=adg_with_deps())
     @settings(max_examples=50)
-    def test_at_most_one_with_dependencies(
-        self, graph: AgentDependencyGraph
-    ) -> None:
+    def test_at_most_one_with_dependencies(self, graph: AgentDependencyGraph) -> None:
         """At-most-one holds even with dependency chains."""
         # Require the root (last skill in chain)
         skills = sorted(graph.skills)
@@ -126,9 +134,7 @@ class TestDependencySatisfaction:
 
     @given(graph=adg_with_deps())
     @settings(max_examples=50)
-    def test_all_deps_satisfied(
-        self, graph: AgentDependencyGraph
-    ) -> None:
+    def test_all_deps_satisfied(self, graph: AgentDependencyGraph) -> None:
         """For each installed skill, its dependencies are also installed."""
         skills = sorted(graph.skills)
         if not skills:
@@ -157,18 +163,22 @@ class TestDependencySatisfaction:
         """A -> B -> C chain: all three must be in resolution."""
         graph = AgentDependencyGraph()
         graph.add_skill(SkillNode(name="C", version="1.0.0"))
-        graph.add_skill(SkillNode(
-            name="B", version="1.0.0",
-            dependencies=[SkillDependency("C", VersionConstraint(">=1.0.0"))],
-        ))
-        graph.add_skill(SkillNode(
-            name="A", version="1.0.0",
-            dependencies=[SkillDependency("B", VersionConstraint(">=1.0.0"))],
-        ))
-
-        resolver = DependencyResolver(
-            graph, requirements={"A": VersionConstraint("*")}
+        graph.add_skill(
+            SkillNode(
+                name="B",
+                version="1.0.0",
+                dependencies=[SkillDependency("C", VersionConstraint(">=1.0.0"))],
+            )
         )
+        graph.add_skill(
+            SkillNode(
+                name="A",
+                version="1.0.0",
+                dependencies=[SkillDependency("B", VersionConstraint(">=1.0.0"))],
+            )
+        )
+
+        resolver = DependencyResolver(graph, requirements={"A": VersionConstraint("*")})
         resolution = resolver.resolve()
         assert resolution.success
         assert "A" in resolution.installed
@@ -187,10 +197,13 @@ class TestConflictFreedom:
     def test_conflicting_skills_not_both_installed(self) -> None:
         """Two skills that conflict cannot both appear in the resolution."""
         graph = AgentDependencyGraph()
-        graph.add_skill(SkillNode(
-            name="X", version="1.0.0",
-            conflicts=[SkillConflict("Y", VersionConstraint("*"))],
-        ))
+        graph.add_skill(
+            SkillNode(
+                name="X",
+                version="1.0.0",
+                conflicts=[SkillConflict("Y", VersionConstraint("*"))],
+            )
+        )
         graph.add_skill(SkillNode(name="Y", version="1.0.0"))
 
         # Require both -- should fail or only install one
@@ -212,14 +225,20 @@ class TestConflictFreedom:
     def test_conflict_causes_failure_when_both_required(self) -> None:
         """Requiring two conflicting skills results in resolution failure."""
         graph = AgentDependencyGraph()
-        graph.add_skill(SkillNode(
-            name="A", version="1.0.0",
-            conflicts=[SkillConflict("B", VersionConstraint("*"))],
-        ))
-        graph.add_skill(SkillNode(
-            name="B", version="1.0.0",
-            conflicts=[SkillConflict("A", VersionConstraint("*"))],
-        ))
+        graph.add_skill(
+            SkillNode(
+                name="A",
+                version="1.0.0",
+                conflicts=[SkillConflict("B", VersionConstraint("*"))],
+            )
+        )
+        graph.add_skill(
+            SkillNode(
+                name="B",
+                version="1.0.0",
+                conflicts=[SkillConflict("A", VersionConstraint("*"))],
+            )
+        )
 
         resolver = DependencyResolver(
             graph,
@@ -245,10 +264,13 @@ class TestDeterminism:
         graph = AgentDependencyGraph()
         graph.add_skill(SkillNode(name="lib", version="1.0.0"))
         graph.add_skill(SkillNode(name="lib", version="2.0.0"))
-        graph.add_skill(SkillNode(
-            name="app", version="1.0.0",
-            dependencies=[SkillDependency("lib", VersionConstraint(">=1.0.0"))],
-        ))
+        graph.add_skill(
+            SkillNode(
+                name="app",
+                version="1.0.0",
+                dependencies=[SkillDependency("lib", VersionConstraint(">=1.0.0"))],
+            )
+        )
 
         req = {"app": VersionConstraint("*")}
 
@@ -259,9 +281,7 @@ class TestDeterminism:
 
     @given(graph=adg_with_deps())
     @settings(max_examples=30)
-    def test_determinism_property(
-        self, graph: AgentDependencyGraph
-    ) -> None:
+    def test_determinism_property(self, graph: AgentDependencyGraph) -> None:
         """Repeated resolutions of generated graphs are identical."""
         skills = sorted(graph.skills)
         if not skills:
@@ -287,14 +307,20 @@ class TestCapabilityFiltering:
     def test_over_privileged_version_excluded(self) -> None:
         """A skill version exceeding allowed capabilities is not installed."""
         graph = AgentDependencyGraph()
-        graph.add_skill(SkillNode(
-            name="tool", version="1.0.0",
-            capabilities={"network:READ"},
-        ))
-        graph.add_skill(SkillNode(
-            name="tool", version="2.0.0",
-            capabilities={"network:READ", "shell:WRITE"},
-        ))
+        graph.add_skill(
+            SkillNode(
+                name="tool",
+                version="1.0.0",
+                capabilities={"network:READ"},
+            )
+        )
+        graph.add_skill(
+            SkillNode(
+                name="tool",
+                version="2.0.0",
+                capabilities={"network:READ", "shell:WRITE"},
+            )
+        )
 
         resolver = DependencyResolver(
             graph,
@@ -308,10 +334,13 @@ class TestCapabilityFiltering:
     def test_empty_capabilities_always_allowed(self) -> None:
         """A skill with no capability requirements always passes filtering."""
         graph = AgentDependencyGraph()
-        graph.add_skill(SkillNode(
-            name="safe", version="1.0.0",
-            capabilities=set(),
-        ))
+        graph.add_skill(
+            SkillNode(
+                name="safe",
+                version="1.0.0",
+                capabilities=set(),
+            )
+        )
 
         resolver = DependencyResolver(
             graph,

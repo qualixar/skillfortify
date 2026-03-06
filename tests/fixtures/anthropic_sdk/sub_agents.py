@@ -5,6 +5,7 @@ Used by test_anthropic_sdk.py to verify extraction of:
 - Agent used as a tool inside another Agent
 - Model references for each agent
 """
+
 from claude_agent_sdk import Agent
 from claude_agent_sdk.tools import tool
 

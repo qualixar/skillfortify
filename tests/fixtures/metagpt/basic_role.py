@@ -5,6 +5,7 @@ Used by test_metagpt.py to verify extraction of:
 - Action subclass with name
 - Role-to-action mapping
 """
+
 from metagpt.roles import Role
 from metagpt.actions import Action
 

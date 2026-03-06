@@ -4,6 +4,7 @@ Used by test_openai_agents.py to verify detection of:
 - InputGuardrail / OutputGuardrail imports and usage
 - Guardrail functions referenced in agent definition
 """
+
 from agents import Agent, InputGuardrail, OutputGuardrail, function_tool
 from pydantic import BaseModel
 

@@ -86,9 +86,7 @@ class RegistryScanner(ABC):
         """Human-readable name of this registry (e.g. 'MCP Registry')."""
 
     @abstractmethod
-    async def fetch_entries(
-        self, *, limit: int = 100, keyword: str = ""
-    ) -> list[RegistryEntry]:
+    async def fetch_entries(self, *, limit: int = 100, keyword: str = "") -> list[RegistryEntry]:
         """Fetch entries from the remote registry.
 
         Args:

@@ -17,33 +17,43 @@ N8N_DIR = ".n8n"
 N8N_WORKFLOW_SUFFIX = ".workflow.json"
 N8N_NODE_PREFIX = "n8n-nodes-"
 
-_CODE_NODE_TYPES = frozenset({
-    "n8n-nodes-base.code",
-    "n8n-nodes-base.function",
-    "n8n-nodes-base.functionItem",
-})
+_CODE_NODE_TYPES = frozenset(
+    {
+        "n8n-nodes-base.code",
+        "n8n-nodes-base.function",
+        "n8n-nodes-base.functionItem",
+    }
+)
 
-_SHELL_NODE_TYPES = frozenset({
-    "n8n-nodes-base.executeCommand",
-    "n8n-nodes-base.ssh",
-})
+_SHELL_NODE_TYPES = frozenset(
+    {
+        "n8n-nodes-base.executeCommand",
+        "n8n-nodes-base.ssh",
+    }
+)
 
-_WEBHOOK_NODE_TYPES = frozenset({
-    "n8n-nodes-base.webhook",
-    "n8n-nodes-base.respondToWebhook",
-})
+_WEBHOOK_NODE_TYPES = frozenset(
+    {
+        "n8n-nodes-base.webhook",
+        "n8n-nodes-base.respondToWebhook",
+    }
+)
 
-_HTTP_NODE_TYPES = frozenset({
-    "n8n-nodes-base.httpRequest",
-})
+_HTTP_NODE_TYPES = frozenset(
+    {
+        "n8n-nodes-base.httpRequest",
+    }
+)
 
-_DATABASE_NODE_TYPES = frozenset({
-    "n8n-nodes-base.postgres",
-    "n8n-nodes-base.mySql",
-    "n8n-nodes-base.mongoDb",
-    "n8n-nodes-base.redis",
-    "n8n-nodes-base.microsoftSql",
-})
+_DATABASE_NODE_TYPES = frozenset(
+    {
+        "n8n-nodes-base.postgres",
+        "n8n-nodes-base.mySql",
+        "n8n-nodes-base.mongoDb",
+        "n8n-nodes-base.redis",
+        "n8n-nodes-base.microsoftSql",
+    }
+)
 
 _URL_PATTERN = re.compile(r"https?://[^\s\"'`)\]>]+")
 

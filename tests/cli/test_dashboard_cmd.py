@@ -31,16 +31,12 @@ def runner() -> CliRunner:
 class TestDashboardEmptyDirectory:
     """Tests for dashboard generation on directories with no skills."""
 
-    def test_empty_dir_exits_with_code_2(
-        self, runner: CliRunner, empty_dir: Path
-    ) -> None:
+    def test_empty_dir_exits_with_code_2(self, runner: CliRunner, empty_dir: Path) -> None:
         """Dashboard on empty directory should exit with code 2."""
         result = runner.invoke(cli, ["dashboard", str(empty_dir)])
         assert result.exit_code == 2
 
-    def test_empty_dir_shows_message(
-        self, runner: CliRunner, empty_dir: Path
-    ) -> None:
+    def test_empty_dir_shows_message(self, runner: CliRunner, empty_dir: Path) -> None:
         """Empty dashboard should display informative message."""
         result = runner.invoke(cli, ["dashboard", str(empty_dir)])
         assert "No skills found" in result.output
@@ -49,18 +45,14 @@ class TestDashboardEmptyDirectory:
 class TestDashboardGeneration:
     """Tests for successful dashboard generation."""
 
-    def test_creates_html_file(
-        self, runner: CliRunner, clean_claude_skill_dir: Path
-    ) -> None:
+    def test_creates_html_file(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """Dashboard should create an HTML file in the target directory."""
         result = runner.invoke(cli, ["dashboard", str(clean_claude_skill_dir)])
         assert result.exit_code == 0
         html_file = clean_claude_skill_dir / "skillfortify-report.html"
         assert html_file.exists()
 
-    def test_html_is_valid_structure(
-        self, runner: CliRunner, clean_claude_skill_dir: Path
-    ) -> None:
+    def test_html_is_valid_structure(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """Generated HTML should contain expected structure."""
         runner.invoke(cli, ["dashboard", str(clean_claude_skill_dir)])
         html_file = clean_claude_skill_dir / "skillfortify-report.html"
@@ -69,18 +61,14 @@ class TestDashboardGeneration:
         assert "<title>" in content
         assert "SkillFortify" in content
 
-    def test_html_contains_scan_data(
-        self, runner: CliRunner, clean_claude_skill_dir: Path
-    ) -> None:
+    def test_html_contains_scan_data(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """Generated HTML should embed scan data as JSON."""
         runner.invoke(cli, ["dashboard", str(clean_claude_skill_dir)])
         html_file = clean_claude_skill_dir / "skillfortify-report.html"
         content = html_file.read_text(encoding="utf-8")
         assert "__SKILLFORTIFY_DATA__" in content
 
-    def test_output_shows_summary(
-        self, runner: CliRunner, clean_claude_skill_dir: Path
-    ) -> None:
+    def test_output_shows_summary(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """Dashboard output should display a summary line."""
         result = runner.invoke(cli, ["dashboard", str(clean_claude_skill_dir)])
         assert "Dashboard generated" in result.output
@@ -90,9 +78,7 @@ class TestDashboardGeneration:
         self, runner: CliRunner, malicious_claude_skill_dir: Path
     ) -> None:
         """Dashboard should work for directories with unsafe skills."""
-        result = runner.invoke(
-            cli, ["dashboard", str(malicious_claude_skill_dir)]
-        )
+        result = runner.invoke(cli, ["dashboard", str(malicious_claude_skill_dir)])
         assert result.exit_code == 0
         html_file = malicious_claude_skill_dir / "skillfortify-report.html"
         assert html_file.exists()
@@ -129,9 +115,7 @@ class TestDashboardCustomOutput:
 class TestDashboardCustomTitle:
     """Tests for the --title option."""
 
-    def test_custom_title_in_html(
-        self, runner: CliRunner, clean_claude_skill_dir: Path
-    ) -> None:
+    def test_custom_title_in_html(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """Custom title should appear in the generated HTML."""
         runner.invoke(
             cli,
@@ -141,14 +125,11 @@ class TestDashboardCustomTitle:
         content = html_file.read_text(encoding="utf-8")
         assert "My Audit" in content
 
-    def test_html_escapes_title(
-        self, runner: CliRunner, clean_claude_skill_dir: Path
-    ) -> None:
+    def test_html_escapes_title(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """HTML special chars in title should be escaped."""
         runner.invoke(
             cli,
-            ["dashboard", str(clean_claude_skill_dir),
-             "--title", "<script>alert(1)</script>"],
+            ["dashboard", str(clean_claude_skill_dir), "--title", "<script>alert(1)</script>"],
         )
         html_file = clean_claude_skill_dir / "skillfortify-report.html"
         content = html_file.read_text(encoding="utf-8")
@@ -176,9 +157,7 @@ class TestDashboardOpenFlag:
     ) -> None:
         """Without --open, webbrowser should NOT be called."""
         with patch("skillfortify.cli.dashboard_cmd.webbrowser.open") as mock:
-            runner.invoke(
-                cli, ["dashboard", str(clean_claude_skill_dir)]
-            )
+            runner.invoke(cli, ["dashboard", str(clean_claude_skill_dir)])
             mock.assert_not_called()
 
 

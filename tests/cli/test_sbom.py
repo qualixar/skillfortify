@@ -28,16 +28,12 @@ def runner() -> CliRunner:
 class TestSbomEmptyDirectory:
     """Tests for SBOM generation on empty directories."""
 
-    def test_empty_dir_exits_with_code_2(
-        self, runner: CliRunner, empty_dir: Path
-    ) -> None:
+    def test_empty_dir_exits_with_code_2(self, runner: CliRunner, empty_dir: Path) -> None:
         """SBOM on empty directory should exit with code 2."""
         result = runner.invoke(cli, ["sbom", str(empty_dir)])
         assert result.exit_code == 2
 
-    def test_empty_dir_shows_message(
-        self, runner: CliRunner, empty_dir: Path
-    ) -> None:
+    def test_empty_dir_shows_message(self, runner: CliRunner, empty_dir: Path) -> None:
         """Empty SBOM should display informative message."""
         result = runner.invoke(cli, ["sbom", str(empty_dir)])
         assert "No skills found" in result.output
@@ -46,9 +42,7 @@ class TestSbomEmptyDirectory:
 class TestSbomGeneration:
     """Tests for successful SBOM generation."""
 
-    def test_creates_asbom_file(
-        self, runner: CliRunner, clean_claude_skill_dir: Path
-    ) -> None:
+    def test_creates_asbom_file(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """SBOM should create asbom.cdx.json in the target directory."""
         result = runner.invoke(cli, ["sbom", str(clean_claude_skill_dir)])
         assert result.exit_code == 0
@@ -91,9 +85,7 @@ class TestSbomGeneration:
         assert "skillfortify:format" in prop_names
         assert "skillfortify:is-safe" in prop_names
 
-    def test_output_shows_summary(
-        self, runner: CliRunner, clean_claude_skill_dir: Path
-    ) -> None:
+    def test_output_shows_summary(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """SBOM output should display a summary."""
         result = runner.invoke(cli, ["sbom", str(clean_claude_skill_dir)])
         assert "ASBOM written to" in result.output
@@ -120,27 +112,21 @@ class TestSbomCustomOutput:
 class TestSbomProjectMetadata:
     """Tests for --project-name and --project-version options."""
 
-    def test_custom_project_name(
-        self, runner: CliRunner, clean_claude_skill_dir: Path
-    ) -> None:
+    def test_custom_project_name(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """SBOM should use the specified project name."""
         runner.invoke(
             cli,
-            ["sbom", str(clean_claude_skill_dir),
-             "--project-name", "my-agent"],
+            ["sbom", str(clean_claude_skill_dir), "--project-name", "my-agent"],
         )
         asbom_file = clean_claude_skill_dir / "asbom.cdx.json"
         data = json.loads(asbom_file.read_text())
         assert data["metadata"]["component"]["name"] == "my-agent"
 
-    def test_custom_project_version(
-        self, runner: CliRunner, clean_claude_skill_dir: Path
-    ) -> None:
+    def test_custom_project_version(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """SBOM should use the specified project version."""
         runner.invoke(
             cli,
-            ["sbom", str(clean_claude_skill_dir),
-             "--project-version", "2.1.0"],
+            ["sbom", str(clean_claude_skill_dir), "--project-version", "2.1.0"],
         )
         asbom_file = clean_claude_skill_dir / "asbom.cdx.json"
         data = json.loads(asbom_file.read_text())

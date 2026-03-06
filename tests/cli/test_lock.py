@@ -27,16 +27,12 @@ def runner() -> CliRunner:
 class TestLockEmptyDirectory:
     """Tests for locking directories with no skills."""
 
-    def test_empty_dir_exits_with_code_2(
-        self, runner: CliRunner, empty_dir: Path
-    ) -> None:
+    def test_empty_dir_exits_with_code_2(self, runner: CliRunner, empty_dir: Path) -> None:
         """Locking an empty directory should exit with code 2."""
         result = runner.invoke(cli, ["lock", str(empty_dir)])
         assert result.exit_code == 2
 
-    def test_empty_dir_shows_message(
-        self, runner: CliRunner, empty_dir: Path
-    ) -> None:
+    def test_empty_dir_shows_message(self, runner: CliRunner, empty_dir: Path) -> None:
         """Empty lock should display informative message."""
         result = runner.invoke(cli, ["lock", str(empty_dir)])
         assert "No skills found" in result.output
@@ -45,18 +41,14 @@ class TestLockEmptyDirectory:
 class TestLockWithSkills:
     """Tests for locking directories that contain skills."""
 
-    def test_creates_lockfile(
-        self, runner: CliRunner, clean_claude_skill_dir: Path
-    ) -> None:
+    def test_creates_lockfile(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """Lock should create skill-lock.json in the target directory."""
         result = runner.invoke(cli, ["lock", str(clean_claude_skill_dir)])
         assert result.exit_code == 0
         lockfile = clean_claude_skill_dir / "skill-lock.json"
         assert lockfile.exists()
 
-    def test_lockfile_is_valid_json(
-        self, runner: CliRunner, clean_claude_skill_dir: Path
-    ) -> None:
+    def test_lockfile_is_valid_json(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """Generated lockfile should be valid JSON."""
         runner.invoke(cli, ["lock", str(clean_claude_skill_dir)])
         lockfile = clean_claude_skill_dir / "skill-lock.json"
@@ -65,9 +57,7 @@ class TestLockWithSkills:
         assert "skills" in data
         assert "metadata" in data
 
-    def test_lockfile_contains_skill(
-        self, runner: CliRunner, clean_claude_skill_dir: Path
-    ) -> None:
+    def test_lockfile_contains_skill(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """Lockfile should contain the discovered skill."""
         runner.invoke(cli, ["lock", str(clean_claude_skill_dir)])
         lockfile = clean_claude_skill_dir / "skill-lock.json"
@@ -103,17 +93,13 @@ class TestLockCustomOutput:
     ) -> None:
         """Lock with --output should write to the specified path."""
         custom_path = tmp_path / "custom-lock.json"
-        result = runner.invoke(
-            cli, ["lock", str(clean_claude_skill_dir), "-o", str(custom_path)]
-        )
+        result = runner.invoke(cli, ["lock", str(clean_claude_skill_dir), "-o", str(custom_path)])
         assert result.exit_code == 0
         assert custom_path.exists()
         data = json.loads(custom_path.read_text())
         assert "skills" in data
 
-    def test_multi_format_lockfile(
-        self, runner: CliRunner, multi_format_skill_dir: Path
-    ) -> None:
+    def test_multi_format_lockfile(self, runner: CliRunner, multi_format_skill_dir: Path) -> None:
         """Lock should include skills from multiple formats."""
         result = runner.invoke(cli, ["lock", str(multi_format_skill_dir)])
         assert result.exit_code == 0

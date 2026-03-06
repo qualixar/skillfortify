@@ -146,18 +146,22 @@ def _build_skill(
 
 
 def _extract_tool_definitions(
-    source: str, file_path: Path,
+    source: str,
+    file_path: Path,
 ) -> list[ParsedSkill]:
     """Extract Tool/create_tool_from_function calls (delegates to extractors)."""
     from skillfortify.parsers.haystack_extractors import extract_tool_definitions
+
     return extract_tool_definitions(source, file_path)
 
 
 def _extract_pipeline_components(
-    source: str, file_path: Path,
+    source: str,
+    file_path: Path,
 ) -> list[ParsedSkill]:
     """Extract add_component calls (delegates to extractors)."""
     from skillfortify.parsers.haystack_extractors import extract_pipeline_components
+
     return extract_pipeline_components(source, file_path)
 
 

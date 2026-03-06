@@ -82,7 +82,7 @@ class TestSATEncoding:
         clauses, var_map, inv_map = resolver._encode_sat()
         # Should have a requirement clause: [var_A_1.0.0]
         assert len(var_map) == 1
-        assert (clauses is not None)
+        assert clauses is not None
 
     def test_at_most_one_version_clauses(self) -> None:
         """Two versions of same skill produce pairwise exclusion clauses."""
@@ -142,7 +142,8 @@ class TestSATEncoding:
         g.add_skill(_make_node("A", "1.0.0", capabilities={"shell:WRITE"}))
         g.add_skill(_make_node("B", "1.0.0", capabilities={"network:READ"}))
         resolver = DependencyResolver(
-            g, allowed_capabilities={"network:READ"}  # shell:WRITE not allowed
+            g,
+            allowed_capabilities={"network:READ"},  # shell:WRITE not allowed
         )
         clauses, var_map, _ = resolver._encode_sat()
 
@@ -332,9 +333,7 @@ class TestCapabilityBoundedResolution:
     def test_disallowed_capabilities_blocks_installation(self) -> None:
         """Skill requiring disallowed capabilities cannot be installed."""
         g = AgentDependencyGraph()
-        g.add_skill(
-            _make_node("dangerous", "1.0.0", capabilities={"shell:WRITE", "network:READ"})
-        )
+        g.add_skill(_make_node("dangerous", "1.0.0", capabilities={"shell:WRITE", "network:READ"}))
         resolver = DependencyResolver(
             g,
             allowed_capabilities={"network:READ"},  # shell:WRITE not allowed

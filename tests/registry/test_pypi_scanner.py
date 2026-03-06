@@ -88,9 +88,7 @@ class TestFetchEntries:
         """Fetching with a keyword searches for that package."""
         data = _make_pypi_info(name="mcp-server-test")
         with _patch_fetch_json(data):
-            entries = asyncio.run(
-                scanner.fetch_entries(limit=10, keyword="mcp-server-test")
-            )
+            entries = asyncio.run(scanner.fetch_entries(limit=10, keyword="mcp-server-test"))
         assert len(entries) == 1
         assert entries[0].name == "mcp-server-test"
 
@@ -113,9 +111,7 @@ class TestFetchEntries:
     def test_fetch_empty_response(self, scanner: PyPIScanner) -> None:
         """Empty API response returns empty list."""
         with _patch_fetch_json({}):
-            entries = asyncio.run(
-                scanner.fetch_entries(keyword="nonexistent")
-            )
+            entries = asyncio.run(scanner.fetch_entries(keyword="nonexistent"))
         assert entries == []
 
     def test_fetch_respects_limit(self, scanner: PyPIScanner) -> None:
@@ -179,9 +175,7 @@ class TestScanEntry:
         with _patch_fetch_json(data):
             result = asyncio.run(scanner.scan_entry(entry))
         assert not result.is_safe
-        assert any(
-            f.attack_class == "malicious_dependency" for f in result.findings
-        )
+        assert any(f.attack_class == "malicious_dependency" for f in result.findings)
 
     def test_missing_author(self, scanner: PyPIScanner) -> None:
         """Missing author triggers MEDIUM finding."""
@@ -190,9 +184,7 @@ class TestScanEntry:
         data["info"]["maintainer"] = ""
         with _patch_fetch_json(data):
             result = asyncio.run(scanner.scan_entry(entry))
-        assert any(
-            f.attack_class == "missing_provenance" for f in result.findings
-        )
+        assert any(f.attack_class == "missing_provenance" for f in result.findings)
 
     def test_description_with_exfil_pattern(self, scanner: PyPIScanner) -> None:
         """Exfiltration pattern in description triggers finding."""
@@ -229,9 +221,7 @@ class TestScanEntry:
         )
         with _patch_fetch_json(data):
             result = asyncio.run(scanner.scan_entry(entry))
-        dep_findings = [
-            f for f in result.findings if f.attack_class == "malicious_dependency"
-        ]
+        dep_findings = [f for f in result.findings if f.attack_class == "malicious_dependency"]
         assert len(dep_findings) == 0
 
     def test_metadata_fetch_failure(self, scanner: PyPIScanner) -> None:

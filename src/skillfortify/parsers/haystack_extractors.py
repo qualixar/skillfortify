@@ -62,7 +62,8 @@ def _get_tool_function_name(call: ast.Call) -> str:
 
 
 def extract_tool_definitions(
-    source: str, file_path: Path,
+    source: str,
+    file_path: Path,
 ) -> list[ParsedSkill]:
     """Extract Tool() and create_tool_from_function() calls from AST.
 
@@ -111,7 +112,8 @@ def extract_tool_definitions(
 
 
 def _regex_fallback_tools(
-    source: str, file_path: Path,
+    source: str,
+    file_path: Path,
 ) -> list[ParsedSkill]:
     """Regex fallback for tool definitions in unparseable source."""
     results: list[ParsedSkill] = []
@@ -176,7 +178,8 @@ def _component_capabilities(comp_type: str) -> list[str]:
 
 
 def extract_pipeline_components(
-    source: str, file_path: Path,
+    source: str,
+    file_path: Path,
 ) -> list[ParsedSkill]:
     """Extract pipeline add_component() calls from AST.
 
@@ -207,7 +210,8 @@ def extract_pipeline_components(
         body = ast.get_source_segment(source, node) or ""
         caps = _component_capabilities(comp_type)
         results.append(
-            _build_skill(comp_name, f"Haystack component: {comp_type}",
-                         body, file_path, source, caps),
+            _build_skill(
+                comp_name, f"Haystack component: {comp_type}", body, file_path, source, caps
+            ),
         )
     return results

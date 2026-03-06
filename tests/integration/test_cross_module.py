@@ -3,6 +3,7 @@
 Verifies that data flows correctly between SkillFortify modules:
 ParsedSkill -> AnalysisResult -> TrustScore -> LockedSkill -> ASBOM.
 """
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -67,8 +68,10 @@ class TestAnalyzerToTrust:
 
         behavioral = 1.0 if result.is_safe else 0.0
         signals = TrustSignals(
-            provenance=0.5, behavioral=behavioral,
-            community=0.5, historical=0.5,
+            provenance=0.5,
+            behavioral=behavioral,
+            community=0.5,
+            historical=0.5,
         )
         engine = TrustEngine()
         score = engine.compute_score("clean-skill", "1.0.0", signals)
@@ -87,16 +90,20 @@ class TestAnalyzerToTrust:
 
         behavioral = 1.0 if result.is_safe else 0.0
         signals = TrustSignals(
-            provenance=0.5, behavioral=behavioral,
-            community=0.5, historical=0.5,
+            provenance=0.5,
+            behavioral=behavioral,
+            community=0.5,
+            historical=0.5,
         )
         engine = TrustEngine()
         score = engine.compute_score("bad-skill", "1.0.0", signals)
 
         # Compare with the clean skill's score -- must be lower
         clean_signals = TrustSignals(
-            provenance=0.5, behavioral=1.0,
-            community=0.5, historical=0.5,
+            provenance=0.5,
+            behavioral=1.0,
+            community=0.5,
+            historical=0.5,
         )
         clean_score = engine.compute_score("clean", "1.0.0", clean_signals)
         assert score.intrinsic_score < clean_score.intrinsic_score
@@ -133,9 +140,7 @@ class TestAnalyzerToLockfile:
         assert inferred is not None
 
         # Build lockfile entry with inferred capabilities
-        cap_strings = [
-            f"{cap.resource}:{cap.access.name}" for cap in inferred
-        ]
+        cap_strings = [f"{cap.resource}:{cap.access.name}" for cap in inferred]
         locked = LockedSkill(
             name="net-skill",
             version="1.0.0",
@@ -158,8 +163,10 @@ class TestTrustToLockfile:
         """Trust level from engine is stored in LockedSkill."""
         engine = TrustEngine()
         signals = TrustSignals(
-            provenance=0.9, behavioral=1.0,
-            community=0.8, historical=0.9,
+            provenance=0.9,
+            behavioral=1.0,
+            community=0.8,
+            historical=0.9,
         )
         score = engine.compute_score("trusted-skill", "2.0.0", signals)
 
@@ -179,17 +186,23 @@ class TestTrustToLockfile:
         engine = TrustEngine()
 
         dep_signals = TrustSignals(
-            provenance=0.1, behavioral=0.2,
-            community=0.1, historical=0.1,
+            provenance=0.1,
+            behavioral=0.2,
+            community=0.1,
+            historical=0.1,
         )
         dep_score = engine.compute_score("shady-dep", "0.1.0", dep_signals)
 
         parent_signals = TrustSignals(
-            provenance=0.9, behavioral=1.0,
-            community=0.8, historical=0.9,
+            provenance=0.9,
+            behavioral=1.0,
+            community=0.8,
+            historical=0.9,
         )
         parent_score = engine.compute_score(
-            "good-parent", "1.0.0", parent_signals,
+            "good-parent",
+            "1.0.0",
+            parent_signals,
             dependency_scores=[dep_score],
         )
 
@@ -208,26 +221,30 @@ class TestLockfileToASBOM:
         """Every skill in the lockfile appears as an ASBOM component."""
         lockfile = Lockfile()
         for i in range(5):
-            lockfile.add_skill(LockedSkill(
-                name=f"skill-{i}",
-                version="1.0.0",
-                integrity="sha256:" + "b" * 64,
-                format="claude",
-                trust_score=0.7,
-                trust_level="COMMUNITY_VERIFIED",
-            ))
+            lockfile.add_skill(
+                LockedSkill(
+                    name=f"skill-{i}",
+                    version="1.0.0",
+                    integrity="sha256:" + "b" * 64,
+                    format="claude",
+                    trust_score=0.7,
+                    trust_level="COMMUNITY_VERIFIED",
+                )
+            )
 
         gen = ASBOMGenerator()
         for name in lockfile.skill_names:
             skill = lockfile.get_skill(name)
             assert skill is not None
-            gen.add_component(SkillComponent(
-                name=skill.name,
-                version=skill.version,
-                format=skill.format,
-                trust_score=skill.trust_score,
-                trust_level=skill.trust_level,
-            ))
+            gen.add_component(
+                SkillComponent(
+                    name=skill.name,
+                    version=skill.version,
+                    format=skill.format,
+                    trust_score=skill.trust_score,
+                    trust_level=skill.trust_level,
+                )
+            )
 
         assert gen.component_count == 5
         bom = gen.generate()
@@ -254,8 +271,10 @@ class TestFullDataChain:
         engine = TrustEngine()
         behavioral = 1.0 if result.is_safe else 0.0
         signals = TrustSignals(
-            provenance=0.5, behavioral=behavioral,
-            community=0.5, historical=0.5,
+            provenance=0.5,
+            behavioral=behavioral,
+            community=0.5,
+            historical=0.5,
         )
         trust = engine.compute_score(skill.name, skill.version, signals)
 
@@ -275,7 +294,8 @@ class TestFullDataChain:
         # 5. ASBOM
         gen = ASBOMGenerator()
         gen.add_from_parsed_skill(
-            skill, result,
+            skill,
+            result,
             trust_score=trust.effective_score,
             trust_level=trust.level.name,
         )
@@ -293,12 +313,15 @@ class TestFullDataChain:
     def test_dependency_graph_feeds_lockfile_factory(self) -> None:
         """ADG resolution result can create a lockfile via factory."""
         graph = AgentDependencyGraph()
-        graph.add_skill(SkillNode(
-            name="app", version="1.0.0",
-            dependencies=[
-                SkillDependency("lib", VersionConstraint(">=1.0.0")),
-            ],
-        ))
+        graph.add_skill(
+            SkillNode(
+                name="app",
+                version="1.0.0",
+                dependencies=[
+                    SkillDependency("lib", VersionConstraint(">=1.0.0")),
+                ],
+            )
+        )
         graph.add_skill(SkillNode(name="lib", version="1.2.0"))
 
         resolver = DependencyResolver(
@@ -319,13 +342,15 @@ class TestFullDataChain:
     def test_lockfile_validation_catches_missing_deps(self) -> None:
         """Lockfile validation flags skills referencing missing dependencies."""
         lockfile = Lockfile()
-        lockfile.add_skill(LockedSkill(
-            name="orphan",
-            version="1.0.0",
-            integrity="sha256:" + "c" * 64,
-            format="mcp",
-            dependencies={"missing-dep": "1.0.0"},
-        ))
+        lockfile.add_skill(
+            LockedSkill(
+                name="orphan",
+                version="1.0.0",
+                integrity="sha256:" + "c" * 64,
+                format="mcp",
+                dependencies={"missing-dep": "1.0.0"},
+            )
+        )
 
         errors = lockfile.validate()
         assert len(errors) > 0

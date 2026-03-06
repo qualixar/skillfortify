@@ -112,9 +112,7 @@ class N8nWorkflowParser(SkillParser):
 
         description_parts = [f"n8n workflow: {workflow_name}"]
         if node_types:
-            description_parts.append(
-                f"Nodes: {', '.join(sorted(set(node_types)))}"
-            )
+            description_parts.append(f"Nodes: {', '.join(sorted(set(node_types)))}")
 
         return ParsedSkill(
             name=workflow_name,

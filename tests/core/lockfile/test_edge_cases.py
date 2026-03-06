@@ -23,13 +23,15 @@ class TestNonExistentDependencyValidation:
     def test_missing_dependency_detected(self) -> None:
         """A skill depending on a non-existent skill produces a validation error."""
         lf = Lockfile()
-        lf.add_skill(LockedSkill(
-            name="consumer",
-            version="1.0.0",
-            integrity=Lockfile.compute_integrity("consumer content"),
-            format="mcp",
-            dependencies={"nonexistent-lib": "2.0.0"},
-        ))
+        lf.add_skill(
+            LockedSkill(
+                name="consumer",
+                version="1.0.0",
+                integrity=Lockfile.compute_integrity("consumer content"),
+                format="mcp",
+                dependencies={"nonexistent-lib": "2.0.0"},
+            )
+        )
         errors = lf.validate()
         assert len(errors) >= 1
         assert any("nonexistent-lib" in e for e in errors)
@@ -41,20 +43,24 @@ class TestCircularDependencyValidation:
     def test_direct_circular_a_b_a(self) -> None:
         """A->B->A circular dependency is detected by validation."""
         lf = Lockfile()
-        lf.add_skill(LockedSkill(
-            name="skill-a",
-            version="1.0.0",
-            integrity=Lockfile.compute_integrity("a"),
-            format="mcp",
-            dependencies={"skill-b": "1.0.0"},
-        ))
-        lf.add_skill(LockedSkill(
-            name="skill-b",
-            version="1.0.0",
-            integrity=Lockfile.compute_integrity("b"),
-            format="mcp",
-            dependencies={"skill-a": "1.0.0"},
-        ))
+        lf.add_skill(
+            LockedSkill(
+                name="skill-a",
+                version="1.0.0",
+                integrity=Lockfile.compute_integrity("a"),
+                format="mcp",
+                dependencies={"skill-b": "1.0.0"},
+            )
+        )
+        lf.add_skill(
+            LockedSkill(
+                name="skill-b",
+                version="1.0.0",
+                integrity=Lockfile.compute_integrity("b"),
+                format="mcp",
+                dependencies={"skill-a": "1.0.0"},
+            )
+        )
         errors = lf.validate()
         circular_errors = [e for e in errors if "ircular" in e]
         assert len(circular_errors) >= 1
@@ -68,14 +74,16 @@ class TestLargeLockfile:
         lf = Lockfile()
         for i in range(100):
             name = f"skill-{i:03d}"
-            lf.add_skill(LockedSkill(
-                name=name,
-                version=f"{i}.0.0",
-                integrity=Lockfile.compute_integrity(f"content-{i}"),
-                format="mcp",
-                capabilities=["network:READ"],
-                source_path=f"/tmp/skills/{name}",
-            ))
+            lf.add_skill(
+                LockedSkill(
+                    name=name,
+                    version=f"{i}.0.0",
+                    integrity=Lockfile.compute_integrity(f"content-{i}"),
+                    format="mcp",
+                    capabilities=["network:READ"],
+                    source_path=f"/tmp/skills/{name}",
+                )
+            )
         assert lf.skill_count == 100
 
         # Serialize to JSON.
@@ -106,17 +114,19 @@ class TestOptionalFieldsNone:
     def test_minimal_skill_serializes_cleanly(self) -> None:
         """A LockedSkill with None trust and empty capabilities serializes."""
         lf = Lockfile()
-        lf.add_skill(LockedSkill(
-            name="bare-skill",
-            version="0.1.0",
-            integrity=Lockfile.compute_integrity("bare"),
-            format="claude",
-            capabilities=[],
-            dependencies={},
-            trust_score=None,
-            trust_level=None,
-            source_path="",
-        ))
+        lf.add_skill(
+            LockedSkill(
+                name="bare-skill",
+                version="0.1.0",
+                integrity=Lockfile.compute_integrity("bare"),
+                format="claude",
+                capabilities=[],
+                dependencies={},
+                trust_score=None,
+                trust_level=None,
+                source_path="",
+            )
+        )
         d = lf.to_dict()
         skill_entry = d["skills"]["bare-skill"]
         # Optional fields omitted when None/empty.

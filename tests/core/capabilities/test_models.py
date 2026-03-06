@@ -160,87 +160,113 @@ class TestCapabilitySet:
 
     def test_permits_when_declared_covers_required(self) -> None:
         """Declared WRITE permits required READ."""
-        declared = CapabilitySet.from_list([
-            Capability(resource="filesystem", access=AccessLevel.WRITE),
-        ])
+        declared = CapabilitySet.from_list(
+            [
+                Capability(resource="filesystem", access=AccessLevel.WRITE),
+            ]
+        )
         required = Capability(resource="filesystem", access=AccessLevel.READ)
         assert declared.permits(required)
 
     def test_permits_exact_match(self) -> None:
-        declared = CapabilitySet.from_list([
-            Capability(resource="network", access=AccessLevel.READ),
-        ])
+        declared = CapabilitySet.from_list(
+            [
+                Capability(resource="network", access=AccessLevel.READ),
+            ]
+        )
         required = Capability(resource="network", access=AccessLevel.READ)
         assert declared.permits(required)
 
     def test_denies_excess(self) -> None:
         """Declared READ denies required WRITE."""
-        declared = CapabilitySet.from_list([
-            Capability(resource="filesystem", access=AccessLevel.READ),
-        ])
+        declared = CapabilitySet.from_list(
+            [
+                Capability(resource="filesystem", access=AccessLevel.READ),
+            ]
+        )
         required = Capability(resource="filesystem", access=AccessLevel.WRITE)
         assert not declared.permits(required)
 
     def test_denies_unknown_resource(self) -> None:
         """A skill requesting access to an undeclared resource is denied."""
-        declared = CapabilitySet.from_list([
-            Capability(resource="filesystem", access=AccessLevel.ADMIN),
-        ])
+        declared = CapabilitySet.from_list(
+            [
+                Capability(resource="filesystem", access=AccessLevel.ADMIN),
+            ]
+        )
         required = Capability(resource="network", access=AccessLevel.READ)
         assert not declared.permits(required)
 
     def test_is_subset_of(self) -> None:
         """A set with lower/equal access is a subset of a broader set."""
-        smaller = CapabilitySet.from_list([
-            Capability(resource="filesystem", access=AccessLevel.READ),
-        ])
-        bigger = CapabilitySet.from_list([
-            Capability(resource="filesystem", access=AccessLevel.WRITE),
-            Capability(resource="network", access=AccessLevel.READ),
-        ])
+        smaller = CapabilitySet.from_list(
+            [
+                Capability(resource="filesystem", access=AccessLevel.READ),
+            ]
+        )
+        bigger = CapabilitySet.from_list(
+            [
+                Capability(resource="filesystem", access=AccessLevel.WRITE),
+                Capability(resource="network", access=AccessLevel.READ),
+            ]
+        )
         assert smaller.is_subset_of(bigger)
 
     def test_not_subset_when_exceeds(self) -> None:
         """A set requiring higher access is NOT a subset."""
-        requesting = CapabilitySet.from_list([
-            Capability(resource="filesystem", access=AccessLevel.ADMIN),
-        ])
-        allowed = CapabilitySet.from_list([
-            Capability(resource="filesystem", access=AccessLevel.READ),
-        ])
+        requesting = CapabilitySet.from_list(
+            [
+                Capability(resource="filesystem", access=AccessLevel.ADMIN),
+            ]
+        )
+        allowed = CapabilitySet.from_list(
+            [
+                Capability(resource="filesystem", access=AccessLevel.READ),
+            ]
+        )
         assert not requesting.is_subset_of(allowed)
 
     def test_not_subset_when_extra_resource(self) -> None:
         """A set with capabilities for an undeclared resource is NOT a subset."""
-        requesting = CapabilitySet.from_list([
-            Capability(resource="filesystem", access=AccessLevel.READ),
-            Capability(resource="shell", access=AccessLevel.WRITE),
-        ])
-        allowed = CapabilitySet.from_list([
-            Capability(resource="filesystem", access=AccessLevel.ADMIN),
-        ])
+        requesting = CapabilitySet.from_list(
+            [
+                Capability(resource="filesystem", access=AccessLevel.READ),
+                Capability(resource="shell", access=AccessLevel.WRITE),
+            ]
+        )
+        allowed = CapabilitySet.from_list(
+            [
+                Capability(resource="filesystem", access=AccessLevel.ADMIN),
+            ]
+        )
         assert not requesting.is_subset_of(allowed)
 
     def test_empty_is_subset_of_anything(self) -> None:
         """The empty set is a subset of every CapabilitySet."""
         empty = CapabilitySet()
-        non_empty = CapabilitySet.from_list([
-            Capability(resource="filesystem", access=AccessLevel.READ),
-        ])
+        non_empty = CapabilitySet.from_list(
+            [
+                Capability(resource="filesystem", access=AccessLevel.READ),
+            ]
+        )
         assert empty.is_subset_of(non_empty)
         assert empty.is_subset_of(CapabilitySet())
 
     def test_violations_against_returns_excess(self) -> None:
         """violations_against lists capabilities that exceed the declared set."""
-        observed = CapabilitySet.from_list([
-            Capability(resource="filesystem", access=AccessLevel.READ),
-            Capability(resource="shell", access=AccessLevel.WRITE),
-            Capability(resource="network", access=AccessLevel.ADMIN),
-        ])
-        declared = CapabilitySet.from_list([
-            Capability(resource="filesystem", access=AccessLevel.WRITE),
-            Capability(resource="network", access=AccessLevel.READ),
-        ])
+        observed = CapabilitySet.from_list(
+            [
+                Capability(resource="filesystem", access=AccessLevel.READ),
+                Capability(resource="shell", access=AccessLevel.WRITE),
+                Capability(resource="network", access=AccessLevel.ADMIN),
+            ]
+        )
+        declared = CapabilitySet.from_list(
+            [
+                Capability(resource="filesystem", access=AccessLevel.WRITE),
+                Capability(resource="network", access=AccessLevel.READ),
+            ]
+        )
         violations = observed.violations_against(declared)
         assert len(violations) == 2
         violation_resources = {v.resource for v in violations}
@@ -249,25 +275,33 @@ class TestCapabilitySet:
 
     def test_violations_empty_when_compliant(self) -> None:
         """No violations when observed is a subset of declared."""
-        observed = CapabilitySet.from_list([
-            Capability(resource="filesystem", access=AccessLevel.READ),
-        ])
-        declared = CapabilitySet.from_list([
-            Capability(resource="filesystem", access=AccessLevel.ADMIN),
-        ])
+        observed = CapabilitySet.from_list(
+            [
+                Capability(resource="filesystem", access=AccessLevel.READ),
+            ]
+        )
+        declared = CapabilitySet.from_list(
+            [
+                Capability(resource="filesystem", access=AccessLevel.ADMIN),
+            ]
+        )
         violations = observed.violations_against(declared)
         assert len(violations) == 0
 
     def test_contains(self) -> None:
-        cs = CapabilitySet.from_list([
-            Capability(resource="filesystem", access=AccessLevel.READ),
-        ])
+        cs = CapabilitySet.from_list(
+            [
+                Capability(resource="filesystem", access=AccessLevel.READ),
+            ]
+        )
         assert Capability(resource="filesystem", access=AccessLevel.READ) in cs
 
     def test_not_contains(self) -> None:
-        cs = CapabilitySet.from_list([
-            Capability(resource="filesystem", access=AccessLevel.READ),
-        ])
+        cs = CapabilitySet.from_list(
+            [
+                Capability(resource="filesystem", access=AccessLevel.READ),
+            ]
+        )
         assert Capability(resource="network", access=AccessLevel.READ) not in cs
 
     def test_iter(self) -> None:
@@ -280,9 +314,11 @@ class TestCapabilitySet:
         assert len(iterated) == 2
 
     def test_len(self) -> None:
-        cs = CapabilitySet.from_list([
-            Capability(resource="filesystem", access=AccessLevel.READ),
-            Capability(resource="network", access=AccessLevel.WRITE),
-            Capability(resource="shell", access=AccessLevel.ADMIN),
-        ])
+        cs = CapabilitySet.from_list(
+            [
+                Capability(resource="filesystem", access=AccessLevel.READ),
+                Capability(resource="network", access=AccessLevel.WRITE),
+                Capability(resource="shell", access=AccessLevel.ADMIN),
+            ]
+        )
         assert len(cs) == 3

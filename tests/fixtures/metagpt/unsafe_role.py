@@ -10,6 +10,7 @@ Used by test_metagpt.py to verify detection of:
 - External URLs in action code
 - Shell command extraction
 """
+
 from metagpt.roles import Role
 from metagpt.actions import Action
 import os

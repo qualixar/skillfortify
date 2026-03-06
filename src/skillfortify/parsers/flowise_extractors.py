@@ -18,27 +18,64 @@ from typing import Any
 
 FLOWISE_DIR = ".flowise"
 
-FLOWISE_NODE_TYPES: frozenset[str] = frozenset({
-    "ChatOpenAI", "ChatAnthropic", "ChatGoogleGenerativeAI",
-    "ChatHuggingFace", "ChatLocalAI", "ChatOllama",
-    "CustomTool", "ToolAgent", "ConversationChain",
-    "ConversationalRetrievalQAChain", "RetrievalQAChain",
-    "VectorStoreAgent", "OpenAIAssistant", "BufferMemory",
-    "ConversationSummaryMemory", "ZepMemory", "RedisBackedChatMemory",
-    "Pinecone", "Chroma", "Weaviate", "QdrantVectorStore",
-    "SupabaseVectorStore", "OpenAIEmbedding", "HuggingFaceEmbedding",
-    "CohereEmbedding", "PDFLoader", "CSVLoader", "WebBrowser",
-    "SerpAPI", "Calculator", "RequestsGet", "RequestsPost",
-})
+FLOWISE_NODE_TYPES: frozenset[str] = frozenset(
+    {
+        "ChatOpenAI",
+        "ChatAnthropic",
+        "ChatGoogleGenerativeAI",
+        "ChatHuggingFace",
+        "ChatLocalAI",
+        "ChatOllama",
+        "CustomTool",
+        "ToolAgent",
+        "ConversationChain",
+        "ConversationalRetrievalQAChain",
+        "RetrievalQAChain",
+        "VectorStoreAgent",
+        "OpenAIAssistant",
+        "BufferMemory",
+        "ConversationSummaryMemory",
+        "ZepMemory",
+        "RedisBackedChatMemory",
+        "Pinecone",
+        "Chroma",
+        "Weaviate",
+        "QdrantVectorStore",
+        "SupabaseVectorStore",
+        "OpenAIEmbedding",
+        "HuggingFaceEmbedding",
+        "CohereEmbedding",
+        "PDFLoader",
+        "CSVLoader",
+        "WebBrowser",
+        "SerpAPI",
+        "Calculator",
+        "RequestsGet",
+        "RequestsPost",
+    }
+)
 
-CREDENTIAL_INPUT_KEYS: frozenset[str] = frozenset({
-    "openAIApiKey", "anthropicApiKey", "googleApiKey",
-    "cohereApiKey", "huggingFaceApiKey", "pineconeApiKey",
-    "weaviateApiKey", "qdrantApiKey", "supabaseApiKey",
-    "serpApiKey", "zapierApiKey", "azureOpenAIApiKey",
-    "awsAccessKeyId", "awsSecretAccessKey", "redisUrl",
-    "zepApiKey", "apiKey",
-})
+CREDENTIAL_INPUT_KEYS: frozenset[str] = frozenset(
+    {
+        "openAIApiKey",
+        "anthropicApiKey",
+        "googleApiKey",
+        "cohereApiKey",
+        "huggingFaceApiKey",
+        "pineconeApiKey",
+        "weaviateApiKey",
+        "qdrantApiKey",
+        "supabaseApiKey",
+        "serpApiKey",
+        "zapierApiKey",
+        "azureOpenAIApiKey",
+        "awsAccessKeyId",
+        "awsSecretAccessKey",
+        "redisUrl",
+        "zepApiKey",
+        "apiKey",
+    }
+)
 
 _URL_PATTERN = re.compile(r"https?://[^\s\"'`)\]>]+")
 _ENV_PATTERN = re.compile(r"process\.env\.([A-Z_][A-Z0-9_]*)")
@@ -56,6 +93,7 @@ _REQUIRE_PATTERN = re.compile(r"require\s*\(\s*['\"]([^'\"]+)['\"]\s*\)")
 # ---------------------------------------------------------------------------
 # File loading
 # ---------------------------------------------------------------------------
+
 
 def safe_load_json(file_path: Path) -> dict[str, Any] | None:
     """Load a JSON file, returning None on any error.
@@ -103,6 +141,7 @@ def is_flowise_chatflow(data: dict[str, Any]) -> bool:
 # Text extraction
 # ---------------------------------------------------------------------------
 
+
 def extract_urls(text: str) -> list[str]:
     """Extract all HTTP/HTTPS URLs from text."""
     return _URL_PATTERN.findall(text)
@@ -124,6 +163,7 @@ def extract_shell_commands(text: str) -> list[str]:
 # ---------------------------------------------------------------------------
 # Node-level extraction
 # ---------------------------------------------------------------------------
+
 
 def extract_credentials(nodes: list[dict[str, Any]]) -> list[str]:
     """Extract credential input key names from node inputs.

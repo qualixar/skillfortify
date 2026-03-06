@@ -26,28 +26,35 @@ from skillfortify.parsers.openai_agents_utils import build_skill
 # --------------------------------------------------------------------------- #
 
 # Hosted tool class names exposed by the SDK.
-HOSTED_TOOL_NAMES = frozenset({
-    "WebSearchTool",
-    "FileSearchTool",
-    "CodeInterpreterTool",
-    "ComputerTool",
-})
+HOSTED_TOOL_NAMES = frozenset(
+    {
+        "WebSearchTool",
+        "FileSearchTool",
+        "CodeInterpreterTool",
+        "ComputerTool",
+    }
+)
 
 # MCP server class names.
-MCP_SERVER_NAMES = frozenset({
-    "MCPServerStdio",
-    "MCPServerHTTP",
-    "MCPServerSse",
-    "MCPServerStreamableHttp",
-})
+MCP_SERVER_NAMES = frozenset(
+    {
+        "MCPServerStdio",
+        "MCPServerHTTP",
+        "MCPServerSse",
+        "MCPServerStreamableHttp",
+    }
+)
 
 
 # --------------------------------------------------------------------------- #
 # @function_tool extraction                                                    #
 # --------------------------------------------------------------------------- #
 
+
 def extract_function_tools(
-    tree: ast.Module, source: str, path: Path,
+    tree: ast.Module,
+    source: str,
+    path: Path,
 ) -> list[ParsedSkill]:
     """Extract ``@function_tool`` decorated functions from *tree*."""
     results: list[ParsedSkill] = []
@@ -85,8 +92,11 @@ def _has_function_tool_decorator(
 # Agent(...) extraction                                                        #
 # --------------------------------------------------------------------------- #
 
+
 def extract_agents(
-    tree: ast.Module, source: str, path: Path,
+    tree: ast.Module,
+    source: str,
+    path: Path,
 ) -> list[ParsedSkill]:
     """Extract ``Agent(...)`` instantiations from *tree*."""
     results: list[ParsedSkill] = []
@@ -100,15 +110,17 @@ def extract_agents(
             continue
         capabilities = _collect_agent_capabilities(node, info)
         body_text = ast.get_source_segment(source, node) or ""
-        results.append(build_skill(
-            name=info["name"],
-            description=info.get("handoff_description", ""),
-            body=body_text,
-            path=path,
-            source=source,
-            capabilities=capabilities,
-            instructions=info.get("instructions", ""),
-        ))
+        results.append(
+            build_skill(
+                name=info["name"],
+                description=info.get("handoff_description", ""),
+                body=body_text,
+                path=path,
+                source=source,
+                capabilities=capabilities,
+                instructions=info.get("instructions", ""),
+            )
+        )
     return results
 
 
@@ -133,7 +145,8 @@ def _parse_agent_kwargs(node: ast.Call) -> dict[str, str]:
 
 
 def _collect_agent_capabilities(
-    node: ast.Call, info: dict[str, str],
+    node: ast.Call,
+    info: dict[str, str],
 ) -> list[str]:
     """Derive capability strings from Agent keyword arguments."""
     caps: list[str] = []
@@ -155,8 +168,11 @@ def _collect_agent_capabilities(
 # Hosted tools extraction                                                      #
 # --------------------------------------------------------------------------- #
 
+
 def extract_hosted_tools(
-    tree: ast.Module, source: str, path: Path,
+    tree: ast.Module,
+    source: str,
+    path: Path,
 ) -> list[ParsedSkill]:
     """Detect hosted tool imports (WebSearchTool, etc.)."""
     results: list[ParsedSkill] = []
@@ -167,14 +183,16 @@ def extract_hosted_tools(
             continue
         for alias in node.names:
             if alias.name in HOSTED_TOOL_NAMES:
-                results.append(build_skill(
-                    name=alias.name,
-                    description=f"OpenAI hosted tool: {alias.name}",
-                    body="",
-                    path=path,
-                    source=source,
-                    capabilities=[f"hosted:{alias.name}"],
-                ))
+                results.append(
+                    build_skill(
+                        name=alias.name,
+                        description=f"OpenAI hosted tool: {alias.name}",
+                        body="",
+                        path=path,
+                        source=source,
+                        capabilities=[f"hosted:{alias.name}"],
+                    )
+                )
     return results
 
 
@@ -182,8 +200,11 @@ def extract_hosted_tools(
 # MCP server extraction                                                        #
 # --------------------------------------------------------------------------- #
 
+
 def extract_mcp_servers(
-    tree: ast.Module, source: str, path: Path,
+    tree: ast.Module,
+    source: str,
+    path: Path,
 ) -> list[ParsedSkill]:
     """Extract MCPServerStdio/MCPServerHTTP instantiations."""
     results: list[ParsedSkill] = []
@@ -197,14 +218,16 @@ def extract_mcp_servers(
         body_text = ast.get_source_segment(source, node) or ""
         name = info.get("command") or info.get("url") or class_name
         caps = [f"mcp:{class_name}"]
-        results.append(build_skill(
-            name=name,
-            description=f"MCP server connection via {class_name}",
-            body=body_text,
-            path=path,
-            source=source,
-            capabilities=caps,
-        ))
+        results.append(
+            build_skill(
+                name=name,
+                description=f"MCP server connection via {class_name}",
+                body=body_text,
+                path=path,
+                source=source,
+                capabilities=caps,
+            )
+        )
     return results
 
 
@@ -233,11 +256,14 @@ def _parse_mcp_kwargs(node: ast.Call) -> dict[str, str]:
 # Regex fallback                                                               #
 # --------------------------------------------------------------------------- #
 
+
 def regex_fallback(source: str, file_path: Path) -> list[ParsedSkill]:
     """Regex fallback for files that fail AST parsing."""
     results: list[ParsedSkill] = []
     for match in re.finditer(
-        r"@function_tool\s*[\n(].*?def\s+(\w+)", source, re.DOTALL,
+        r"@function_tool\s*[\n(].*?def\s+(\w+)",
+        source,
+        re.DOTALL,
     ):
         results.append(
             build_skill(match.group(1), "", source, file_path, source),

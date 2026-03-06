@@ -106,6 +106,7 @@ FIXTURES_DIR = Path(__file__).parent.parent / "fixtures" / "llamaindex"
 # Fixtures
 # ---------------------------------------------------------------------------
 
+
 @pytest.fixture
 def parser() -> LlamaIndexParser:
     return LlamaIndexParser()
@@ -138,6 +139,7 @@ def reader_dir(tmp_path: Path) -> Path:
 # ---------------------------------------------------------------------------
 # can_parse
 # ---------------------------------------------------------------------------
+
 
 class TestCanParse:
     """Validate LlamaIndex format detection."""
@@ -172,6 +174,7 @@ class TestCanParse:
 # FunctionTool
 # ---------------------------------------------------------------------------
 
+
 class TestFunctionTool:
     """Validate FunctionTool.from_defaults() extraction."""
 
@@ -201,6 +204,7 @@ class TestFunctionTool:
 # QueryEngineTool
 # ---------------------------------------------------------------------------
 
+
 class TestQueryEngineTool:
     """Validate QueryEngineTool extraction."""
 
@@ -222,6 +226,7 @@ class TestQueryEngineTool:
 # ---------------------------------------------------------------------------
 # Agent
 # ---------------------------------------------------------------------------
+
 
 class TestAgent:
     """Validate ReActAgent.from_tools() extraction."""
@@ -245,6 +250,7 @@ class TestAgent:
 # Data reader
 # ---------------------------------------------------------------------------
 
+
 class TestDataReader:
     """Validate data reader extraction."""
 
@@ -261,6 +267,7 @@ class TestDataReader:
 # ---------------------------------------------------------------------------
 # Security extraction
 # ---------------------------------------------------------------------------
+
 
 class TestSecurity:
     """Validate extraction of security-sensitive patterns."""
@@ -292,6 +299,7 @@ class TestSecurity:
 # ---------------------------------------------------------------------------
 # Output shape
 # ---------------------------------------------------------------------------
+
 
 class TestOutputShape:
     """Validate structural properties of parser output."""
@@ -327,6 +335,7 @@ class TestOutputShape:
 # Edge cases
 # ---------------------------------------------------------------------------
 
+
 class TestEdgeCases:
     """Validate graceful handling of edge cases."""
 
@@ -334,13 +343,17 @@ class TestEdgeCases:
         assert parser.parse(tmp_path) == []
 
     def test_malformed_no_raise(self, parser: LlamaIndexParser, tmp_path: Path) -> None:
-        bad = "from llama_index.core.tools import FunctionTool\ntool = FunctionTool.from_defaults(\n"
+        bad = (
+            "from llama_index.core.tools import FunctionTool\ntool = FunctionTool.from_defaults(\n"
+        )
         (tmp_path / "b.py").write_text(bad)
         skills = parser.parse(tmp_path)
         assert isinstance(skills, list)
 
     def test_malformed_regex_fallback(self, parser: LlamaIndexParser, tmp_path: Path) -> None:
-        bad = "from llama_index.core.tools import FunctionTool\ntool = FunctionTool.from_defaults(\n"
+        bad = (
+            "from llama_index.core.tools import FunctionTool\ntool = FunctionTool.from_defaults(\n"
+        )
         (tmp_path / "b.py").write_text(bad)
         assert len(parser.parse(tmp_path)) >= 1
 

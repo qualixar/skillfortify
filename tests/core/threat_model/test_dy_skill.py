@@ -198,9 +198,7 @@ class TestDYSkillAttacker:
 
     # -- Knowledge Closure --
 
-    def test_knowledge_closure_intercept_then_replay(
-        self, attacker: DYSkillAttacker
-    ) -> None:
+    def test_knowledge_closure_intercept_then_replay(self, attacker: DYSkillAttacker) -> None:
         """After intercept, the same message can be replayed."""
         msg = SkillMessage("lib", "2.0", b"data", frozenset({"cap:x"}))
         attacker.intercept(msg)
@@ -208,9 +206,7 @@ class TestDYSkillAttacker:
         # This must not raise
         attacker.replay(msg, registry_name)
 
-    def test_knowledge_closure_synthesize_then_replay(
-        self, attacker: DYSkillAttacker
-    ) -> None:
+    def test_knowledge_closure_synthesize_then_replay(self, attacker: DYSkillAttacker) -> None:
         """After synthesize, the synthesized message can be replayed."""
         comp = SkillMessage("base", "1.0", b"base_code", frozenset({"io:read"}))
         attacker.intercept(comp)
@@ -226,8 +222,7 @@ class TestDYSkillAttacker:
         the attacker retains it permanently.
         """
         msgs = [
-            SkillMessage(f"skill-{i}", "1.0", f"code-{i}".encode(), frozenset())
-            for i in range(5)
+            SkillMessage(f"skill-{i}", "1.0", f"code-{i}".encode(), frozenset()) for i in range(5)
         ]
         for i, msg in enumerate(msgs):
             attacker.intercept(msg)

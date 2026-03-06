@@ -55,6 +55,7 @@ _MCP_SERVER_FILENAMES = ("server.py", "main.py", "index.ts", "index.js")
 
 # ── Main parser class ─────────────────────────────────────────────────────
 
+
 class McpServerParser(SkillParser):
     """Deep scanner for MCP server source code implementations.
 
@@ -105,6 +106,7 @@ class McpServerParser(SkillParser):
 
 # ── File-level detection helpers ───────────────────────────────────────────
 
+
 def _file_has_mcp_import(filepath: Path) -> bool:
     """Check if a file contains MCP SDK import statements."""
     try:
@@ -148,6 +150,7 @@ def _pyproject_has_mcp(directory: Path) -> bool:
 
 # ── Per-file parse functions ───────────────────────────────────────────────
 
+
 def _parse_python_server(filepath: Path) -> list[ParsedSkill]:
     """Parse a single Python MCP server file into ParsedSkill(s)."""
     try:
@@ -163,19 +166,21 @@ def _parse_python_server(filepath: Path) -> list[ParsedSkill]:
         caps = sorted(set(caps) | {"credentials:read"})
     name = filepath.stem
     description = f"MCP server ({len(tools)} tools): {', '.join(tools[:5])}"
-    return [ParsedSkill(
-        name=name,
-        version="unknown",
-        source_path=filepath,
-        format="mcp_server",
-        description=description,
-        declared_capabilities=caps,
-        env_vars_referenced=env_vars,
-        urls=urls,
-        shell_commands=shell_cmds,
-        code_blocks=[source],
-        raw_content=source,
-    )]
+    return [
+        ParsedSkill(
+            name=name,
+            version="unknown",
+            source_path=filepath,
+            format="mcp_server",
+            description=description,
+            declared_capabilities=caps,
+            env_vars_referenced=env_vars,
+            urls=urls,
+            shell_commands=shell_cmds,
+            code_blocks=[source],
+            raw_content=source,
+        )
+    ]
 
 
 def _parse_ts_server(filepath: Path) -> list[ParsedSkill]:
@@ -188,16 +193,18 @@ def _parse_ts_server(filepath: Path) -> list[ParsedSkill]:
     name = filepath.stem
     tools = info["tools"]
     description = f"MCP server ({len(tools)} tools): {', '.join(tools[:5])}"
-    return [ParsedSkill(
-        name=name,
-        version="unknown",
-        source_path=filepath,
-        format="mcp_server",
-        description=description,
-        declared_capabilities=info["capabilities"],
-        env_vars_referenced=info["env_vars"],
-        urls=info["urls"],
-        shell_commands=info["shell_cmds"],
-        code_blocks=[source],
-        raw_content=source,
-    )]
+    return [
+        ParsedSkill(
+            name=name,
+            version="unknown",
+            source_path=filepath,
+            format="mcp_server",
+            description=description,
+            declared_capabilities=info["capabilities"],
+            env_vars_referenced=info["env_vars"],
+            urls=info["urls"],
+            shell_commands=info["shell_cmds"],
+            code_blocks=[source],
+            raw_content=source,
+        )
+    ]

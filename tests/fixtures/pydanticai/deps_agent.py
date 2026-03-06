@@ -14,9 +14,9 @@ class MyDeps:
 
 
 agent = Agent(
-    'openai:gpt-4o',
+    "openai:gpt-4o",
     deps_type=MyDeps,
-    system_prompt='You are a database assistant.',
+    system_prompt="You are a database assistant.",
 )
 
 
@@ -30,5 +30,6 @@ def add_user_context(ctx: RunContext[MyDeps]) -> str:
 def query_database(ctx: RunContext[MyDeps], sql: str) -> str:
     """Execute a database query."""
     import os
+
     os.getenv("DB_PASSWORD")
     return f"Results from {ctx.deps.db_url}"

@@ -46,7 +46,8 @@ def _get_function_tool_name(call: ast.Call) -> str:
 
 
 def extract_function_tools(
-    source: str, file_path: Path,
+    source: str,
+    file_path: Path,
 ) -> list[ParsedSkill]:
     """Extract plain Python functions referenced in Agent tools lists.
 
@@ -143,7 +144,8 @@ def _collect_dict_params(dict_node: ast.Dict, out: list[str]) -> None:
 
 
 def extract_mcp_toolsets(
-    source: str, file_path: Path,
+    source: str,
+    file_path: Path,
 ) -> list[ParsedSkill]:
     """Extract MCPToolset connection parameters from source.
 
@@ -168,14 +170,16 @@ def extract_mcp_toolsets(
         body = ast.get_source_segment(source, node) or ""
         cmd_args = _extract_stdio_params(node)
         caps = [f"mcp:{arg}" for arg in cmd_args if arg]
-        results.append(_build_skill(
-            name="MCPToolset",
-            description=f"MCP connection: {' '.join(cmd_args)}",
-            body=body,
-            path=file_path,
-            source=source,
-            capabilities=caps,
-        ))
+        results.append(
+            _build_skill(
+                name="MCPToolset",
+                description=f"MCP connection: {' '.join(cmd_args)}",
+                body=body,
+                path=file_path,
+                source=source,
+                capabilities=caps,
+            )
+        )
     return results
 
 
@@ -195,7 +199,8 @@ def _is_openapi_toolset_call(call: ast.Call) -> bool:
 
 
 def extract_openapi_toolsets(
-    source: str, file_path: Path,
+    source: str,
+    file_path: Path,
 ) -> list[ParsedSkill]:
     """Extract OpenAPIToolset references from source.
 
@@ -219,14 +224,16 @@ def extract_openapi_toolsets(
             continue
         body = ast.get_source_segment(source, node) or ""
         spec_type = _get_kwarg_str(node, "spec_str_type") or "unknown"
-        results.append(_build_skill(
-            name="OpenAPIToolset",
-            description=f"OpenAPI toolset (spec_type={spec_type})",
-            body=body,
-            path=file_path,
-            source=source,
-            capabilities=["openapi:external_api"],
-        ))
+        results.append(
+            _build_skill(
+                name="OpenAPIToolset",
+                description=f"OpenAPI toolset (spec_type={spec_type})",
+                body=body,
+                path=file_path,
+                source=source,
+                capabilities=["openapi:external_api"],
+            )
+        )
     return results
 
 

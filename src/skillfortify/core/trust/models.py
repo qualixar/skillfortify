@@ -109,13 +109,9 @@ class TrustSignals:
         for name in ("provenance", "behavioral", "community", "historical"):
             value = getattr(self, name)
             if not isinstance(value, (int, float)):
-                raise ValueError(
-                    f"Signal '{name}' must be numeric, got {type(value).__name__}"
-                )
+                raise ValueError(f"Signal '{name}' must be numeric, got {type(value).__name__}")
             if value < 0.0 or value > 1.0:
-                raise ValueError(
-                    f"Signal '{name}' must be in [0, 1], got {value}"
-                )
+                raise ValueError(f"Signal '{name}' must be in [0, 1], got {value}")
 
     def as_dict(self) -> dict[str, float]:
         """Return signals as a dictionary for iteration.
@@ -205,19 +201,14 @@ class TrustWeights:
         for name in weight_names:
             value = getattr(self, name)
             if not isinstance(value, (int, float)):
-                raise ValueError(
-                    f"Weight '{name}' must be numeric, got {type(value).__name__}"
-                )
+                raise ValueError(f"Weight '{name}' must be numeric, got {type(value).__name__}")
             if value < 0.0:
-                raise ValueError(
-                    f"Weight '{name}' must be non-negative, got {value}"
-                )
+                raise ValueError(f"Weight '{name}' must be non-negative, got {value}")
             total += value
 
         if abs(total - 1.0) > WEIGHT_SUM_EPSILON:
             raise ValueError(
-                f"Weights must sum to 1.0 (within epsilon={WEIGHT_SUM_EPSILON}), "
-                f"got sum={total}"
+                f"Weights must sum to 1.0 (within epsilon={WEIGHT_SUM_EPSILON}), got sum={total}"
             )
 
 

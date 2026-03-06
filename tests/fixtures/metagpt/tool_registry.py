@@ -5,6 +5,7 @@ Used by test_metagpt.py to verify extraction of:
 - URLs from tool code
 - Docstring as description
 """
+
 from metagpt.tools.tool_registry import register_tool
 import requests
 
@@ -18,6 +19,4 @@ def search_web(query: str) -> str:
 @register_tool()
 def fetch_stock_price(symbol: str) -> str:
     """Fetch current stock price for a symbol."""
-    return requests.get(
-        f"https://finance.example.com/api/quote/{symbol}"
-    ).text
+    return requests.get(f"https://finance.example.com/api/quote/{symbol}").text

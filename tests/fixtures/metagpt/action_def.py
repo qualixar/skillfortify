@@ -5,6 +5,7 @@ Used by test_metagpt.py to verify extraction of:
 - URLs from _aask / requests calls
 - Import dependencies
 """
+
 from metagpt.actions import Action
 import requests
 

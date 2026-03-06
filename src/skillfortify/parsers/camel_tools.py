@@ -28,15 +28,27 @@ _SHELL_RE = re.compile(
 _CAMEL_MARKERS = ("from camel", "import camel")
 
 _TOOLKIT_CLASSES = (
-    "SearchToolkit", "CodeExecutionToolkit", "MathToolkit",
-    "GoogleMapsToolkit", "WeatherToolkit", "SlackToolkit",
-    "TwitterToolkit", "GithubToolkit", "GoogleScholarToolkit",
-    "HuggingFaceToolkit", "RetrievalToolkit", "DalleToolkit",
+    "SearchToolkit",
+    "CodeExecutionToolkit",
+    "MathToolkit",
+    "GoogleMapsToolkit",
+    "WeatherToolkit",
+    "SlackToolkit",
+    "TwitterToolkit",
+    "GithubToolkit",
+    "GoogleScholarToolkit",
+    "HuggingFaceToolkit",
+    "RetrievalToolkit",
+    "DalleToolkit",
 )
 
 _AGENT_CLASSES = (
-    "ChatAgent", "RolePlaying", "Workforce",
-    "CriticAgent", "TaskSpecifyAgent", "EmbodiedAgent",
+    "ChatAgent",
+    "RolePlaying",
+    "Workforce",
+    "CriticAgent",
+    "TaskSpecifyAgent",
+    "EmbodiedAgent",
 )
 
 _TOOLKIT_CAPS: dict[str, list[str]] = {
@@ -103,17 +115,27 @@ def _has_camel_imports(text: str) -> bool:
 
 
 def _build_skill(
-    name: str, desc: str, body: str, path: Path, source: str,
+    name: str,
+    desc: str,
+    body: str,
+    path: Path,
+    source: str,
     caps: list[str] | None = None,
 ) -> ParsedSkill:
     """Construct a ``ParsedSkill`` from extracted CAMEL-AI metadata."""
     return ParsedSkill(
-        name=name, version="unknown", source_path=path, format="camel",
-        description=desc, declared_capabilities=caps or [],
+        name=name,
+        version="unknown",
+        source_path=path,
+        format="camel",
+        description=desc,
+        declared_capabilities=caps or [],
         code_blocks=[body] if body else [],
-        urls=_extract_urls(body), env_vars_referenced=_extract_env_vars(body),
+        urls=_extract_urls(body),
+        env_vars_referenced=_extract_env_vars(body),
         shell_commands=_extract_shell_commands(body),
-        dependencies=_extract_imports(source), raw_content=source,
+        dependencies=_extract_imports(source),
+        raw_content=source,
     )
 
 
@@ -154,16 +176,28 @@ def _extract_toolkit_skills(source: str, fp: Path) -> list[ParsedSkill]:
             continue
         if fn in _TOOLKIT_CLASSES:
             body = ast.get_source_segment(source, node) or ""
-            results.append(_build_skill(
-                fn, f"CAMEL-AI {fn}", body, fp, source, _TOOLKIT_CAPS.get(fn, []),
-            ))
+            results.append(
+                _build_skill(
+                    fn,
+                    f"CAMEL-AI {fn}",
+                    body,
+                    fp,
+                    source,
+                    _TOOLKIT_CAPS.get(fn, []),
+                )
+            )
         if fn == "FunctionTool" and node.args:
             wrapped = ast.get_source_segment(source, node.args[0]) or "unknown_function"
             body = ast.get_source_segment(source, node) or ""
-            results.append(_build_skill(
-                f"FunctionTool({wrapped})", f"FunctionTool wrapping {wrapped}",
-                body, fp, source,
-            ))
+            results.append(
+                _build_skill(
+                    f"FunctionTool({wrapped})",
+                    f"FunctionTool wrapping {wrapped}",
+                    body,
+                    fp,
+                    source,
+                )
+            )
     return results
 
 
@@ -197,9 +231,16 @@ def _regex_toolkits(source: str, fp: Path) -> list[ParsedSkill]:
     results: list[ParsedSkill] = []
     for tk in _TOOLKIT_CLASSES:
         if re.search(rf"\b{tk}\s*\(", source):
-            results.append(_build_skill(
-                tk, f"CAMEL-AI {tk}", source, fp, source, _TOOLKIT_CAPS.get(tk, []),
-            ))
+            results.append(
+                _build_skill(
+                    tk,
+                    f"CAMEL-AI {tk}",
+                    source,
+                    fp,
+                    source,
+                    _TOOLKIT_CAPS.get(tk, []),
+                )
+            )
     return results
 
 

@@ -28,11 +28,7 @@ class TestMalformedYAMLFrontmatter:
         skills_dir = tmp_path / ".claude" / "skills"
         skills_dir.mkdir(parents=True)
         (skills_dir / "broken.md").write_text(
-            "---\n"
-            "name: broken-skill\n"
-            "description: missing close\n"
-            "\n"
-            "This is the body text.\n"
+            "---\nname: broken-skill\ndescription: missing close\n\nThis is the body text.\n"
         )
         parser = ClaudeSkillsParser()
         results = parser.parse(tmp_path)
@@ -46,10 +42,7 @@ class TestMalformedYAMLFrontmatter:
         skills_dir = tmp_path / ".claude" / "skills"
         skills_dir.mkdir(parents=True)
         (skills_dir / "invalid.md").write_text(
-            "---\n"
-            "[this: is: not: valid: yaml: {{{\n"
-            "---\n\n"
-            "Body content here.\n"
+            "---\n[this: is: not: valid: yaml: {{{\n---\n\nBody content here.\n"
         )
         parser = ClaudeSkillsParser()
         results = parser.parse(tmp_path)
@@ -84,8 +77,7 @@ class TestVeryLargeSkillFile:
         skills_dir = tmp_path / ".claude" / "skills"
         skills_dir.mkdir(parents=True)
         large_content = (
-            "---\nname: large-skill\n---\n\n"
-            + "This is a very long line. " * 50000  # ~1.3MB
+            "---\nname: large-skill\n---\n\n" + "This is a very long line. " * 50000  # ~1.3MB
         )
         (skills_dir / "large.md").write_text(large_content)
         parser = ClaudeSkillsParser()
@@ -120,10 +112,7 @@ class TestDuplicateMCPServerNames:
         # Standard JSON doesn't support duplicate keys, but Python's
         # json.loads takes the last value for duplicate keys.
         config_text = (
-            '{"mcpServers": {'
-            '"server-a": {"command": "first"},'
-            '"server-a": {"command": "second"}'
-            '}}'
+            '{"mcpServers": {"server-a": {"command": "first"},"server-a": {"command": "second"}}}'
         )
         (tmp_path / "mcp.json").write_text(config_text)
         parser = McpConfigParser()

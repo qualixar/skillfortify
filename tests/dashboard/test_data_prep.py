@@ -46,14 +46,17 @@ class TestExecutiveSummary:
         assert s["unsafe_count"] == 0
 
     def test_mixed(
-        self, safe_result: AnalysisResult, unsafe_result: AnalysisResult,
+        self,
+        safe_result: AnalysisResult,
+        unsafe_result: AnalysisResult,
     ) -> None:
         s = prepare_executive_summary([safe_result, unsafe_result], [])
         assert s["safe_count"] == 1
         assert s["unsafe_count"] == 1
 
     def test_severity_counts(
-        self, all_severity_results: list[AnalysisResult],
+        self,
+        all_severity_results: list[AnalysisResult],
     ) -> None:
         s = prepare_executive_summary(all_severity_results, [])
         assert s["critical_count"] == 1
@@ -66,7 +69,8 @@ class TestExecutiveSummary:
         assert "T" in s["scan_timestamp"]
 
     def test_frameworks_detected(
-        self, multi_framework_skills: list[ParsedSkill],
+        self,
+        multi_framework_skills: list[ParsedSkill],
     ) -> None:
         s = prepare_executive_summary([], multi_framework_skills)
         fws = s["frameworks_detected"]
@@ -87,21 +91,26 @@ class TestFindingsTable:
         assert prepare_findings_table([], []) == []
 
     def test_findings_flattened(
-        self, unsafe_result: AnalysisResult, unsafe_skill: ParsedSkill,
+        self,
+        unsafe_result: AnalysisResult,
+        unsafe_skill: ParsedSkill,
     ) -> None:
         rows = prepare_findings_table([unsafe_result], [unsafe_skill])
         assert len(rows) == 2
         assert rows[0]["skill_name"] == "data-exfil-tool"
 
     def test_format_lookup(
-        self, unsafe_result: AnalysisResult, unsafe_skill: ParsedSkill,
+        self,
+        unsafe_result: AnalysisResult,
+        unsafe_skill: ParsedSkill,
     ) -> None:
         rows = prepare_findings_table([unsafe_result], [unsafe_skill])
         for row in rows:
             assert row["format"] == "claude"
 
     def test_missing_format_defaults(
-        self, unsafe_result: AnalysisResult,
+        self,
+        unsafe_result: AnalysisResult,
     ) -> None:
         rows = prepare_findings_table([unsafe_result], [])
         for row in rows:
@@ -109,11 +118,17 @@ class TestFindingsTable:
 
     def test_evidence_truncation(self) -> None:
         finding = Finding(
-            skill_name="t", severity=Severity.LOW, message="m",
-            attack_class="a", finding_type="p", evidence="z" * 200,
+            skill_name="t",
+            severity=Severity.LOW,
+            message="m",
+            attack_class="a",
+            finding_type="p",
+            evidence="z" * 200,
         )
         result = AnalysisResult(
-            skill_name="t", is_safe=False, findings=[finding],
+            skill_name="t",
+            is_safe=False,
+            findings=[finding],
         )
         rows = prepare_findings_table([result], [])
         assert len(rows[0]["evidence"]) <= 120
@@ -121,11 +136,17 @@ class TestFindingsTable:
 
     def test_short_evidence_not_truncated(self) -> None:
         finding = Finding(
-            skill_name="t", severity=Severity.LOW, message="m",
-            attack_class="a", finding_type="p", evidence="short",
+            skill_name="t",
+            severity=Severity.LOW,
+            message="m",
+            attack_class="a",
+            finding_type="p",
+            evidence="short",
         )
         result = AnalysisResult(
-            skill_name="t", is_safe=False, findings=[finding],
+            skill_name="t",
+            is_safe=False,
+            findings=[finding],
         )
         rows = prepare_findings_table([result], [])
         assert rows[0]["evidence"] == "short"
@@ -133,8 +154,13 @@ class TestFindingsTable:
     def test_row_keys(self, unsafe_result: AnalysisResult) -> None:
         rows = prepare_findings_table([unsafe_result], [])
         expected_keys = {
-            "skill_name", "format", "severity", "message",
-            "attack_class", "finding_type", "evidence",
+            "skill_name",
+            "format",
+            "severity",
+            "message",
+            "attack_class",
+            "finding_type",
+            "evidence",
         }
         assert set(rows[0].keys()) == expected_keys
 
@@ -156,13 +182,15 @@ class TestCapabilitiesMatrix:
 
     def test_empty_capability_set(self) -> None:
         result = AnalysisResult(
-            skill_name="x", is_safe=True,
+            skill_name="x",
+            is_safe=True,
             inferred_capabilities=CapabilitySet(),
         )
         assert prepare_capabilities_matrix([result]) == []
 
     def test_capabilities_extracted(
-        self, safe_result: AnalysisResult,
+        self,
+        safe_result: AnalysisResult,
     ) -> None:
         matrix = prepare_capabilities_matrix([safe_result])
         assert len(matrix) == 1
@@ -170,7 +198,8 @@ class TestCapabilitiesMatrix:
         assert matrix[0]["capabilities"]["network"] == "READ"
 
     def test_multiple_capabilities(
-        self, unsafe_result: AnalysisResult,
+        self,
+        unsafe_result: AnalysisResult,
     ) -> None:
         matrix = prepare_capabilities_matrix([unsafe_result])
         caps = matrix[0]["capabilities"]
@@ -197,7 +226,8 @@ class TestFrameworkCoverage:
         assert cov[0]["count"] == 1
 
     def test_multi_sorted_by_count(
-        self, multi_framework_skills: list[ParsedSkill],
+        self,
+        multi_framework_skills: list[ParsedSkill],
     ) -> None:
         cov = prepare_framework_coverage(multi_framework_skills)
         assert cov[0]["count"] >= cov[-1]["count"]
