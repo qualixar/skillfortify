@@ -8,14 +8,14 @@ version = "0.3.3"
 description = "SkillFortify — Supply chain security scanner for AI agent skills. Supports 22 frameworks."
 readme = "README.md"
 requires-python = ">=3.11"
-license = "MIT"
+license = "Elastic-2.0"
 authors = [
     { name = "Varun Pratap Bhardwaj", email = "varun.pratap.bhardwaj@gmail.com" },
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
+    "License :: Other/Proprietary License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",

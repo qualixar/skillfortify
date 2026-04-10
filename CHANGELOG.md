@@ -4,6 +4,9 @@ All notable changes to SkillFortify are documented here.
 
 This project follows [Semantic Versioning](https://semver.org/).
 
+### [Unreleased]
+- **License:** Changed from MIT to Elastic-2.0 to protect research IP
+
 ## [0.3.2] - 2026-03-04
 
 ### Added

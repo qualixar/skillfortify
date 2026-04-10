@@ -123,7 +123,7 @@ SkillFortify provides capabilities not available in heuristic scanning tools:
 | **Registry scanning** | Pre-install evaluation | Not available |
 | **Peer-reviewed paper** | 31 pages, 5 theorems | Rare |
 | **Runs offline** | Yes | Varies |
-| **License** | MIT (free) | Varies |
+| **License** | Elastic-2.0 | Varies |
 
 ### Key Differentiators
 

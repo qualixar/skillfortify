@@ -69,7 +69,7 @@ Transformed SkillFortify from a project scanner into a system-wide security tool
 
 ## How to Contribute
 
-SkillFortify is open source (MIT License). Contributions are welcome:
+SkillFortify is source-available (Elastic License 2.0). Contributions are welcome:
 
 - **New framework parsers**: Add detection for frameworks not yet covered
 - **Benchmark skills**: Contribute samples to SkillFortifyBench

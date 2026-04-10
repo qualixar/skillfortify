@@ -4,7 +4,7 @@
 
 [![PyPI version](https://img.shields.io/pypi/v/skillfortify.svg)](https://pypi.org/project/skillfortify/)
 [![Tests](https://img.shields.io/github/actions/workflow/status/qualixar/skillfortify/ci.yml?label=tests)](https://github.com/qualixar/skillfortify/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![License: Elastic-2.0](https://img.shields.io/badge/License-Elastic--2.0-blue)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/downloads/)
 
 **[Website](https://www.superlocalmemory.com/skillfortify)** | **[PyPI](https://pypi.org/project/skillfortify/)** | **[Paper (arXiv)](https://arxiv.org/abs/2603.00195)** | **[Wiki](https://github.com/qualixar/skillfortify/wiki)**
@@ -237,7 +237,9 @@ Contributions welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup instruct
 
 ## License
 
-MIT License. See [LICENSE](LICENSE) for details.
+Elastic License 2.0. See [LICENSE](LICENSE).
+
+Copyright (c) 2026 Varun Pratap Bhardwaj / Qualixar.
 
 ---
 

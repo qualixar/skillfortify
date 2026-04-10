@@ -1,6 +1,6 @@
 # SkillFortify -- Formal Verification for Agent Skill Supply Chains
 
-**SkillFortify** is the first security tool that formally verifies what your AI agent skills can actually do -- instead of guessing with heuristic pattern matching. Grounded in five mathematical theorems with full proofs, SkillFortify provides soundness-guaranteed analysis across **22 agent frameworks** and **23 IDE configurations**. One command scans every AI tool on your system. Zero false positives on the benchmark suite. Open source under MIT License.
+**SkillFortify** is the first security tool that formally verifies what your AI agent skills can actually do -- instead of guessing with heuristic pattern matching. Grounded in five mathematical theorems with full proofs, SkillFortify provides soundness-guaranteed analysis across **22 agent frameworks** and **23 IDE configurations**. One command scans every AI tool on your system. Zero false positives on the benchmark suite. Source-available under Elastic License 2.0.
 
 ---
 
@@ -33,7 +33,7 @@ skillfortify dashboard
 skillfortify frameworks
 ```
 
-**Requirements:** Python 3.11+ | Works on macOS, Linux, Windows | Runs entirely offline | MIT License
+**Requirements:** Python 3.11+ | Works on macOS, Linux, Windows | Runs entirely offline | Elastic License 2.0
 
 ---
 
@@ -148,4 +148,4 @@ If you use SkillFortify in your research, please cite:
 
 ## License
 
-MIT License. See [LICENSE](https://github.com/qualixar/skillfortify/blob/main/LICENSE) for details.
+Elastic License 2.0. See [LICENSE](https://github.com/qualixar/skillfortify/blob/main/LICENSE) for details.

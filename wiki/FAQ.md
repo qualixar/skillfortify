@@ -12,7 +12,7 @@ SkillFortify is a security tool that formally verifies what your AI agent skills
 
 ### Is SkillFortify free?
 
-Yes. SkillFortify is open source under the MIT License. No paid tiers, usage limits, or feature restrictions. Full source code at [github.com/qualixar/skillfortify](https://github.com/qualixar/skillfortify).
+Yes. SkillFortify is source-available under the Elastic License 2.0. No paid tiers, usage limits, or feature restrictions. Full source code at [github.com/qualixar/skillfortify](https://github.com/qualixar/skillfortify).
 
 ### Does SkillFortify work offline?
 
