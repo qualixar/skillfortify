@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "skillfortify"
-version = "0.4.2"
+version = "0.4.3"
 description = "SkillFortify — Supply chain security scanner for AI agent skills. Supports 22 frameworks."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -59,6 +59,27 @@ skillfortify = "skillfortify.cli.main:cli"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/skillfortify"]
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+    ".backup/",
+    ".venv/",
+    "venv/",
+    ".claude/",
+    "CLAUDE.md",
+    "AGENTS.md",
+    ".npmignore",
+    ".code-review-graph/",
+    ".gitnexus/",
+    ".env*",
+    "*.log",
+    ".pytest_cache/",
+    ".ruff_cache/",
+    ".mypy_cache/",
+    ".hypothesis/",
+    "htmlcov/",
+    "*.bak",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
