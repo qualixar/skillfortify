@@ -75,6 +75,21 @@ class AttackClass(Enum):
     TYPOSQUATTING = "typosquatting"
     NAMESPACE_SQUATTING = "namespace_squatting"
 
+    def is_registry_dependent(self) -> bool:
+        """True if this class requires external registry observability to detect.
+
+        Registry-dependent classes cannot be analyzed from a single skill
+        artifact alone. Per paper §11.2, TYPOSQUATTING and DEPENDENCY_CONFUSION
+        require comparing the skill's declared dependencies against a
+        live package registry. NAMESPACE_SQUATTING additionally requires
+        observability of namespace ownership.
+
+        SkillFortifyBench v1.0 scopes to content-analyzable classes only;
+        registry-dependent classes are acknowledged as limitations per
+        paper §11.1 and reserved for v1.1+ relational-scanner work.
+        """
+        return self in _REGISTRY_DEPENDENT_CLASSES
+
     def applicable_phases(self) -> frozenset[SupplyChainPhase]:
         """Return the supply chain phases where this attack class can manifest.
 
@@ -284,3 +299,110 @@ def _build_all_surfaces() -> list[AttackSurface]:
             ),
         ),
     ]
+
+
+# ---------------------------------------------------------------------------
+# Registry-dependent class set (used by AttackClass.is_registry_dependent)
+# ---------------------------------------------------------------------------
+
+_REGISTRY_DEPENDENT_CLASSES: frozenset[AttackClass] = frozenset(
+    {
+        AttackClass.TYPOSQUATTING,
+        AttackClass.DEPENDENCY_CONFUSION,
+        AttackClass.NAMESPACE_SQUATTING,
+    }
+)
+
+
+# ---------------------------------------------------------------------------
+# AttackType: Thirteen concrete attack types (A1..A13) per paper §8.1 + Appendix B
+# ---------------------------------------------------------------------------
+
+
+class AttackType(Enum):
+    """Thirteen concrete attack types used by the SkillFortifyBench evaluation.
+
+    Paper arXiv:2603.00195 §3.2 defines 6 formal ``AttackClass`` categories
+    (c1..c6). Paper §8.1 + §9.1 + Appendix B.1 use 13 concrete A-types
+    (A1..A13) for benchmark reporting and per-type detection-rate analysis.
+
+    Both layers are canonical: ``AttackClass`` describes the threat-model
+    taxonomy; ``AttackType`` describes the benchmark's per-type evaluation
+    granularity. Every AttackType maps to exactly one parent AttackClass
+    via ``ATTACK_TYPE_TO_CLASS`` (see ``to_class()`` helper).
+
+    NAMESPACE_SQUATTING (c6) intentionally has NO AttackType representation:
+    paper §B.1 scoped the benchmark to content-analyzable attack types;
+    c6 requires full-registry observability (who owns which namespaces)
+    and is deferred to v1.1+ per LLD-04 §3.1.
+
+    References
+    ----------
+    Paper §3.2 Definition 3.2 (six formal classes c1..c6).
+    Paper §8.1 (thirteen concrete attack types A1..A13).
+    Paper §9.4 Table 6 (per-type detection rates).
+    Paper §B.1 Table 11 (benchmark distribution across A1..A13).
+    Paper §11.2 (registry-dependent limitations for c4/c5/c6).
+    """
+
+    A1 = "A1"
+    A2 = "A2"
+    A3 = "A3"
+    A4 = "A4"
+    A5 = "A5"
+    A6 = "A6"
+    A7 = "A7"
+    A8 = "A8"
+    A9 = "A9"
+    A10 = "A10"
+    A11 = "A11"
+    A12 = "A12"
+    A13 = "A13"
+
+    def to_class(self) -> AttackClass:
+        """Return the parent ``AttackClass`` for this concrete attack type.
+
+        Uses the ``ATTACK_TYPE_TO_CLASS`` mapping which is guaranteed total
+        over the AttackType enum.
+        """
+        return ATTACK_TYPE_TO_CLASS[self]
+
+    def description(self) -> str:
+        """Short human-readable label per paper Appendix B.1 Table 11."""
+        return _ATTACK_TYPE_DESCRIPTIONS[self]
+
+
+# Concrete-type -> formal-class mapping (total over AttackType).
+# Locked per paper §3.2 + §8.1 + Appendix B.1; any change requires paper amendment.
+ATTACK_TYPE_TO_CLASS: dict[AttackType, AttackClass] = {
+    AttackType.A1: AttackClass.DATA_EXFILTRATION,  # HTTP exfil
+    AttackType.A2: AttackClass.DATA_EXFILTRATION,  # DNS exfil
+    AttackType.A3: AttackClass.DATA_EXFILTRATION,  # Credential theft
+    AttackType.A4: AttackClass.PRIVILEGE_ESCALATION,  # Arbitrary code exec
+    AttackType.A5: AttackClass.PRIVILEGE_ESCALATION,  # File system tampering
+    AttackType.A6: AttackClass.PRIVILEGE_ESCALATION,  # Privilege escalation
+    AttackType.A7: AttackClass.DATA_EXFILTRATION,  # Steganographic exfil
+    AttackType.A8: AttackClass.PROMPT_INJECTION,  # Prompt injection
+    AttackType.A9: AttackClass.DATA_EXFILTRATION,  # Reverse shell
+    AttackType.A10: AttackClass.PRIVILEGE_ESCALATION,  # Crypto mining
+    AttackType.A11: AttackClass.TYPOSQUATTING,  # Typosquatting
+    AttackType.A12: AttackClass.DEPENDENCY_CONFUSION,  # Dependency confusion
+    AttackType.A13: AttackClass.DATA_EXFILTRATION,  # Encoded/obfuscated payloads
+}
+
+
+_ATTACK_TYPE_DESCRIPTIONS: dict[AttackType, str] = {
+    AttackType.A1: "Data exfiltration (HTTP)",
+    AttackType.A2: "Data exfiltration (DNS)",
+    AttackType.A3: "Credential theft",
+    AttackType.A4: "Arbitrary code execution",
+    AttackType.A5: "File system tampering",
+    AttackType.A6: "Privilege escalation",
+    AttackType.A7: "Steganographic exfiltration",
+    AttackType.A8: "Prompt injection",
+    AttackType.A9: "Reverse shell",
+    AttackType.A10: "Cryptocurrency mining",
+    AttackType.A11: "Typosquatting",
+    AttackType.A12: "Dependency confusion",
+    AttackType.A13: "Encoded/obfuscated payloads",
+}

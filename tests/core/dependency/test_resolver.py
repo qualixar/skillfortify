@@ -17,6 +17,14 @@ from skillfortify.core.dependency import (
     SkillNode,
     VersionConstraint,
 )
+from skillfortify.core.dependency.resolver import _PYSAT_AVAILABLE
+
+# Tests that invoke DependencyResolver.resolve() require the optional `python-sat`
+# extra. Mark SAT-dependent classes to skip cleanly when the extra is not installed.
+_requires_pysat = pytest.mark.skipif(
+    not _PYSAT_AVAILABLE,
+    reason="requires skillfortify[sat] extra (python-sat)",
+)
 
 
 # ===========================================================================
@@ -160,6 +168,7 @@ class TestSATEncoding:
 # ===========================================================================
 
 
+@_requires_pysat
 class TestSimpleResolution:
     """Tests for SAT-based resolution with straightforward dependencies."""
 
@@ -240,6 +249,7 @@ class TestSimpleResolution:
 # ===========================================================================
 
 
+@_requires_pysat
 class TestConflictResolution:
     """Tests for resolution when skills declare conflicts."""
 
@@ -314,6 +324,7 @@ class TestConflictResolution:
 # ===========================================================================
 
 
+@_requires_pysat
 class TestCapabilityBoundedResolution:
     """Tests for resolution with capability constraints (POLA at install time)."""
 

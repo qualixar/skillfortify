@@ -9,6 +9,7 @@ Verifies the formal guarantees of DependencyResolver (Theorem 4):
 
 from __future__ import annotations
 
+import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
 
@@ -19,6 +20,15 @@ from skillfortify.core.dependency import (
     SkillDependency,
     SkillConflict,
     VersionConstraint,
+)
+from skillfortify.core.dependency.resolver import _PYSAT_AVAILABLE
+
+# All property tests in this module invoke DependencyResolver.resolve(), which
+# requires the optional `python-sat` extra. Skip entire module cleanly when the
+# extra is not installed.
+pytestmark = pytest.mark.skipif(
+    not _PYSAT_AVAILABLE,
+    reason="requires skillfortify[sat] extra (python-sat)",
 )
 
 

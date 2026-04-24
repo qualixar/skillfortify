@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
 
 from skillfortify.core.analyzer import StaticAnalyzer, Severity
 from skillfortify.core.dependency import (
@@ -16,6 +17,14 @@ from skillfortify.core.dependency import (
     SkillNode,
     SkillDependency,
     VersionConstraint,
+)
+from skillfortify.core.dependency.resolver import _PYSAT_AVAILABLE
+
+# The single test that invokes DependencyResolver.resolve() requires the
+# optional `python-sat` extra. All other tests in this module are unaffected.
+_requires_pysat = pytest.mark.skipif(
+    not _PYSAT_AVAILABLE,
+    reason="requires skillfortify[sat] extra (python-sat)",
 )
 from skillfortify.core.lockfile import Lockfile, LockedSkill
 from skillfortify.core.sbom import ASBOMGenerator, SkillComponent
@@ -310,6 +319,7 @@ class TestFullDataChain:
         assert lf_skill is not None
         assert lf_skill.trust_score == trust.effective_score
 
+    @_requires_pysat
     def test_dependency_graph_feeds_lockfile_factory(self) -> None:
         """ADG resolution result can create a lockfile via factory."""
         graph = AgentDependencyGraph()

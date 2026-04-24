@@ -79,6 +79,7 @@ def _results_to_json(results: list[AnalysisResult]) -> list[dict]:
                 "severity": f.severity.name,
                 "message": f.message,
                 "attack_class": f.attack_class,
+                "attack_type": f.attack_type.name if f.attack_type else None,
                 "finding_type": f.finding_type,
                 "evidence": f.evidence,
             }

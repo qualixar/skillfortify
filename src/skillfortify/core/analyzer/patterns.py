@@ -25,6 +25,7 @@ import re
 from urllib.parse import urlparse
 
 from skillfortify.core.analyzer.models import Severity
+from skillfortify.core.threat_model.taxonomy import AttackType
 
 
 # ---------------------------------------------------------------------------
@@ -106,22 +107,25 @@ def _is_sensitive_env_var(name: str) -> bool:
 # Dangerous shell/code patterns (Phase 2)
 # ---------------------------------------------------------------------------
 
-# Each entry: (compiled regex, severity, attack_class, message_template)
+# Each entry: (compiled regex, severity, attack_class, message_template, attack_type)
 # The regex is matched against individual shell commands or code blocks.
+# attack_type (A1..A13) per LLD-04 §8.4 maps patterns to paper §8.1 granular types.
 
-_DANGEROUS_SHELL_PATTERNS: list[tuple[re.Pattern[str], Severity, str, str]] = [
+_DANGEROUS_SHELL_PATTERNS: list[tuple[re.Pattern[str], Severity, str, str, AttackType]] = [
     # CRITICAL: Remote code via pipe-to-shell
     (
         re.compile(r"curl\s+.*\|\s*(ba)?sh", re.IGNORECASE),
         Severity.CRITICAL,
         "privilege_escalation",
         "Remote code: curl piped to shell",
+        AttackType.A4,
     ),
     (
         re.compile(r"wget\s+.*\|\s*(ba)?sh", re.IGNORECASE),
         Severity.CRITICAL,
         "privilege_escalation",
         "Remote code: wget piped to shell",
+        AttackType.A4,
     ),
     # CRITICAL: Destructive file operations
     (
@@ -129,6 +133,7 @@ _DANGEROUS_SHELL_PATTERNS: list[tuple[re.Pattern[str], Severity, str, str]] = [
         Severity.CRITICAL,
         "privilege_escalation",
         "Destructive operation: recursive forced removal (rm -rf)",
+        AttackType.A5,
     ),
     # CRITICAL: Encoded payload to shell
     (
@@ -136,6 +141,7 @@ _DANGEROUS_SHELL_PATTERNS: list[tuple[re.Pattern[str], Severity, str, str]] = [
         Severity.CRITICAL,
         "privilege_escalation",
         "Obfuscated code: base64 decode piped to shell",
+        AttackType.A13,
     ),
     # CRITICAL: Netcat listener (reverse shell / data exfiltration)
     (
@@ -143,6 +149,7 @@ _DANGEROUS_SHELL_PATTERNS: list[tuple[re.Pattern[str], Severity, str, str]] = [
         Severity.CRITICAL,
         "data_exfiltration",
         "Network listener detected: netcat in listen mode (potential reverse shell)",
+        AttackType.A9,
     ),
     # HIGH: Excessive permissions
     (
@@ -150,6 +157,7 @@ _DANGEROUS_SHELL_PATTERNS: list[tuple[re.Pattern[str], Severity, str, str]] = [
         Severity.HIGH,
         "privilege_escalation",
         "Excessive permissions: chmod 777 grants world read/write/execute",
+        AttackType.A6,
     ),
 ]
 
@@ -158,18 +166,20 @@ _DANGEROUS_SHELL_PATTERNS: list[tuple[re.Pattern[str], Severity, str, str]] = [
 _EVAL_NAME = "ev" + "al"
 _EXEC_NAME = "ex" + "ec"
 
-_DANGEROUS_CODE_PATTERNS: list[tuple[re.Pattern[str], Severity, str, str]] = [
+_DANGEROUS_CODE_PATTERNS: list[tuple[re.Pattern[str], Severity, str, str, AttackType]] = [
     (
         re.compile(rf"\b{_EVAL_NAME}\s*\("),
         Severity.HIGH,
         "privilege_escalation",
         f"Dynamic code evaluation: {_EVAL_NAME}() can run arbitrary code",
+        AttackType.A4,
     ),
     (
         re.compile(rf"\b{_EXEC_NAME}\s*\("),
         Severity.HIGH,
         "privilege_escalation",
         f"Dynamic code evaluation: {_EXEC_NAME}() can run arbitrary code",
+        AttackType.A4,
     ),
 ]
 

@@ -30,6 +30,7 @@ from skillfortify.core.analyzer.patterns import (
     _is_safe_url,
     _is_sensitive_env_var,
 )
+from skillfortify.core.threat_model.taxonomy import AttackType
 from skillfortify.parsers.base import ParsedSkill
 
 
@@ -150,7 +151,7 @@ class StaticAnalyzer:
 
         # 2a: Shell command patterns
         for cmd in skill.shell_commands:
-            for pattern, severity, attack_class, message in _DANGEROUS_SHELL_PATTERNS:
+            for pattern, severity, attack_class, message, attack_type in _DANGEROUS_SHELL_PATTERNS:
                 if pattern.search(cmd):
                     findings.append(
                         Finding(
@@ -160,12 +161,13 @@ class StaticAnalyzer:
                             attack_class=attack_class,
                             finding_type="pattern_match",
                             evidence=cmd,
+                            attack_type=attack_type,
                         )
                     )
 
         # 2b: Code block patterns
         for block in skill.code_blocks:
-            for pattern, severity, attack_class, message in _DANGEROUS_CODE_PATTERNS:
+            for pattern, severity, attack_class, message, attack_type in _DANGEROUS_CODE_PATTERNS:
                 if pattern.search(block):
                     findings.append(
                         Finding(
@@ -175,10 +177,11 @@ class StaticAnalyzer:
                             attack_class=attack_class,
                             finding_type="pattern_match",
                             evidence=block,
+                            attack_type=attack_type,
                         )
                     )
 
-        # 2c: External URLs (not in allow-list)
+        # 2c: External URLs (not in allow-list) -> A1 HTTP exfil
         for url in skill.urls:
             if not _is_safe_url(url):
                 findings.append(
@@ -189,10 +192,11 @@ class StaticAnalyzer:
                         attack_class="data_exfiltration",
                         finding_type="pattern_match",
                         evidence=url,
+                        attack_type=AttackType.A1,
                     )
                 )
 
-        # 2d: Sensitive environment variable access
+        # 2d: Sensitive environment variable access -> A3 credential theft
         for env_var in skill.env_vars_referenced:
             if _is_sensitive_env_var(env_var):
                 findings.append(
@@ -203,11 +207,12 @@ class StaticAnalyzer:
                         attack_class="data_exfiltration",
                         finding_type="pattern_match",
                         evidence=env_var,
+                        attack_type=AttackType.A3,
                     )
                 )
 
-        # 2e: Information flow: base64 encoding + network access
-        # This combination suggests data exfiltration via encoding
+        # 2e: Information flow: base64 encoding + external URL -> A13 encoded/obfuscated
+        # This combination suggests data exfiltration via encoding.
         has_base64 = any(_BASE64_PATTERN.search(cmd) for cmd in skill.shell_commands) or any(
             _BASE64_PATTERN.search(block) for block in skill.code_blocks
         )
@@ -225,6 +230,7 @@ class StaticAnalyzer:
                     attack_class="data_exfiltration",
                     finding_type="info_flow",
                     evidence="base64 + external URL",
+                    attack_type=AttackType.A13,
                 )
             )
 
@@ -265,6 +271,20 @@ class StaticAnalyzer:
 
         findings: list[Finding] = []
         for violation in violations:
+            # Capability-violation heuristic per LLD-04 §8.4:
+            # shell / filesystem:WRITE -> A6 privilege escalation;
+            # network -> A1 HTTP exfil; else None (ambiguous).
+            attack_type: AttackType | None
+            resource = violation.resource
+            if resource == "shell":
+                attack_type = AttackType.A6
+            elif resource == "filesystem" and violation.access >= AccessLevel.WRITE:
+                attack_type = AttackType.A6
+            elif resource == "network":
+                attack_type = AttackType.A1
+            else:
+                attack_type = None
+
             findings.append(
                 Finding(
                     skill_name=skill.name,
@@ -278,6 +298,7 @@ class StaticAnalyzer:
                     attack_class="privilege_escalation",
                     finding_type="capability_violation",
                     evidence=f"inferred={violation.resource}:{violation.access.name}",
+                    attack_type=attack_type,
                 )
             )
 

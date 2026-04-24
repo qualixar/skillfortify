@@ -10,8 +10,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import IntEnum
+from typing import TYPE_CHECKING
 
 from skillfortify.core.capabilities import CapabilitySet
+
+if TYPE_CHECKING:
+    from skillfortify.core.threat_model.taxonomy import AttackType
 
 
 # ---------------------------------------------------------------------------
@@ -57,6 +61,10 @@ class Finding:
             "capability_violation" -- inferred capability exceeds declared.
             "info_flow" -- cross-channel information flow concern.
         evidence: The specific text/pattern that triggered the finding.
+        attack_type: Optional concrete attack type (A1..A13) per paper §8.1.
+            ``None`` for findings without a granular type mapping (e.g.
+            ambiguous capability violations). Populated by the engine for
+            every malicious pattern match per LLD-04 §5.3.
     """
 
     skill_name: str
@@ -65,6 +73,7 @@ class Finding:
     attack_class: str
     finding_type: str
     evidence: str
+    attack_type: "AttackType | None" = None
 
 
 # ---------------------------------------------------------------------------

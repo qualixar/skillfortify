@@ -6,6 +6,8 @@ constraints, dataclass defaults, and other unusual graph configurations.
 
 from __future__ import annotations
 
+import pytest
+
 from skillfortify.core.dependency import (
     AgentDependencyGraph,
     DependencyResolver,
@@ -14,6 +16,15 @@ from skillfortify.core.dependency import (
     SkillDependency,
     SkillNode,
     VersionConstraint,
+)
+from skillfortify.core.dependency.resolver import _PYSAT_AVAILABLE
+
+# Tests that invoke DependencyResolver.resolve() require the optional `python-sat`
+# extra. Without it, the call raises ImportError. Mark SAT-dependent tests to
+# skip cleanly in environments that do not install skillfortify[sat].
+_requires_pysat = pytest.mark.skipif(
+    not _PYSAT_AVAILABLE,
+    reason="requires skillfortify[sat] extra (python-sat)",
 )
 
 
@@ -53,6 +64,7 @@ def _make_node(
 class TestEdgeCases:
     """Tests for boundary conditions and unusual graph configurations."""
 
+    @_requires_pysat
     def test_empty_graph_resolution(self) -> None:
         """Resolving an empty graph succeeds with empty installation."""
         g = AgentDependencyGraph()
@@ -61,6 +73,7 @@ class TestEdgeCases:
         assert result.success is True
         assert result.installed == {}
 
+    @_requires_pysat
     def test_single_skill_no_deps(self) -> None:
         """A single skill with no deps resolves trivially."""
         g = AgentDependencyGraph()
@@ -70,6 +83,7 @@ class TestEdgeCases:
         assert result.success is True
         assert result.installed["solo"] == "1.0.0"
 
+    @_requires_pysat
     def test_missing_required_skill(self) -> None:
         """Requiring a skill not in the graph fails."""
         g = AgentDependencyGraph()
@@ -78,6 +92,7 @@ class TestEdgeCases:
         assert result.success is False
         assert any("missing" in msg for msg in result.conflicts)
 
+    @_requires_pysat
     def test_unsatisfiable_version_constraint(self) -> None:
         """Requiring a version that doesn't exist fails."""
         g = AgentDependencyGraph()
@@ -93,6 +108,7 @@ class TestEdgeCases:
         assert r.installed == {}
         assert r.conflicts == []
 
+    @_requires_pysat
     def test_no_requirements_no_forced_installs(self) -> None:
         """Without requirements, the solver is free to install nothing."""
         g = AgentDependencyGraph()
@@ -115,6 +131,7 @@ class TestEdgeCases:
         vc = VersionConstraint(">=1.0.0")
         assert ">=1.0.0" in repr(vc)
 
+    @_requires_pysat
     def test_dependency_with_missing_dep_in_graph(self) -> None:
         """A depends on B but B is not in the graph: A cannot be installed."""
         g = AgentDependencyGraph()

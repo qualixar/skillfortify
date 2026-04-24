@@ -1,0 +1,23 @@
+cff-version: "1.2.0"
+message: "If you use this benchmark, please cite the paper."
+title: "SkillFortifyBench: A 540-skill benchmark for agent skill security"
+version: "1.0.0"
+type: dataset
+license: MIT
+doi: "10.5281/zenodo.XXXXXXXX"
+repository-code: "https://github.com/qualixar/skillfortifybench"
+url: "https://github.com/qualixar/skillfortifybench"
+authors:
+  - family-names: Bhardwaj
+    given-names: Varun Pratap
+    orcid: "https://orcid.org/0009-0002-8726-4289"
+preferred-citation:
+  type: article
+  title: "Formal Analysis and Supply Chain Security for Agentic AI Skills"
+  authors:
+    - family-names: Bhardwaj
+      given-names: Varun Pratap
+      orcid: "https://orcid.org/0009-0002-8726-4289"
+  url: "https://arxiv.org/abs/2603.00195"
+  doi: "10.5281/zenodo.18787663"
+  year: 2025

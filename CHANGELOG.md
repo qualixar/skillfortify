@@ -7,6 +7,15 @@ This project follows [Semantic Versioning](https://semver.org/).
 ### [Unreleased]
 - **License:** Changed from MIT to Elastic-2.0 to protect research IP
 
+## [0.4.4] - 2026-04-22
+
+### Added
+- `AttackType` enum (A1..A13) exposing per-attack-type classification alongside the existing six formal attack classes (paper §8.1 + Appendix B.1).
+- `ATTACK_TYPE_TO_CLASS` mapping from concrete attack types to parent formal classes (paper §3.2).
+- `AttackClass.is_registry_dependent()` helper identifying classes requiring external registry observability (TYPOSQUATTING, DEPENDENCY_CONFUSION, NAMESPACE_SQUATTING).
+- `attack_type` field on `Finding` and `attack_type` key in JSON scan output, enabling per-type benchmark evaluation.
+- Pattern catalog entries now carry the `AttackType` that matching findings emit.
+
 ## [0.3.2] - 2026-03-04
 
 ### Added

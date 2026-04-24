@@ -20,15 +20,19 @@ Submodules
 from skillfortify.core.threat_model.dy_skill import DYSkillAttacker
 from skillfortify.core.threat_model.messages import Registry, SkillMessage, SupplyChain
 from skillfortify.core.threat_model.taxonomy import (
+    ATTACK_TYPE_TO_CLASS,
     AttackClass,
     AttackSurface,
+    AttackType,
     SupplyChainPhase,
     ThreatActor,
 )
 
 __all__ = [
+    "ATTACK_TYPE_TO_CLASS",
     "AttackClass",
     "AttackSurface",
+    "AttackType",
     "DYSkillAttacker",
     "Registry",
     "SkillMessage",
