@@ -79,6 +79,8 @@ exclude = [
     ".hypothesis/",
     "htmlcov/",
     "*.bak",
+    ".skfval-tmp/",
+    "graphify-out/",
 ]
 
 [tool.pytest.ini_options]

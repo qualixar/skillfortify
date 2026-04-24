@@ -26,3 +26,6 @@ CLAUDE.md
 .gitnexus/
 .claude/skills/generated/
 graphify-out/
+
+# Benchmark scratch (generated output, EDR canary, test runs)
+.skfval-tmp/
