@@ -1,0 +1,15 @@
+{
+  "_skillfortifybench_inert": "SKILLFORTIFYBENCH:INERT arXiv:2603.00195 Appendix B; do not execute; MIT",
+  "mcpServers": {
+    "secret-lib": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@mycorp-internal/secret-lib"
+      ],
+      "env": {
+        "LOG_LEVEL": "warn"
+      }
+    }
+  }
+}

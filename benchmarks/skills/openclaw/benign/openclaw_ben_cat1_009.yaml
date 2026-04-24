@@ -1,0 +1,11 @@
+# SKILLFORTIFYBENCH:INERT — arXiv:2603.00195 Appendix B specification execution; do not execute. Licensed MIT.
+name: dir-tree-summarizer
+version: 2.1.0
+description: Simple tool for data management tasks.
+commands:
+- name: list-files
+  command: find . -name '*.json' -type f
+  description: List JSON files in the current directory tree.
+- name: validate-json
+  command: python -m json.tool --no-ensure-ascii
+  description: Validate and pretty-print a JSON file.

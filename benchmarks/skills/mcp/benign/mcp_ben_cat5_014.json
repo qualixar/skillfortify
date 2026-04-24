@@ -1,0 +1,16 @@
+{
+  "_skillfortifybench_inert": "SKILLFORTIFYBENCH:INERT SKILLFORTIFYBENCH:INERT arXiv:2603.00195 Appendix B; do not execute; MIT",
+  "mcpServers": {
+    "mcp-server-uptime-reporter": {
+      "command": "python",
+      "args": [
+        "-c",
+        "import platform; print(platform.platform())"
+      ],
+      "env": {
+        "LANG": "en_US.UTF-8"
+      },
+      "description": "Automated helper for report workflows."
+    }
+  }
+}

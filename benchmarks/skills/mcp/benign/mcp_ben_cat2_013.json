@@ -1,0 +1,16 @@
+{
+  "_skillfortifybench_inert": "SKILLFORTIFYBENCH:INERT SKILLFORTIFYBENCH:INERT arXiv:2603.00195 Appendix B; do not execute; MIT",
+  "mcpServers": {
+    "mcp-server-xml-pretty-printer": {
+      "command": "python",
+      "args": [
+        "-c",
+        "import json, sys; json.dump(json.load(sys.stdin), sys.stdout, indent=2)"
+      ],
+      "env": {
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "description": "Minimal helper for config inspection."
+    }
+  }
+}

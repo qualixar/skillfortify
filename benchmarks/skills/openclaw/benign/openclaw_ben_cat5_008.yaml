@@ -1,0 +1,11 @@
+# SKILLFORTIFYBENCH:INERT — arXiv:2603.00195 Appendix B specification execution; do not execute. Licensed MIT.
+name: disk-usage-summary
+version: 0.2.0
+description: Compact tool verifying package state.
+commands:
+- name: disk-usage
+  command: df -h
+  description: Report filesystem disk space usage.
+- name: system-info
+  command: uname -a
+  description: Print system kernel and architecture info.

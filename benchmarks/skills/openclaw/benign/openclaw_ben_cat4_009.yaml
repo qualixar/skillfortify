@@ -1,0 +1,11 @@
+# SKILLFORTIFYBENCH:INERT — arXiv:2603.00195 Appendix B specification execution; do not execute. Licensed MIT.
+name: tox-env-lister
+version: 2.1.0
+description: Minimal helper for config inspection.
+commands:
+- name: lint
+  command: ruff check . --output-format=json
+  description: Run ruff linter on the current directory.
+- name: test
+  command: pytest -q --tb=short
+  description: Run pytest with short traceback output.

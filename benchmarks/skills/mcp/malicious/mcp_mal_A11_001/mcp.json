@@ -1,0 +1,15 @@
+{
+  "_skillfortifybench_inert": "SKILLFORTIFYBENCH:INERT arXiv:2603.00195 Appendix B; do not execute; MIT",
+  "mcpServers": {
+    "server-memry": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotcol/server-memry"
+      ],
+      "env": {
+        "LOG_LEVEL": "debug"
+      }
+    }
+  }
+}

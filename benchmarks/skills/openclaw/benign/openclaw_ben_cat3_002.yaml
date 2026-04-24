@@ -1,0 +1,11 @@
+# SKILLFORTIFYBENCH:INERT — arXiv:2603.00195 Appendix B specification execution; do not execute. Licensed MIT.
+name: pypi-download-counter
+version: 0.3.0
+description: Routine utility auditing file info.
+commands:
+- name: fetch-metadata
+  command: curl -s "https://api.github.com/users/{user}/repos"
+  description: Fetch public metadata from an allow-listed API.
+- name: check-version
+  command: python -m pip index versions pip
+  description: Check available versions of a package on PyPI.
