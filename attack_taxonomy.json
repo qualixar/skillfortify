@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "paper_section": "§3.2 + §8.1 + §B.1",
+  "formal_classes": {},
+  "attack_types": {
+    "A1": {
+      "parent_class": "c1_DATA_EXFILTRATION"
+    },
+    "A2": {
+      "parent_class": "c1_DATA_EXFILTRATION"
+    },
+    "A3": {
+      "parent_class": "c1_DATA_EXFILTRATION"
+    },
+    "A4": {
+      "parent_class": "c2_PRIVILEGE_ESCALATION"
+    },
+    "A5": {
+      "parent_class": "c2_PRIVILEGE_ESCALATION"
+    },
+    "A6": {
+      "parent_class": "c2_PRIVILEGE_ESCALATION"
+    },
+    "A7": {
+      "parent_class": "c1_DATA_EXFILTRATION"
+    },
+    "A8": {
+      "parent_class": "c3_PROMPT_INJECTION"
+    },
+    "A9": {
+      "parent_class": "c1_DATA_EXFILTRATION"
+    },
+    "A10": {
+      "parent_class": "c2_PRIVILEGE_ESCALATION"
+    },
+    "A11": {
+      "parent_class": "c5_TYPOSQUATTING"
+    },
+    "A12": {
+      "parent_class": "c4_DEPENDENCY_CONFUSION"
+    },
+    "A13": {
+      "parent_class": "c1_DATA_EXFILTRATION"
+    }
+  },
+  "benign_categories": [
+    "file_management",
+    "data_transformation",
+    "api_integration",
+    "development_tooling",
+    "system_information"
+  ]
+}

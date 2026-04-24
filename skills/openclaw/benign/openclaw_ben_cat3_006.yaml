@@ -1,0 +1,11 @@
+# SKILLFORTIFYBENCH:INERT — arXiv:2603.00195 Appendix B specification execution; do not execute. Licensed MIT.
+name: github-repo-stats
+version: 0.4.0
+description: Fast utility scanning build resources.
+commands:
+- name: fetch-metadata
+  command: curl -s "https://pypi.org/simple/{package}/"
+  description: Fetch public metadata from an allow-listed API.
+- name: check-version
+  command: python -m pip index versions pip
+  description: Check available versions of a package on PyPI.

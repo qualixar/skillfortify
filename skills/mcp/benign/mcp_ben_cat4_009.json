@@ -1,0 +1,18 @@
+{
+  "_skillfortifybench_inert": "SKILLFORTIFYBENCH:INERT SKILLFORTIFYBENCH:INERT arXiv:2603.00195 Appendix B; do not execute; MIT",
+  "mcpServers": {
+    "mcp-server-tox-env-lister": {
+      "command": "python",
+      "args": [
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short"
+      ],
+      "env": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "description": "Simple tool for environment management tasks."
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "_skillfortifybench_inert": "SKILLFORTIFYBENCH:INERT SKILLFORTIFYBENCH:INERT arXiv:2603.00195 Appendix B; do not execute; MIT",
+  "mcpServers": {
+    "mcp-server-temp-dir-cleaner": {
+      "command": "python",
+      "args": [
+        "-m",
+        "json.tool",
+        "--sort-keys"
+      ],
+      "env": {
+        "LOG_LEVEL": "info"
+      },
+      "description": "Quick utility to process package data."
+    }
+  }
+}

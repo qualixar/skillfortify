@@ -1,0 +1,15 @@
+{
+  "_skillfortifybench_inert": "SKILLFORTIFYBENCH:INERT arXiv:2603.00195 Appendix B; do not execute; MIT",
+  "mcpServers": {
+    "auth-helper": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@corp-tools/auth-helper"
+      ],
+      "env": {
+        "LOG_LEVEL": "warn"
+      }
+    }
+  }
+}

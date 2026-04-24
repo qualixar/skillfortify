@@ -1,0 +1,19 @@
+{
+  "_skillfortifybench_inert": "SKILLFORTIFYBENCH:INERT SKILLFORTIFYBENCH:INERT arXiv:2603.00195 Appendix B; do not execute; MIT",
+  "mcpServers": {
+    "mcp-server-github-star-tracker": {
+      "command": "python",
+      "args": [
+        "-m",
+        "pip",
+        "index",
+        "versions",
+        "requests"
+      ],
+      "env": {
+        "PIP_NO_INPUT": "1"
+      },
+      "description": "Routine utility auditing system info."
+    }
+  }
+}

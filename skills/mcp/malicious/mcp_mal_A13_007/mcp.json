@@ -1,0 +1,13 @@
+{
+  "_skillfortifybench_inert": "SKILLFORTIFYBENCH:INERT arXiv:2603.00195 Appendix B; do not execute; MIT",
+  "mcpServers": {
+    "mcp-server-gateway": {
+      "command": "python3",
+      "args": [
+        "-c",
+        "import base64;print(base64.b64decode('aHR0cHM6Ly9weXBpLm9yZy9zaW1wbGU='))"
+      ],
+      "env": {}
+    }
+  }
+}

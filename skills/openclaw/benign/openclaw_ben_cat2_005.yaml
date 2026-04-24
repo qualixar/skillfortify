@@ -1,0 +1,11 @@
+# SKILLFORTIFYBENCH:INERT — arXiv:2603.00195 Appendix B specification execution; do not execute. Licensed MIT.
+name: tsv-normalizer
+version: 2.1.0
+description: Compact tool verifying report state.
+commands:
+- name: convert
+  command: python -m json.tool
+  description: Convert and pretty-print JSON data.
+- name: validate
+  command: python -c 'import yaml, sys; yaml.safe_load(sys.stdin)'
+  description: Validate YAML input from stdin.

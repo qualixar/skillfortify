@@ -1,0 +1,11 @@
+# SKILLFORTIFYBENCH:INERT — arXiv:2603.00195 Appendix B specification execution; do not execute. Licensed MIT.
+name: pypi-license-scanner
+version: 3.0.0
+description: Routine utility auditing report info.
+commands:
+- name: fetch-metadata
+  command: curl -s "https://api.github.com/repos/{owner}/{repo}"
+  description: Fetch public metadata from an allow-listed API.
+- name: check-version
+  command: python -m pip index versions pip
+  description: Check available versions of a package on PyPI.

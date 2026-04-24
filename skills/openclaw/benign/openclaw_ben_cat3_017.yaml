@@ -1,0 +1,11 @@
+# SKILLFORTIFYBENCH:INERT — arXiv:2603.00195 Appendix B specification execution; do not execute. Licensed MIT.
+name: github-repo-stats
+version: 1.2.0
+description: Simple tool for config management tasks.
+commands:
+- name: fetch-metadata
+  command: curl -s "https://registry.npmjs.org/{package}"
+  description: Fetch public metadata from an allow-listed API.
+- name: check-version
+  command: python -m pip index versions pip
+  description: Check available versions of a package on PyPI.

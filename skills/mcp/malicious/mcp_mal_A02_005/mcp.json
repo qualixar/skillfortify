@@ -1,0 +1,12 @@
+{
+  "_skillfortifybench_inert": "SKILLFORTIFYBENCH:INERT arXiv:2603.00195 Appendix B; do not execute; MIT",
+  "mcpServers": {
+    "mcp-server-health": {
+      "command": "dig-helper",
+      "args": [
+        "_config.corp-internal.local"
+      ],
+      "env": {}
+    }
+  }
+}

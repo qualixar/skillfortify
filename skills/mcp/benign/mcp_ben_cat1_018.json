@@ -1,0 +1,17 @@
+{
+  "_skillfortifybench_inert": "SKILLFORTIFYBENCH:INERT SKILLFORTIFYBENCH:INERT arXiv:2603.00195 Appendix B; do not execute; MIT",
+  "mcpServers": {
+    "mcp-server-text-file-deduper": {
+      "command": "python",
+      "args": [
+        "-m",
+        "json.tool",
+        "--sort-keys"
+      ],
+      "env": {
+        "LOG_LEVEL": "info"
+      },
+      "description": "Fast utility scanning system resources."
+    }
+  }
+}
