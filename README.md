@@ -2,12 +2,18 @@
 
 > Supply chain security scanner for AI agent skills -- supports 22 frameworks.
 
+## SkillFortifyBench Now Available
+
+**540-skill, 3-format benchmark** for evaluating AI agent skill supply chain security scanners. 270 malicious (13 attack types) + 270 benign (5 categories) across Claude, MCP, and OpenClaw formats. Deterministic generation from seed=42. 100% precision, 91.5% recall with Wilson 95% CI containing the paper point estimate. **[View Benchmark](benchmarks/)** | **[Standalone Repo](https://github.com/qualixar/skillfortifybench)**
+
+---
+
 [![PyPI version](https://img.shields.io/pypi/v/skillfortify.svg)](https://pypi.org/project/skillfortify/)
 [![Tests](https://img.shields.io/github/actions/workflow/status/qualixar/skillfortify/ci.yml?label=tests)](https://github.com/qualixar/skillfortify/actions)
 [![License: Elastic-2.0](https://img.shields.io/badge/License-Elastic--2.0-blue)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/downloads/)
 
-**[Website](https://www.superlocalmemory.com/skillfortify)** | **[PyPI](https://pypi.org/project/skillfortify/)** | **[Paper (arXiv)](https://arxiv.org/abs/2603.00195)** | **[Wiki](https://github.com/qualixar/skillfortify/wiki)**
+**[Website](https://www.superlocalmemory.com/skillfortify)** | **[PyPI](https://pypi.org/project/skillfortify/)** | **[Paper (arXiv)](https://arxiv.org/abs/2603.00195)** | **[Wiki](https://github.com/qualixar/skillfortify/wiki)** | **[@varunPbhardwaj](https://twitter.com/varunPbhardwaj)**
 
 ---
 
