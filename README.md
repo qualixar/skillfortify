@@ -13,7 +13,7 @@
 [![License: Elastic-2.0](https://img.shields.io/badge/License-Elastic--2.0-blue)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/downloads/)
 
-**[Website](https://www.superlocalmemory.com/skillfortify)** | **[PyPI](https://pypi.org/project/skillfortify/)** | **[Paper (arXiv)](https://arxiv.org/abs/2603.00195)** | **[Wiki](https://github.com/qualixar/skillfortify/wiki)** | **[@varunPbhardwaj](https://twitter.com/varunPbhardwaj)**
+**[Website](https://www.superlocalmemory.com/skillfortify)** | **[PyPI](https://pypi.org/project/skillfortify/)** | **[Paper (arXiv)](https://arxiv.org/abs/2603.00195)** | **[Wiki](https://github.com/qualixar/skillfortify/wiki)** | **[Varun Pratap Bhardwaj](https://varunpratap.com)** · [@varunPbhardwaj](https://twitter.com/varunPbhardwaj)
 
 ---
 
