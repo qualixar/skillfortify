@@ -1,160 +1,177 @@
 # SkillFortifyBench
 
-A 540-skill, 3-format benchmark for evaluating AI agent skill supply chain security scanners.
+A 540-skill benchmark for evaluating scanners of AI agent skill supply chains,
+across the three surfaces an agent actually loads from.
 
-## About This Release
+## What this is, and what it is not
 
-This release is a deterministic execution of the benchmark specification in
-Appendix B of *Formal Analysis and Supply Chain Security for Agentic AI Skills*
-(Bhardwaj 2026, arXiv:2603.00195). All 540 skills are produced byte-identically
-via `python -m benchmarks.generator --seed 42` per paper Section B.3 Principle 2. The
-novelty of this artifact is limited to engineering reproducibility (Docker pin,
-hash-pinned dependencies, SOURCE\_DATE\_EPOCH); conceptual contribution rests in
-the paper. See **Citations and Prior Work** below for adjacent benchmarks.
+SkillFortifyBench is a **deterministic synthetic corpus**. Every specimen is
+generated from a seed, and its label is the class the generator drew from —
+not a judgement made after the fact. That makes the corpus reproducible and
+its labels exact, and it also bounds what a score against it can mean:
 
-## Overview
+- It measures whether a scanner recognises a catalogue of known attack
+  behaviours expressed in real skill packaging.
+- It does **not** estimate field accuracy on marketplace skills. The specimens
+  are constructed, not collected, and their distribution is chosen rather than
+  observed.
 
-SkillFortifyBench provides 540 skills across Claude (`.md`), MCP (`.json`), and
-OpenClaw (`.yaml`) formats — 270 malicious (13 attack types, A1-A13) and 270
-benign (5 categories) — generated deterministically from seed=42.
+Numbers here are reported for `skillfortify` at the version in
+`results/summary.json`. They are recomputed on each release rather than quoted
+from the paper.
 
-SkillFortify is part of the broader effort in AI Reliability Engineering:
-building tooling that makes agent ecosystems trustworthy by default.
+## Layout
 
-## Quick Start
+Each specimen is a self-contained installation root, laid out the way its
+runtime loads skills, so that scanning a specimen exercises the same discovery
+path that scanning a real machine does:
 
-```bash
-pip install skillfortify
-PYTHONHASHSEED=0 python -m benchmarks.generator --output ./benchmark-output --seed 42
+```
+skills/claude/malicious/<specimen-id>/.claude/skills/<name>/SKILL.md
+skills/openclaw/benign/<specimen-id>/.openclaw/skills/<name>/SKILL.md
+skills/mcp/malicious/<specimen-id>/.mcp.json
 ```
 
-Or via Docker (recommended for byte-identical reproduction):
+Claude Code and OpenClaw both implement the
+[Agent Skills](https://agentskills.io) open standard: a skill is a *directory*
+containing `SKILL.md` with YAML frontmatter. The two differ in where the
+runtime looks and in the runtime-specific metadata a skill may carry, which is
+what the two slices exercise.
 
-```bash
-docker run --rm \
-    --security-opt seccomp=seccomp-default.json \
-    --cap-drop=ALL \
-    --read-only \
-    --tmpfs /tmp:rw,nosuid,nodev,noexec \
-    -v "$(pwd)/results:/bench/results:rw" \
-    skillfortify-bench:v1.0.0
-```
+Both classes are emitted through one shared code path, so the malicious and
+benign halves are structurally identical — same install path, same frontmatter
+schema, same inert marker, same name vocabulary. `metrics/leakage.py` checks
+this mechanically, and the release gate fails if any structural feature
+predicts the label.
 
 ## Contents
 
-- `skills/claude/` — 180 Claude skills (90 malicious + 90 benign)
+- `skills/claude/` — 180 Claude Code skills (90 malicious + 90 benign)
 - `skills/mcp/` — 180 MCP server configs (90 malicious + 90 benign)
 - `skills/openclaw/` — 180 OpenClaw skills (90 malicious + 90 benign)
-- `manifest.json` — 540-entry manifest with SHA-256 hashes
-- `attack_taxonomy.json` — A1-A13 attack type taxonomy
+- `manifest.json` — 540-entry manifest with per-file SHA-256
+- `attack_taxonomy.json` — attack types and formal classes, written by the
+  generator from the seed modules themselves
+- `results/` — per-specimen scan records and the summary they aggregate to
 
-## Attack Type Distribution (Table 11)
+## Quick start
 
-| Type | Claude | MCP | OpenClaw | Total | Description |
-|------|-------:|----:|---------:|------:|-------------|
-| A1   |     10 |  10 |       10 |    30 | HTTP exfiltration |
-| A2   |      6 |   6 |        6 |    18 | DNS exfiltration |
-| A3   |     10 |  10 |       10 |    30 | Prompt injection |
-| A4   |     10 |  10 |       10 |    30 | Tool poisoning |
-| A5   |      6 |   6 |        6 |    18 | Credential theft |
-| A6   |      6 |   6 |        6 |    18 | Privilege escalation |
-| A7   |      8 |   8 |        8 |    24 | Arbitrary code execution |
-| A8   |      8 |   8 |        8 |    24 | Indirect prompt injection |
-| A9   |      8 |   8 |        8 |    24 | Shadow tool registration |
-| A10  |      4 |   4 |        4 |    12 | Dependency confusion |
-| A11  |      4 |   2 |        2 |     8 | Skill squatting |
-| A12  |      2 |   4 |        2 |     8 | Typosquatting |
-| A13  |      8 |   8 |       10 |    26 | Multi-vector composite |
-| **Malicious** | **90** | **90** | **90** | **270** | — |
-| Benign |   90 |  90 |       90 |   270 | 5 categories |
-| **Total** | **180** | **180** | **180** | **540** | — |
+```bash
+PYTHONHASHSEED=0 python -m benchmarks.generator --output ./benchmark-output --seed 42
+```
+
+Scoring a scanner means scanning each specimen root on its own and comparing
+the verdict to the manifest label:
+
+```bash
+PYTHONHASHSEED=0 python -m benchmarks.metrics --corpus benchmarks --output benchmarks/results
+```
+
+One specimen yields one prediction, so the totals and the per-type breakdown
+are two views of the same records and cannot disagree.
+
+## Attack types and measured recall
+
+Behaviour names are read from `attack_taxonomy.json`, which the generator
+writes from the seed classes, so this table cannot drift from the specimens it
+describes.
+
+| Type | Claude | MCP | OpenClaw | Total | Behaviour | Detected | Recall | Wilson 95% CI |
+|------|-------:|----:|---------:|------:|-----------|---------:|-------:|---------------|
+| A1 | 10 | 10 | 10 | 30 | HTTP exfiltration | 28 | 93.3% | [78.7%, 98.2%] |
+| A2 | 6 | 6 | 6 | 18 | DNS exfiltration | 17 | 94.4% | [74.2%, 99.0%] |
+| A3 | 10 | 10 | 10 | 30 | Credential theft | 29 | 96.7% | [83.3%, 99.4%] |
+| A4 | 10 | 10 | 10 | 30 | Arbitrary code execution | 30 | 100.0% | [88.6%, 100.0%] |
+| A5 | 6 | 6 | 6 | 18 | File system tampering | 18 | 100.0% | [82.4%, 100.0%] |
+| A6 | 6 | 6 | 6 | 18 | Privilege escalation | 18 | 100.0% | [82.4%, 100.0%] |
+| A7 | 8 | 8 | 8 | 24 | Steganographic exfiltration | 24 | 100.0% | [86.2%, 100.0%] |
+| A8 | 8 | 8 | 8 | 24 | Prompt injection | 21 | 87.5% | [69.0%, 95.7%] |
+| A9 | 8 | 8 | 8 | 24 | Reverse shell | 24 | 100.0% | [86.2%, 100.0%] |
+| A10 | 4 | 4 | 4 | 12 | Cryptocurrency mining | 12 | 100.0% | [75.7%, 100.0%] |
+| A11 | 4 | 2 | 2 | 8 | Typosquatting | 4 | 50.0% | [21.5%, 78.5%] |
+| A12 | 2 | 4 | 2 | 8 | Dependency confusion | 0 | 0.0% | [0.0%, 32.4%] |
+| A13 | 8 | 8 | 10 | 26 | Encoded payload | 25 | 96.2% | [81.1%, 99.3%] |
+| **Malicious** | **90** | **90** | **90** | **270** | — | **250** | **92.59%** | [88.84%, 95.15%] |
+| Benign | 90 | 90 | 90 | 270 | 5 categories | — | — | — |
+
+**A12 dependency confusion is not detected at all, and half of A11
+typosquatting is missed.** Both need registry knowledge the analyser does not
+have: deciding that an internal-looking package name also resolves publicly,
+or that a name is a near-miss of a popular one, requires an index of what
+legitimately exists. These are open gaps, published rather than omitted.
+
+## Measured results
+
+`skillfortify` at the version recorded in `results/summary.json`, MEDIUM
+severity threshold:
+
+| Format | Precision | Recall | F1 | TP | FP | TN | FN |
+|--------|----------:|-------:|---:|---:|---:|---:|---:|
+| Claude | 100.0% | 96.7% | 98.3% | 87 | 0 | 90 | 3 |
+| MCP | 100.0% | 84.4% | 91.6% | 76 | 0 | 90 | 14 |
+| OpenClaw | 100.0% | 96.7% | 98.3% | 87 | 0 | 90 | 3 |
+| **Overall** | **100.0%** | **92.59%** | **96.15%** | **250** | **0** | **270** | **20** |
+
+Wilson 95% intervals: recall [88.84%, 95.15%], precision [98.49%, 100%],
+specificity [98.60%, 100%].
+
+**How to read the precision figure.** It says no benign specimen in this
+corpus produced a finding at or above MEDIUM. It is not an estimate of the
+false-positive rate on real skills, because the benign half is generated
+rather than collected. It is worth more than a trivially clean run, though:
+90 of the 270 benign specimens (33%) contain dual-use constructs — 54 invoke
+`python -c`, 36 issue `curl` to package registries — and those 90 were the
+analyser's entire false-positive set before interpreter-flag findings were
+graded by what the inline program actually does.
+
+Every number above is recomputed from `results/specimen-results.json`, which
+records the label, verdict, finding count, and highest severity for all 540
+specimens.
 
 ## Reproduction
 
-Every run with `seed=42` and `PYTHONHASHSEED=0` produces byte-identical skill
-files. The `manifest_content_sha256` field in `manifest.json` can be used to
-verify deterministic reproduction.
+Every run with `seed=42` and `PYTHONHASHSEED=0` produces byte-identical files.
+`manifest.json` carries a `manifest_content_sha256` over the entry list and a
+SHA-256 per file, so a regenerated tree can be compared entry by entry.
 
-Expected metrics (skillfortify 0.4.4, medium threshold):
+## Limitations
 
-- Precision: 100% (270/270)
-- Recall: 94.07% (254/270) — 16 intentional false negatives
-- Wilson 95% CI for recall: [0.90592, 0.96320]
-
-## Evaluation
-
-Run the SkillFortify scanner against the benchmark:
-
-```bash
-skillfortify scan benchmark-output/skills/ --format json --severity-threshold medium
-```
-
-## Citation
-
-See [CITATION.cff](CITATION.cff) or cite:
-
-```bibtex
-@article{bhardwaj2025skillfortify,
-  title   = {SkillFortify: Static Analysis for AI Agent Skill Supply Chains},
-  author  = {Bhardwaj, Varun Pratap},
-  journal = {arXiv preprint arXiv:2603.00195},
-  year    = {2025},
-  doi     = {10.48550/arXiv.2603.00195}
-}
-```
-
-Paper DOI: [10.5281/zenodo.18787663](https://doi.org/10.5281/zenodo.18787663)
-
-## Citations and Prior Work
-
-Static analysis of LLM agent security intersects with several concurrent efforts.
-SkillFortifyBench is designed as a complement, not a replacement, to these
-benchmarks:
-
-- Holzbauer et al. 2026 — scanner-disagreement measurement across
-  static tooling (arXiv:2603.16572).
-- SkillClone (Zhu et al., ASE 2026) — clone-detection benchmark for
-  agent skills (arXiv:2603.22447).
-- MalTool (Hu et al. 2026) — tool-abuse pattern taxonomy
-  (arXiv:2602.12194).
-- InjecAgent (Zhan et al. 2024) — prompt-injection benchmark
-  (arXiv:2403.02691).
-- MCPTox (Wang et al., AAAI 2026) — MCP-specific attack corpus
-  (arXiv:2508.14925).
-- HarmBench (Mazeika et al. 2024) — broad LLM-harm benchmark
-  (arXiv:2402.04249).
-
-## Limitations (v1.0)
-
-1. Synthetic-only generation. No real-world seed tier. Natural-distribution
-   prevalence of A1..A13 is out of scope.
-2. No hard-negative tier. Benign skills are diverse but not adversarially
-   selected.
-3. No cross-scanner leaderboard. Comparison vs. Semgrep / Bandit / Slither
-   remains in private notebooks; public leaderboard deferred to v1.1.
-4. No Gebru-style DATASHEET or MODEL-CARD. v1.1 will ship both.
-5. Single-analyzer-version coverage (`skillfortify==0.4.4`). v1.1 will cover
-   a version matrix (0.4.4, 0.5.0, ...) with per-version tagged results.
-6. English-only skill bodies. No i18n in v1.0.
-
-## v1.1 Roadmap (target: 2026 Q3)
-
-- Real-world seed tier (small curated set of sanitized in-the-wild skills).
-- Hard-negative tier (adversarial benign).
-- Interactive leaderboard page.
-- DATASHEET for Datasets (Gebru et al. format).
-- MODEL-CARD analog for the generator.
-- Multi-version analyzer matrix.
+1. **Synthetic only.** No in-the-wild seed tier. The prevalence of A1–A13 here
+   is a design choice, not an observed distribution.
+2. **Constructed bodies.** Payloads are compact and idiomatic rather than
+   obfuscated the way a real campaign would be. A scanner that does well here
+   has not been shown to survive an adversary who knows it is being scanned.
+3. **Hard negatives are present but narrow.** A third of the benign half uses
+   dual-use constructs; none is an adversarially built look-alike.
+4. **Detector and corpus share an author.** Both come from this project, so a
+   good score is evidence about coverage of a known catalogue, not an
+   independent evaluation. Cross-scanner comparison is not published.
+5. **Single analyser version** per results file.
+6. **English-only skill bodies.**
 
 ## License
 
 MIT — see [LICENSE](LICENSE).
 
-Note: The `benchmarks/` subtree is MIT-licensed per paper Section 12; the rest of
-the SkillFortify repository is Elastic License 2.0.
+The `benchmarks/` subtree is MIT-licensed; the rest of the SkillFortify
+repository is Elastic License 2.0.
+
+## Citation
+
+See [CITATION.cff](CITATION.cff).
+
+## Related benchmarks
+
+SkillFortifyBench is a complement to, not a replacement for:
+
+- Holzbauer et al. 2026 — scanner-disagreement measurement (arXiv:2603.16572)
+- SkillClone (Zhu et al., ASE 2026) — clone detection (arXiv:2603.22447)
+- MalTool (Hu et al. 2026) — tool-abuse taxonomy (arXiv:2602.12194)
+- InjecAgent (Zhan et al. 2024) — prompt injection (arXiv:2403.02691)
+- MCPTox (Wang et al., AAAI 2026) — MCP attack corpus (arXiv:2508.14925)
+- HarmBench (Mazeika et al. 2024) — broad LLM harm (arXiv:2402.04249)
 
 ## Links
 
-- Paper: <https://arxiv.org/abs/2603.00195>
-- SkillFortify: <https://github.com/varun369/skillfortify>
+- SkillFortify: <https://github.com/qualixar/skillfortify>
 - [@varunPbhardwaj](https://twitter.com/varunPbhardwaj)

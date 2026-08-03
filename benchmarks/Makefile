@@ -18,10 +18,15 @@ generate:  ## Generate 540 benchmark skills (seed=42)
 verify:  ## Verify existing benchmark against manifest
 	$(PYTHON) -m benchmarks.generator --output $(OUTPUT) --verify-only
 
-benchmark: generate  ## Generate + scan + compute metrics
-	@echo "=== Scanning generated skills ==="
-	skillfortify scan $(OUTPUT) --format json --severity-threshold medium > .skfval-tmp/scan-results.json || true
-	@echo "=== Benchmark complete ==="
+benchmark:  ## Score the scanner against the corpus and write results/
+	$(PYTHON) -m benchmarks.metrics --corpus benchmarks --output benchmarks/results
+
+leakage:  ## Fail if any structural feature of a specimen predicts its label
+	$(PYTHON) -c "from pathlib import Path; \
+		from benchmarks.metrics.leakage import find_leaks, format_report; \
+		leaks = find_leaks(Path('benchmarks/skills')); \
+		print(format_report(leaks)); \
+		raise SystemExit(1 if leaks else 0)"
 
 clean:  ## Remove generated skills (keeps source)
 	rm -rf $(OUTPUT)/skills $(OUTPUT)/manifest.json $(OUTPUT)/attack_taxonomy.json

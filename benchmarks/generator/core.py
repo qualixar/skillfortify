@@ -538,9 +538,9 @@ class BenchmarkGenerator:
                 taxonomy = TaxonomyDoc(
                     schema_version="1.0",
                     paper_section="§3.2 + §8.1 + §B.1",
-                    formal_classes={},
+                    formal_classes=self._formal_classes(),
                     attack_types={
-                        atype: {"parent_class": cls}
+                        atype: self._attack_type_doc(atype, cls)
                         for atype, cls in self._attack_type_to_class.items()
                     },
                     benign_categories=BENIGN_CATEGORIES,
@@ -563,6 +563,31 @@ class BenchmarkGenerator:
             generator_version=gen_version,
             run_metadata=run_metadata,
         )
+
+    def _attack_type_doc(self, attack_type: str, parent_class: str) -> dict:
+        """Describe one attack type using the seed that implements it.
+
+        The name is read off the registered pattern rather than restated here,
+        so a table generated from this file cannot disagree with the specimens
+        on disk about what an attack type is.
+        """
+        pattern = self._attack_registry.get(attack_type)
+        return {
+            "parent_class": parent_class,
+            "display_name": getattr(pattern, "display_name", attack_type),
+            "mnemonic": getattr(pattern, "mnemonic", ""),
+        }
+
+    def _formal_classes(self) -> dict:
+        """Group the registered attack types under their parent classes."""
+        grouped: dict[str, list[str]] = {}
+        for attack_type, parent in sorted(
+            self._attack_type_to_class.items(), key=lambda kv: int(kv[0][1:])
+        ):
+            grouped.setdefault(parent, []).append(attack_type)
+        return {
+            parent: {"attack_types": types} for parent, types in sorted(grouped.items())
+        }
 
 
 # =============================================================================

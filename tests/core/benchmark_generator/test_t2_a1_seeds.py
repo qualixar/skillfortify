@@ -16,12 +16,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import pytest
 import yaml
 
 from benchmarks.generator.core import RenderedSkill, SkillSpec
 from benchmarks.generator.rng import DeterministicRNG
-
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -57,7 +55,7 @@ def test_a1_registry_metadata():
     a1 = A1_HttpExfil()
     assert a1.attack_id == "A1"
     assert a1.parent_class == "c1_DATA_EXFILTRATION"
-    assert a1.sources == ("ClawHavoc (arXiv:2602.20867)",)
+    assert a1.sources == ("ClawHavoc (Koi Security / Yomtov, Feb 2026)",)
     assert a1.supported_formats() == frozenset({"claude", "mcp", "openclaw"})
     assert 1 in a1.obfuscation_levels_supported
     assert 4 in a1.obfuscation_levels_supported
@@ -99,8 +97,13 @@ def test_a1_instantiate_mcp_produces_valid_json():
     assert "mcpServers" in parsed, "MCP skill must have mcpServers key"
 
 
-def test_a1_instantiate_openclaw_produces_valid_yaml():
-    """§7.1.5: OpenClaw instantiation returns RenderedSkill with parseable YAML."""
+def test_a1_instantiate_openclaw_produces_a_skill_md():
+    """An OpenClaw specimen is a ``SKILL.md`` under the runtime's load path.
+
+    OpenClaw loads ``<root>/.openclaw/skills/<name>/SKILL.md`` with YAML
+    frontmatter. Emitting a manifest under some other name would leave the
+    corpus unable to exercise the discovery path a real scan takes.
+    """
     from benchmarks.generator.seeds.a1_http_exfil import A1_HttpExfil
 
     a1 = A1_HttpExfil()
@@ -109,14 +112,15 @@ def test_a1_instantiate_openclaw_produces_valid_yaml():
     result = a1.instantiate(spec, rng)
 
     assert isinstance(result, RenderedSkill)
-    assert result.format_extension == ".yaml"
+    assert result.format_extension == ".md"
+    assert result.filename.endswith("/SKILL.md")
+    assert ".openclaw/skills/" in result.filename
+
     text = result.content_bytes.decode("utf-8")
-    # Strip sentinel comment line before YAML parse
-    lines = text.split("\n")
-    yaml_lines = [l for l in lines if not l.startswith("# SKILLFORTIFYBENCH")]
-    yaml_text = "\n".join(yaml_lines)
-    parsed = yaml.safe_load(yaml_text)
-    assert parsed is not None, "OpenClaw skill must parse as YAML"
+    assert text.startswith("---\n"), "SKILL.md must open with YAML frontmatter"
+    frontmatter = yaml.safe_load(text.split("---\n")[1])
+    assert frontmatter["name"]
+    assert frontmatter["description"]
 
 
 # ---------------------------------------------------------------------------
@@ -196,19 +200,26 @@ def test_a1_sentinel_mcp_key_first_in_json():
     )
 
 
-def test_a1_sentinel_openclaw_first_line_comment():
-    """§5.1: OpenClaw sentinel is a # comment as the first line."""
+def test_a1_sentinel_openclaw_opens_the_body():
+    """The inert marker is the first thing in the Markdown body.
+
+    It appears exactly once and in the same form as every other specimen
+    carries: a marker written differently for one class, or twice for one
+    format, is a feature that predicts the label.
+    """
     from benchmarks.generator.seeds.a1_http_exfil import A1_HttpExfil
 
     a1 = A1_HttpExfil()
     spec = _make_spec("openclaw", 1)
     rng = _make_rng("test::sentinel::openclaw::A1::001")
     result = a1.instantiate(spec, rng)
-    first_line = result.content_bytes.decode("utf-8").split("\n")[0]
+    text = result.content_bytes.decode("utf-8")
+    body = text.split("\n---\n", 1)[1].lstrip("\n")
 
-    assert first_line.startswith("# SKILLFORTIFYBENCH:INERT"), (
-        f"OpenClaw first line must be sentinel comment, got: {first_line!r}"
+    assert body.startswith("<!-- SKILLFORTIFYBENCH:INERT"), (
+        f"body must open with the sentinel, got: {body[:80]!r}"
     )
+    assert text.count("SKILLFORTIFYBENCH:INERT") == 1
 
 
 # ---------------------------------------------------------------------------

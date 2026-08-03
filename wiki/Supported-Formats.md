@@ -12,10 +12,10 @@ Run `skillfortify frameworks` to see the full table in your terminal.
 
 | # | Framework | Format ID | Detection Pattern |
 |---|-----------|-----------|-------------------|
-| 1 | **Claude Code Skills** | `claude` | `.claude/skills/*.md` |
+| 1 | **Claude Code Skills** | `claude` | `.claude/skills/<name>/SKILL.md` |
 | 2 | **MCP Configs** | `mcp` | `mcp.json`, `mcp_config.json` |
 | 3 | **MCP Servers** | `mcp_server` | Server files using MCP SDK |
-| 4 | **OpenClaw** | `openclaw` | `.claw/*.yaml` |
+| 4 | **OpenClaw** | `openclaw` | `.openclaw/skills/<name>/SKILL.md` |
 | 5 | **OpenAI Agents SDK** | `openai_agents` | `@function_tool`, `Agent()` |
 | 6 | **Google ADK** | `google_adk` | Google ADK imports |
 | 7 | **Anthropic Agent SDK** | `anthropic_sdk` | `@tool`, `MCPServer` |

@@ -11,6 +11,20 @@ import json
 from pathlib import Path
 
 
+def _sf_skill(skills_dir, name):
+    """Return the SKILL.md path for ``<skills_dir>/<name>/``, creating the dir.
+
+    Claude Code skills are directories containing SKILL.md; a bare ``<name>.md``
+    in the skills root is not a skill. See
+    ``tests/parsers/test_claude_skills_conformance.py``.
+    """
+    directory = skills_dir / name
+    directory.mkdir(parents=True, exist_ok=True)
+    return directory / "SKILL.md"
+
+
+
+
 def create_claude_home(home: Path) -> None:
     """Create a fake Claude Code installation under home."""
     claude_dir = home / ".claude"
@@ -19,7 +33,7 @@ def create_claude_home(home: Path) -> None:
     skills_dir.mkdir(exist_ok=True)
     config = claude_dir / "mcp_servers.json"
     config.write_text(json.dumps({"servers": []}))
-    skill = skills_dir / "deploy.md"
+    skill = _sf_skill(skills_dir, "deploy")
     skill.write_text("# Deploy Skill\nRun: `echo hello`\n")
 
 
@@ -53,7 +67,7 @@ def create_unknown_ide_with_skills(home: Path) -> None:
     unknown_dir.mkdir(parents=True, exist_ok=True)
     skills = unknown_dir / "skills"
     skills.mkdir(exist_ok=True)
-    skill = skills / "helper.md"
+    skill = _sf_skill(skills, "helper")
     skill.write_text("# Helper\nDo stuff.\n")
 
 

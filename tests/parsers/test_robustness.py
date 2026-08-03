@@ -15,9 +15,22 @@ from __future__ import annotations
 
 from pathlib import Path
 
-
 from skillfortify.parsers.claude_skills import ClaudeSkillsParser
 from skillfortify.parsers.mcp_config import McpConfigParser
+
+
+def _sf_skill(skills_dir, name):
+    """Return the SKILL.md path for ``<skills_dir>/<name>/``, creating the dir.
+
+    Claude Code skills are directories containing SKILL.md; a bare ``<name>.md``
+    in the skills root is not a skill. See
+    ``tests/parsers/test_claude_skills_conformance.py``.
+    """
+    directory = skills_dir / name
+    directory.mkdir(parents=True, exist_ok=True)
+    return directory / "SKILL.md"
+
+
 
 
 class TestMalformedYAMLFrontmatter:
@@ -27,7 +40,7 @@ class TestMalformedYAMLFrontmatter:
         """Skill file with missing closing --- still parses."""
         skills_dir = tmp_path / ".claude" / "skills"
         skills_dir.mkdir(parents=True)
-        (skills_dir / "broken.md").write_text(
+        (_sf_skill(skills_dir, "broken")).write_text(
             "---\nname: broken-skill\ndescription: missing close\n\nThis is the body text.\n"
         )
         parser = ClaudeSkillsParser()
@@ -41,7 +54,7 @@ class TestMalformedYAMLFrontmatter:
         """Skill file with invalid YAML in frontmatter still parses."""
         skills_dir = tmp_path / ".claude" / "skills"
         skills_dir.mkdir(parents=True)
-        (skills_dir / "invalid.md").write_text(
+        (_sf_skill(skills_dir, "invalid")).write_text(
             "---\n[this: is: not: valid: yaml: {{{\n---\n\nBody content here.\n"
         )
         parser = ClaudeSkillsParser()
@@ -58,7 +71,7 @@ class TestBinaryContent:
         """A file with binary (non-text) content is skipped or handled."""
         skills_dir = tmp_path / ".claude" / "skills"
         skills_dir.mkdir(parents=True)
-        binary_file = skills_dir / "binary.md"
+        binary_file = _sf_skill(skills_dir, "binary")
         # Write random binary bytes.
         binary_file.write_bytes(bytes(range(256)) * 4)
         parser = ClaudeSkillsParser()
@@ -79,7 +92,7 @@ class TestVeryLargeSkillFile:
         large_content = (
             "---\nname: large-skill\n---\n\n" + "This is a very long line. " * 50000  # ~1.3MB
         )
-        (skills_dir / "large.md").write_text(large_content)
+        (_sf_skill(skills_dir, "large")).write_text(large_content)
         parser = ClaudeSkillsParser()
         results = parser.parse(tmp_path)
         assert len(results) == 1
@@ -94,7 +107,7 @@ class TestNoNameDescription:
         """Skill with no frontmatter uses filename stem as name."""
         skills_dir = tmp_path / ".claude" / "skills"
         skills_dir.mkdir(parents=True)
-        (skills_dir / "unnamed.md").write_text(
+        (_sf_skill(skills_dir, "unnamed")).write_text(
             "Just some instructions.\n\nNo YAML frontmatter here.\n"
         )
         parser = ClaudeSkillsParser()
@@ -143,7 +156,7 @@ class TestWhitespaceOnlyFile:
         """A file containing only whitespace is parsed with filename as name."""
         skills_dir = tmp_path / ".claude" / "skills"
         skills_dir.mkdir(parents=True)
-        (skills_dir / "blank.md").write_text("   \n\n\t\n   ")
+        (_sf_skill(skills_dir, "blank")).write_text("   \n\n\t\n   ")
         parser = ClaudeSkillsParser()
         results = parser.parse(tmp_path)
         assert len(results) == 1
@@ -160,7 +173,7 @@ class TestNonUTF8Encoding:
         """A Latin-1 encoded file is either parsed or gracefully skipped."""
         skills_dir = tmp_path / ".claude" / "skills"
         skills_dir.mkdir(parents=True)
-        latin1_file = skills_dir / "latin1.md"
+        latin1_file = _sf_skill(skills_dir, "latin1")
         # Write Latin-1 encoded content that is NOT valid UTF-8.
         content_bytes = "---\nname: caf\xe9\n---\nR\xe9sum\xe9".encode("latin-1")
         latin1_file.write_bytes(content_bytes)

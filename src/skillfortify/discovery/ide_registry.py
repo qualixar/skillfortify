@@ -64,9 +64,24 @@ def _build_profiles() -> list[IDEProfile]:
         IDEProfile(
             name="Claude Code",
             short_name="claude",
-            config_paths=[".claude/mcp_servers.json"],
-            skill_paths=[".claude/skills"],
+            # User config is ~/.claude.json; project config is .mcp.json at
+            # the repo root. Verified against a live installation.
+            config_paths=[
+                ".claude.json",
+                ".mcp.json",
+                # Claude Desktop shares the vendor namespace but has no
+                # dot-directory; its config lives under Application Support.
+                "Library/Application Support/Claude/claude_desktop_config.json",
+            ],
+            skill_paths=[".claude/skills", ".claude/commands", ".claude/plugins"],
             dot_dirs=[".claude"],
+        ),
+        IDEProfile(
+            name="OpenClaw",
+            short_name="openclaw",
+            config_paths=[".openclaw/openclaw.json"],
+            skill_paths=[".openclaw/skills"],
+            dot_dirs=[".openclaw"],
         ),
         IDEProfile(
             name="Cursor",
@@ -194,8 +209,9 @@ def _build_profiles() -> list[IDEProfile]:
         IDEProfile(
             name="Codex CLI",
             short_name="codex",
-            config_paths=[],
-            skill_paths=[],
+            # Codex declares MCP servers in TOML under [mcp_servers.<name>].
+            config_paths=[".codex/config.toml"],
+            skill_paths=[".codex/skills"],
             dot_dirs=[".codex"],
         ),
         IDEProfile(

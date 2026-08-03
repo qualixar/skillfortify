@@ -14,7 +14,7 @@ The agent skill ecosystem reached a tipping point in early 2026. Three events in
 
 **ClawHavoc Campaign (January-February 2026)**
 
-Over 1,200 malicious skills were planted in the largest AI agent marketplace. The campaign deployed credential stealers, data exfiltration payloads, and remote access tools disguised as legitimate agent capabilities. Developers installing popular-sounding skill names unknowingly gave attackers access to their file systems, environment variables, and API keys.
+At least 1,184 malicious skills were published in the largest AI agent marketplace. The campaign deployed credential stealers, data exfiltration payloads, and remote access tools disguised as legitimate agent capabilities. Developers installing popular-sounding skill names unknowingly gave attackers access to their file systems, environment variables, and API keys.
 
 This was not a proof-of-concept. It was a sustained, organized attack campaign that compromised real developer environments.
 
@@ -26,7 +26,7 @@ This CVE established that agent skill installation is itself an attack vector, n
 
 **MalTool Dataset (February 12, 2026)**
 
-Researchers catalogued **6,487 malicious agent tools** in a systematic study. The critical finding: conventional security scanners, including VirusTotal, fail to detect the majority of these malicious tools. Agent-specific malware uses techniques that traditional signature-based detection was never designed to catch -- prompt injection payloads, capability escalation through legitimate-looking API calls, and data exfiltration disguised as normal skill behavior.
+Researchers catalogued **7,027 malicious agent tools** in a systematic study. The critical finding: conventional security scanners, including VirusTotal, fail to detect the majority of these malicious tools. Agent-specific malware uses techniques that traditional signature-based detection was never designed to catch -- prompt injection payloads, capability escalation through legitimate-looking API calls, and data exfiltration disguised as normal skill behavior.
 
 ### The Pattern
 
@@ -34,9 +34,9 @@ These incidents are not isolated. They follow the exact pattern that played out 
 
 | Software Supply Chain | Agent Skill Supply Chain |
 |----------------------|------------------------|
-| **event-stream** (2018): Malicious code injected into popular npm package | **ClawHavoc** (2026): 1,200+ malicious skills in agent marketplace |
+| **event-stream** (2018): Malicious code injected into popular npm package | **ClawHavoc** (2026): at least 1,184 malicious skills in agent marketplace |
 | **ua-parser-js** (2021): Crypto-miner injected via compromised maintainer | **CVE-2026-25253**: RCE through crafted skill manifest |
-| **SolarWinds** (2020): State-sponsored supply chain compromise | **MalTool**: 6,487 malicious tools evading conventional detection |
+| **SolarWinds** (2020): State-sponsored supply chain compromise | **MalTool**: 7,027 malicious tools (1,300 standalone + 5,727 embedded) evading conventional detection |
 | **Log4Shell** (2021): Ubiquitous library with critical vulnerability | Next incident: ? |
 
 The software industry took years to build defenses -- npm audit (2018), Snyk (2015), Socket.dev (2022), SLSA framework (2021), Sigstore (2021). The agent skill ecosystem has none of these defenses today.

@@ -107,10 +107,10 @@ def default_registry() -> ParserRegistry:
     The default registry includes parsers for 22 agent frameworks,
     covering skill definitions, MCP configs, and low-code workflows:
 
-    1. ClaudeSkillsParser -- Claude Code skills (.claude/skills/*.md)
+    1. ClaudeSkillsParser -- Claude Code skills (.claude/skills/<name>/SKILL.md)
     2. McpConfigParser -- MCP server configs (mcp.json, etc.)
     3. McpServerParser -- MCP server source code (deep analysis)
-    4. OpenClawParser -- OpenClaw skills (.claw/*.yaml)
+    4. OpenClawParser -- OpenClaw skills (.openclaw/skills/<name>/SKILL.md)
     5. OpenAIAgentsParser -- OpenAI Agents SDK (@function_tool)
     6. GoogleADKParser -- Google ADK (google.adk)
     7. LangChainParser -- LangChain tools (BaseTool / @tool)

@@ -19,6 +19,20 @@ from click.testing import CliRunner
 from skillfortify.cli.main import cli
 
 
+def _sf_skill(skills_dir, name):
+    """Return the SKILL.md path for ``<skills_dir>/<name>/``, creating the dir.
+
+    Claude Code skills are directories containing SKILL.md; a bare ``<name>.md``
+    in the skills root is not a skill. See
+    ``tests/parsers/test_claude_skills_conformance.py``.
+    """
+    directory = skills_dir / name
+    directory.mkdir(parents=True, exist_ok=True)
+    return directory / "SKILL.md"
+
+
+
+
 @pytest.fixture
 def runner() -> CliRunner:
     """Create a Click CliRunner for invoking commands."""
@@ -32,7 +46,7 @@ class TestTrustCleanSkill:
         self, runner: CliRunner, clean_claude_skill_dir: Path
     ) -> None:
         """Trust command on a clean skill should exit with code 0."""
-        skill_file = clean_claude_skill_dir / ".claude" / "skills" / "helper.md"
+        skill_file = _sf_skill(clean_claude_skill_dir / ".claude" / "skills", "helper")
         result = runner.invoke(cli, ["trust", str(skill_file)])
         assert result.exit_code == 0
 
@@ -40,7 +54,7 @@ class TestTrustCleanSkill:
         self, runner: CliRunner, clean_claude_skill_dir: Path
     ) -> None:
         """Trust output should display a trust level."""
-        skill_file = clean_claude_skill_dir / ".claude" / "skills" / "helper.md"
+        skill_file = _sf_skill(clean_claude_skill_dir / ".claude" / "skills", "helper")
         result = runner.invoke(cli, ["trust", str(skill_file)])
         # Should show one of the trust level names
         assert any(
@@ -50,7 +64,7 @@ class TestTrustCleanSkill:
 
     def test_clean_skill_json_output(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """Trust JSON output should contain all score fields."""
-        skill_file = clean_claude_skill_dir / ".claude" / "skills" / "helper.md"
+        skill_file = _sf_skill(clean_claude_skill_dir / ".claude" / "skills", "helper")
         result = runner.invoke(cli, ["trust", str(skill_file), "--format", "json"])
         assert result.exit_code == 0
         data = json.loads(result.output)
@@ -64,7 +78,7 @@ class TestTrustCleanSkill:
         self, runner: CliRunner, clean_claude_skill_dir: Path
     ) -> None:
         """Clean skill should have high behavioral signal (1.0)."""
-        skill_file = clean_claude_skill_dir / ".claude" / "skills" / "helper.md"
+        skill_file = _sf_skill(clean_claude_skill_dir / ".claude" / "skills", "helper")
         result = runner.invoke(cli, ["trust", str(skill_file), "--format", "json"])
         data = json.loads(result.output)
         assert data["signals"]["behavioral"] == 1.0
@@ -77,7 +91,7 @@ class TestTrustMaliciousSkill:
         self, runner: CliRunner, malicious_claude_skill_dir: Path
     ) -> None:
         """Malicious skill should have lower behavioral signal."""
-        skill_file = malicious_claude_skill_dir / ".claude" / "skills" / "exfiltrator.md"
+        skill_file = _sf_skill(malicious_claude_skill_dir / ".claude" / "skills", "exfiltrator")
         result = runner.invoke(cli, ["trust", str(skill_file), "--format", "json"])
         data = json.loads(result.output)
         # Findings should reduce the behavioral signal below 1.0
@@ -87,7 +101,7 @@ class TestTrustMaliciousSkill:
         self, runner: CliRunner, malicious_claude_skill_dir: Path
     ) -> None:
         """Malicious skill should have lower intrinsic score than clean."""
-        skill_file = malicious_claude_skill_dir / ".claude" / "skills" / "exfiltrator.md"
+        skill_file = _sf_skill(malicious_claude_skill_dir / ".claude" / "skills", "exfiltrator")
         result = runner.invoke(cli, ["trust", str(skill_file), "--format", "json"])
         data = json.loads(result.output)
         # Default baselines are 0.5 for provenance/community/historical

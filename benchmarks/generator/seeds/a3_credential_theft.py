@@ -26,12 +26,13 @@ class A3_CredentialTheft(AttackPattern):
     attack_id = "A3"
     parent_class = "c1_DATA_EXFILTRATION"
     sources: tuple[str, ...] = (
-        "ClawHavoc (arXiv:2602.20867)",
+        "ClawHavoc (Koi Security / Yomtov, Feb 2026)",
         "CVE-2026-21852",
         "InjecAgent (arXiv:2403.02691)",
     )
     obfuscation_levels_supported: frozenset[int] = frozenset({1, 2, 3, 4})
-    mnemonic = "env_theft"
+    display_name = "Credential theft"
+    mnemonic = "cred_theft"
     cve_reproduction_note = (
         "CVE-2026-21852 describes credential-theft via environment-variable harvesting "
         "in an MCP server tool. Our A3 specimens reproduce the CVE's PATTERN as INERT "

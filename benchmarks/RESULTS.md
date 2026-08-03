@@ -1,71 +1,126 @@
 # SkillFortifyBench Results
 
-Deterministic execution of the benchmark specification in Appendix B of arXiv:2603.00195.
-Generated from seed=42 with PYTHONHASHSEED=0. Evaluated against SkillFortify v0.4.4 at MEDIUM severity threshold.
+SkillFortify **0.5.0**, MEDIUM severity threshold, corpus generated
+from seed=42 with `PYTHONHASHSEED=0`.
 
-## Table 4: Overall Precision / Recall / F1
+Every figure below is computed from `results/specimen-results.json`, which
+holds one record per specimen: its label, the scanner's verdict, how many
+findings it produced, and the highest severity among them. Totals and
+breakdowns are two views of those same records, so they cannot disagree.
+
+Reproduce with:
+
+```bash
+PYTHONHASHSEED=0 python -m benchmarks.metrics \
+    --corpus benchmarks --output benchmarks/results
+```
+
+## Overall
 
 | Metric | Value | Wilson 95% CI |
 |--------|-------|---------------|
-| Precision | 100.00% | [98.64%, 100.00%] |
-| Recall | 91.48% | [87.54%, 94.26%] |
-| F1 | 95.55% | — |
+| Precision | 100.00% | [98.49%, 100.00%] |
+| Recall | 92.59% | [88.84%, 95.15%] |
+| Specificity | 100.00% | [98.60%, 100.00%] |
+| F1 | 96.15% | — |
 
-Total skills: 540 (malicious: 270, benign: 270)
-TP: 247, FP: 0, FN: 23, TN: 270
+540 specimens: 250 TP, 0 FP, 270 TN, 20 FN.
 
-Paper point estimate (0.9407) falls **inside** our measured Wilson 95% CI [0.8754, 0.9426].
+F1 has no confidence interval here on purpose. It is not a binomial
+proportion, so a Wilson interval computed on it would not describe
+anything; the recall interval is what carries the uncertainty.
 
-## Table 5: Per-Format Recall Breakdown
+## Per format
 
-| Format | Malicious | Detected | Missed | FP | Recall | Wilson 95% CI |
-|--------|-----------|----------|--------|-----|--------|---------------|
-| Claude | 90 | 87 | 3 | 0 | 96.67% | [90.65%, 98.86%] |
-| MCP | 90 | 74 | 16 | 0 | 82.22% | [73.06%, 88.75%] |
-| OpenClaw | 90 | 86 | 4 | 0 | 95.56% | [89.12%, 98.26%] |
+| Format | Malicious | Detected | Missed | FP | Precision | Recall | Wilson 95% CI |
+|--------|----------:|---------:|-------:|---:|----------:|-------:|---------------|
+| claude | 90 | 87 | 3 | 0 | 100.00% | 96.67% | [90.65%, 98.86%] |
+| mcp | 90 | 76 | 14 | 0 | 100.00% | 84.44% | [75.57%, 90.50%] |
+| openclaw | 90 | 87 | 3 | 0 | 100.00% | 96.67% | [90.65%, 98.86%] |
 
-## Table 6: Per-Attack-Type Recall (across all formats)
+## Per attack type
 
-| Attack Type | Description | Total | Detected | Intentional FN | Recall | Wilson 95% CI |
-|-------------|-------------|-------|----------|----------------|--------|---------------|
-| A1 | HTTP exfiltration | 30 | 28 | 1 | 93.33% | [78.68%, 98.15%] |
-| A2 | DNS exfiltration | 18 | 15 | 2 | 83.33% | [61.81%, 93.93%] |
-| A3 | Credential theft | 30 | 29 | 0 | 96.67% | [83.33%, 99.41%] |
+Behaviour names come from `attack_taxonomy.json`, which the generator
+writes from the seed modules, so this table describes the specimens that
+actually exist rather than a list maintained separately.
+
+| Type | Behaviour | Total | Detected | Missed | Recall | Wilson 95% CI |
+|------|-----------|------:|---------:|-------:|-------:|---------------|
+| A1 | HTTP exfiltration | 30 | 28 | 2 | 93.33% | [78.68%, 98.15%] |
+| A2 | DNS exfiltration | 18 | 17 | 1 | 94.44% | [74.24%, 99.01%] |
+| A3 | Credential theft | 30 | 29 | 1 | 96.67% | [83.33%, 99.41%] |
 | A4 | Arbitrary code execution | 30 | 30 | 0 | 100.00% | [88.65%, 100.00%] |
 | A5 | File system tampering | 18 | 18 | 0 | 100.00% | [82.41%, 100.00%] |
 | A6 | Privilege escalation | 18 | 18 | 0 | 100.00% | [82.41%, 100.00%] |
 | A7 | Steganographic exfiltration | 24 | 24 | 0 | 100.00% | [86.20%, 100.00%] |
-| A8 | Prompt injection | 24 | 18 | 4 | 75.00% | [55.10%, 88.00%] |
+| A8 | Prompt injection | 24 | 21 | 3 | 87.50% | [69.00%, 95.66%] |
 | A9 | Reverse shell | 24 | 24 | 0 | 100.00% | [86.20%, 100.00%] |
 | A10 | Cryptocurrency mining | 12 | 12 | 0 | 100.00% | [75.75%, 100.00%] |
 | A11 | Typosquatting | 8 | 4 | 4 | 50.00% | [21.52%, 78.48%] |
 | A12 | Dependency confusion | 8 | 0 | 8 | 0.00% | [0.00%, 32.44%] |
-| A13 | Encoded payload | 26 | 18 | 4 | 69.23% | [50.01%, 83.50%] |
+| A13 | Encoded payload | 26 | 25 | 1 | 96.15% | [81.11%, 99.32%] |
 
-**Intentional false negatives (23 total):** A11 (typosquatting) and A12 (dependency confusion) are non-content-analyzable attack types per paper Section 11.2 — detection depends on registry-level signals unavailable to static content analysis. A8 and A13 MCP variants 7-8 are pure-prompt/pure-encoding specimens with no collateral signal. A1 MCP variant 10 uses base64-encoded URLs with no literal URL string.
+## The 20 misses
 
-## Table 7: Summary Comparison vs Paper
+By type: A1 (2), A2 (1), A3 (1), A8 (3), A11 (4), A12 (8), A13 (1).
 
-| Metric | This Benchmark | Paper (arXiv:2603.00195) | Paper Point in Our Wilson CI? |
-|--------|---------------|--------------------------|-------------------------------|
-| Precision | 100.00% | 100.00% | Yes |
-| Recall | 91.48% | 94.07% | **Yes** |
-| MCP Recall | 82.22% | 82.22% | Exact match |
+These are gaps, not design decisions. An earlier version of this file
+labelled a column *intentional false negatives*, which framed a limit of
+the analyser as a property of the corpus and made the recall figure look
+like a choice rather than a measurement.
 
-## Ground-Truth Construction
+- **A12 dependency confusion (all 8).** Deciding that an internal-looking
+  package name also resolves on a public registry requires an index of
+  what publicly exists. Static content analysis cannot answer it.
+- **A11 typosquatting (half).** Same root cause: a name is a typosquat
+  only relative to a set of real names.
+- **The remainder** are specimens whose payload survives without any
+  literal signal: an endpoint reachable only after decoding, or an
+  instruction that carries no command at all.
 
-Labels in this benchmark are assigned **by construction**: malicious skills are generated from attack-pattern templates seeded with known-bad patterns; benign skills are generated from clean templates that deliberately avoid all analyzer trigger patterns. This is a constructive labeling methodology — see paper Section 11.2 and Appendix B.3 Principle 1 for discussion of the detector-as-judge framing.
+Every missed specimen is listed individually in
+`results/specimen-results.json` with `detected: false`.
+
+## How the labels are assigned
+
+Labels are assigned **by construction**: a specimen's class is the class
+the generator drew it from, fixed before any scanner sees it. That makes
+the labels exact and the corpus reproducible, and it also means a score
+here measures coverage of a known catalogue of behaviours rather than
+field accuracy on skills someone else wrote.
+
+The detector and the corpus come from the same project. That is worth
+stating plainly: it makes these numbers useful for tracking regressions
+between releases, and weak as evidence against an adversary who knows
+which patterns are checked.
+
+## Corpus integrity
+
+Malicious and benign specimens are emitted through one shared code path,
+so both halves have the same install layout, frontmatter schema, inert
+marker, and name vocabulary. `metrics/leakage.py` enumerates structural
+features -- keys, path components, marker counts, closed-vocabulary values
+-- and fails the build if any of them predicts the label. Scoring refuses
+to run while a leak is present, because a metric taken over a leaking
+corpus describes the corpus.
+
+Of the 270 benign specimens, 90 (33%) contain dual-use constructs: 54
+invoke `python -c` and 36 issue `curl` to package registries. Those 90
+were the analyser's entire false-positive set before interpreter-flag
+findings were graded by what the inline program does.
 
 ## Reproducibility
 
 ```bash
-PYTHONHASHSEED=0 python -m benchmarks.generator --output ./benchmark-output --seed 42
+PYTHONHASHSEED=0 python -m benchmarks.generator \
+    --output ./benchmark-output --seed 42
 ```
 
-Two runs with identical seed and PYTHONHASHSEED=0 produce byte-identical skill files and identical `manifest_content_sha256`.
+Manifest content SHA-256: `a725a79ebe1bc66aa68e960a71acaadc004261547cd0c756688866fc22d7c51e`
+
+Two runs with the same seed produce byte-identical files and the same
+manifest hash.
 
 ---
 
-*Wilson CIs computed per LLD-07 Section 4.1 using z=1.96 (per-CI 95%). Paper CI [0.912, 0.967] treated as descriptive only (D4). Bonferroni family-95% z=2.9690 for k=17 available via metrics engine.*
-
-*Evaluated with SkillFortify v0.4.4 on Python 3.14.3, macOS (Darwin). @varunPbhardwaj*
+*Wilson intervals use z=1.96. Evaluated with SkillFortify 0.5.0.*

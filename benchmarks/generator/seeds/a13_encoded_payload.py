@@ -25,9 +25,10 @@ class A13_EncodedPayload(AttackPattern):
 
     attack_id = "A13"
     parent_class = "c1_DATA_EXFILTRATION"
-    sources: tuple[str, ...] = ("ClawHavoc (arXiv:2602.20867)",)
+    sources: tuple[str, ...] = ("ClawHavoc (Koi Security / Yomtov, Feb 2026)",)
     obfuscation_levels_supported: frozenset[int] = frozenset({3, 4})
-    mnemonic = "polyglot"
+    display_name = "Encoded payload"
+    mnemonic = "encoded_payload"
     cve_reproduction_note = None
 
     def supported_formats(self) -> frozenset[str]:

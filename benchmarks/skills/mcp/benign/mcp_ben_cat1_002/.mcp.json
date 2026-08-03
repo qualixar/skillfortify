@@ -1,0 +1,17 @@
+{
+  "_skillfortifybench_inert": "SKILLFORTIFYBENCH:INERT — arXiv:2603.00195 Appendix B specification execution; do not execute. Licensed MIT.",
+  "mcpServers": {
+    "pre-commit-hook-runner": {
+      "command": "python",
+      "args": [
+        "-m",
+        "json.tool",
+        "--sort-keys"
+      ],
+      "env": {
+        "LOG_LEVEL": "info"
+      },
+      "description": "Fast utility scanning config resources."
+    }
+  }
+}

@@ -4,7 +4,7 @@
 
 ## SkillFortifyBench Now Available
 
-**540-skill, 3-format benchmark** for evaluating AI agent skill supply chain security scanners. 270 malicious (13 attack types) + 270 benign (5 categories) across Claude, MCP, and OpenClaw formats. Deterministic generation from seed=42. 100% precision, 91.5% recall with Wilson 95% CI containing the paper point estimate. **[View Benchmark](benchmarks/)** | **[Standalone Repo](https://github.com/qualixar/skillfortifybench)**
+**540-skill benchmark** for evaluating scanners of AI agent skill supply chains. 270 malicious (13 attack types) + 270 benign (5 categories), across the three surfaces an agent loads from: Claude Code and OpenClaw skills (`SKILL.md` under each runtime's install path) and MCP server configs. Deterministic from seed=42, with a mechanical check that no structural feature of a specimen predicts its label. **[View Benchmark](benchmarks/)** | **[Standalone Repo](https://github.com/qualixar/skillfortifybench)**
 
 ---
 
@@ -36,7 +36,7 @@ SkillFortify formally analyzes agent skill safety using sound static analysis. I
 |---|-----------|-----------|
 | 1 | **Claude Code Skills** | `.claude/` directory |
 | 2 | **MCP Servers** | `mcp.json`, `mcp_config.json`, deep server scan |
-| 3 | **OpenClaw Skills** | `.claw/` directory |
+| 3 | **OpenClaw Skills** | `.openclaw/skills/` directory |
 | 4 | **LangChain Tools** | `langchain` imports, `BaseTool`, `@tool` |
 | 5 | **CrewAI Tools** | `crew.yaml`, `crewai` imports |
 | 6 | **AutoGen Tools** | `autogen` imports, `register_for_llm` |
@@ -161,14 +161,26 @@ Open the generated file in any browser -- no server or dependencies required.
 
 ## Benchmark Results
 
-Evaluated on SkillFortifyBench -- 540 agent skills (clean and malicious samples from documented real-world incidents):
+Evaluated on [SkillFortifyBench](benchmarks/) — 540 generated agent skills,
+270 malicious and 270 benign, scanned one specimen at a time at the MEDIUM
+severity threshold:
 
-| Metric | Value |
-|--------|-------|
-| Precision | **100%** (zero false positives) |
-| Recall | 94.12% |
-| F1 Score | **96.95%** |
-| Average scan time | 2.55 ms per skill |
+| Metric | Value | Wilson 95% CI |
+|--------|-------|---------------|
+| Precision | **100%** (0 false positives) | [98.49%, 100%] |
+| Recall | **92.59%** (250/270) | [88.84%, 95.15%] |
+| F1 | **96.15%** | — |
+
+The corpus is synthetic, so these measure coverage of a known catalogue of
+attack behaviours, not accuracy on skills collected in the wild. Two gaps are
+open and visible in the per-type table: dependency confusion is not detected
+at all and half of typosquatting is missed, both because deciding a package
+name is suspicious needs an index of what publicly exists.
+
+Per-specimen records are published in
+[`benchmarks/results/`](benchmarks/results/), so every figure above can be
+recomputed without rerunning a scan. See [RESULTS.md](benchmarks/RESULTS.md)
+for the full breakdown and what the numbers do and do not support.
 
 ---
 

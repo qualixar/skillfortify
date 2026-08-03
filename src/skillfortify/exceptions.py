@@ -56,3 +56,13 @@ class SBOMError(SkillFortifyError):
     Covers serialization errors, schema validation failures,
     and issues producing CycloneDX output.
     """
+
+
+class RegistryScanError(SkillFortifyError):
+    """Raised when a remote registry cannot be scanned safely or successfully.
+
+    Covers refusal as well as failure: a URL that resolves to a non-public
+    address, a redirect chain that exceeds the hop limit, or a response body
+    larger than the configured cap all raise this rather than being fetched.
+
+    """

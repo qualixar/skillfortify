@@ -30,7 +30,8 @@ class A8_PromptInjection(AttackPattern):
         "invariant-labs/mcp-injection-experiments",
     )
     obfuscation_levels_supported: frozenset[int] = frozenset({1, 2, 3, 4})
-    mnemonic = "prompt_agg"
+    display_name = "Prompt injection"
+    mnemonic = "prompt_injection"
     cve_reproduction_note = None
 
     def supported_formats(self) -> frozenset[str]:

@@ -10,9 +10,22 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-
 from skillfortify.core.analyzer import StaticAnalyzer
 from skillfortify.parsers.registry import default_registry
+
+
+def _sf_skill(skills_dir, name):
+    """Return the SKILL.md path for ``<skills_dir>/<name>/``, creating the dir.
+
+    Claude Code skills are directories containing SKILL.md; a bare ``<name>.md``
+    in the skills root is not a skill. See
+    ``tests/parsers/test_claude_skills_conformance.py``.
+    """
+    directory = skills_dir / name
+    directory.mkdir(parents=True, exist_ok=True)
+    return directory / "SKILL.md"
+
+
 
 
 # ---------------------------------------------------------------------------
@@ -34,7 +47,7 @@ description: A {name} skill
 
 Performs {name} operations on input data.
 """
-        (skills_dir / f"{name}.md").write_text(content, encoding="utf-8")
+        (_sf_skill(skills_dir, f"{name}")).write_text(content, encoding="utf-8")
 
 
 def _create_mcp_project(root: Path, servers: dict) -> None:
@@ -43,28 +56,26 @@ def _create_mcp_project(root: Path, servers: dict) -> None:
     (root / "mcp.json").write_text(json.dumps(config, indent=2), encoding="utf-8")
 
 
-def _create_openclaw_project(root: Path, skills: list[dict], dir_name: str = ".claw") -> None:
-    """Create an OpenClaw project with skill YAML files."""
-    claw_dir = root / dir_name
-    claw_dir.mkdir(parents=True, exist_ok=True)
-    for skill_def in skills:
-        name = skill_def["name"]
-        version = skill_def.get("version", "1.0.0")
-        desc = skill_def.get("description", "")
-        content = f"""name: {name}
-version: "{version}"
-description: {desc}
-instructions: |
-  Use this skill for {name} tasks.
-commands: []
-dependencies: []
-"""
-        (claw_dir / f"{name}.yaml").write_text(content, encoding="utf-8")
+def _create_openclaw_project(root: Path, skills: list[dict], dir_name: str = ".openclaw") -> None:
+    """Create OpenClaw skills as ``<dir_name>/skills/<name>/SKILL.md``.
+
+    OpenClaw uses the Agent Skills standard: a skill is a directory containing
+    SKILL.md, not a standalone YAML manifest.
+    """
+    skills_root = root / dir_name / "skills" if dir_name.startswith(".") else root / dir_name
+    for skill in skills:
+        name = skill.get("name", "skill")
+        skill_dir = skills_root / name
+        skill_dir.mkdir(parents=True, exist_ok=True)
+        version = skill.get("version", "1.0.0")
+        description = skill.get("description", "")
+        body = skill.get("body", "")
+        (skill_dir / "SKILL.md").write_text(
+            f"---\nname: {name}\nversion: \"{version}\"\ndescription: {description}\n---\n\n{body}",
+            encoding="utf-8",
+        )
 
 
-# ---------------------------------------------------------------------------
-# Tests
-# ---------------------------------------------------------------------------
 
 
 class TestScanClaudeProject:

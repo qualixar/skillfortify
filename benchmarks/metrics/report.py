@@ -106,33 +106,32 @@ def generate_results_md(metrics: BenchmarkMetrics) -> str:
         )
     lines.append("")
 
-    # Table 7: Summary comparison vs paper.
-    lines.append("## Table 7: Summary Comparison vs Paper")
+    # Headline metrics for this run.
+    #
+    # An earlier version of this table compared every run against a hardcoded
+    # published recall and reported whether that figure fell inside the run's
+    # confidence interval. With a fixed target on the page, a run that differs
+    # from it reads as agreement whenever the interval is wide enough, which
+    # is a property of the sample size rather than of the scanner. The run
+    # stands on its own numbers instead.
+    lines.append("## Table 7: Headline Metrics")
     lines.append("")
+    lines.append("| Metric | Value | Wilson 95% CI |")
+    lines.append("| --- | --- | --- |")
     lines.append(
-        "| Metric | This Run | Paper Value | "
-        "Paper Point in Wilson CI? |"
-    )
-    lines.append("| --- | --- | --- | --- |")
-    # Precision row.
-    lines.append(
-        f"| Precision | {_fmt_pct(metrics.precision)} | 100.00% | "
-        f"{'Yes' if metrics.precision_ci[0] <= 1.0 <= metrics.precision_ci[1] else 'No'} |"
-    )
-    # Recall row. Paper point estimate: 0.9407.
-    paper_recall_point = 0.9407
-    recall_in_ci = (
-        metrics.recall_ci[0] <= paper_recall_point <= metrics.recall_ci[1]
+        f"| Precision | {_fmt_pct(metrics.precision)} | "
+        f"{_fmt_ci(metrics.precision_ci)} |"
     )
     lines.append(
-        f"| Recall | {_fmt_pct(metrics.recall)} | 94.07% | "
-        f"{'Yes' if recall_in_ci else 'No'} |"
+        f"| Recall | {_fmt_pct(metrics.recall)} | {_fmt_ci(metrics.recall_ci)} |"
     )
+    lines.append(f"| F1 | {_fmt_pct(metrics.f1)} | — |")
     lines.append("")
 
     lines.append(
-        "*Wilson CIs computed per LLD-07 S4.1. "
-        "Paper CI [0.912, 0.967] treated as descriptive only (D4).*"
+        "*Wilson intervals are computed on the underlying proportion. F1 is a "
+        "point estimate: it is not a binomial proportion, so a Wilson interval "
+        "on it would not mean anything.*"
     )
     lines.append("")
 

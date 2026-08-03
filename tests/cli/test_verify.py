@@ -19,6 +19,20 @@ from click.testing import CliRunner
 from skillfortify.cli.main import cli
 
 
+def _sf_skill(skills_dir, name):
+    """Return the SKILL.md path for ``<skills_dir>/<name>/``, creating the dir.
+
+    Claude Code skills are directories containing SKILL.md; a bare ``<name>.md``
+    in the skills root is not a skill. See
+    ``tests/parsers/test_claude_skills_conformance.py``.
+    """
+    directory = skills_dir / name
+    directory.mkdir(parents=True, exist_ok=True)
+    return directory / "SKILL.md"
+
+
+
+
 @pytest.fixture
 def runner() -> CliRunner:
     """Create a Click CliRunner for invoking commands."""
@@ -32,19 +46,19 @@ class TestVerifyCleanSkill:
         self, runner: CliRunner, clean_claude_skill_dir: Path
     ) -> None:
         """Verifying a clean skill should exit with code 0."""
-        skill_file = clean_claude_skill_dir / ".claude" / "skills" / "helper.md"
+        skill_file = _sf_skill(clean_claude_skill_dir / ".claude" / "skills", "helper")
         result = runner.invoke(cli, ["verify", str(skill_file)])
         assert result.exit_code == 0
 
     def test_clean_skill_shows_safe(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """Clean skill verification should show SAFE status."""
-        skill_file = clean_claude_skill_dir / ".claude" / "skills" / "helper.md"
+        skill_file = _sf_skill(clean_claude_skill_dir / ".claude" / "skills", "helper")
         result = runner.invoke(cli, ["verify", str(skill_file)])
         assert "SAFE" in result.output
 
     def test_clean_skill_json_output(self, runner: CliRunner, clean_claude_skill_dir: Path) -> None:
         """Clean skill JSON output should show is_safe=true."""
-        skill_file = clean_claude_skill_dir / ".claude" / "skills" / "helper.md"
+        skill_file = _sf_skill(clean_claude_skill_dir / ".claude" / "skills", "helper")
         result = runner.invoke(cli, ["verify", str(skill_file), "--format", "json"])
         assert result.exit_code == 0
         data = json.loads(result.output)
@@ -59,7 +73,7 @@ class TestVerifyMaliciousSkill:
         self, runner: CliRunner, malicious_claude_skill_dir: Path
     ) -> None:
         """Verifying a malicious skill should exit with code 1."""
-        skill_file = malicious_claude_skill_dir / ".claude" / "skills" / "exfiltrator.md"
+        skill_file = _sf_skill(malicious_claude_skill_dir / ".claude" / "skills", "exfiltrator")
         result = runner.invoke(cli, ["verify", str(skill_file)])
         assert result.exit_code == 1
 
@@ -67,7 +81,7 @@ class TestVerifyMaliciousSkill:
         self, runner: CliRunner, malicious_claude_skill_dir: Path
     ) -> None:
         """Malicious skill verification should display findings."""
-        skill_file = malicious_claude_skill_dir / ".claude" / "skills" / "exfiltrator.md"
+        skill_file = _sf_skill(malicious_claude_skill_dir / ".claude" / "skills", "exfiltrator")
         result = runner.invoke(cli, ["verify", str(skill_file)])
         assert "UNSAFE" in result.output
 
@@ -75,7 +89,7 @@ class TestVerifyMaliciousSkill:
         self, runner: CliRunner, malicious_claude_skill_dir: Path
     ) -> None:
         """Malicious skill JSON output should contain findings."""
-        skill_file = malicious_claude_skill_dir / ".claude" / "skills" / "exfiltrator.md"
+        skill_file = _sf_skill(malicious_claude_skill_dir / ".claude" / "skills", "exfiltrator")
         result = runner.invoke(cli, ["verify", str(skill_file), "--format", "json"])
         data = json.loads(result.output)
         assert data["is_safe"] is False
@@ -87,7 +101,7 @@ class TestVerifyNonExistent:
 
     def test_nonexistent_file_error(self, runner: CliRunner, tmp_path: Path) -> None:
         """Verifying a non-existent file should fail."""
-        fake = tmp_path / "nonexistent.md"
+        fake = _sf_skill(tmp_path, "nonexistent")
         result = runner.invoke(cli, ["verify", str(fake)])
         # Click will catch the path-not-exists error before our code
         assert result.exit_code != 0

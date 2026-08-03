@@ -18,6 +18,20 @@ from skillfortify.parsers.base import ParsedSkill
 from skillfortify.parsers.registry import ParserRegistry, default_registry
 
 
+def _sf_skill(skills_dir, name):
+    """Return the SKILL.md path for ``<skills_dir>/<name>/``, creating the dir.
+
+    Claude Code skills are directories containing SKILL.md; a bare ``<name>.md``
+    in the skills root is not a skill. See
+    ``tests/parsers/test_claude_skills_conformance.py``.
+    """
+    directory = skills_dir / name
+    directory.mkdir(parents=True, exist_ok=True)
+    return directory / "SKILL.md"
+
+
+
+
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
@@ -29,7 +43,7 @@ def multi_format_dir(tmp_path: Path) -> Path:
     # Claude skill
     claude_dir = tmp_path / ".claude" / "skills"
     claude_dir.mkdir(parents=True)
-    (claude_dir / "helper.md").write_text("---\nname: claude-helper\n---\nContent\n")
+    (_sf_skill(claude_dir, "helper")).write_text("---\nname: claude-helper\n---\nContent\n")
 
     # MCP config
     mcp_config = {
@@ -43,19 +57,19 @@ def multi_format_dir(tmp_path: Path) -> Path:
     }
     (tmp_path / "mcp.json").write_text(json.dumps(mcp_config))
 
-    # OpenClaw skill
-    claw_dir = tmp_path / ".claw"
-    claw_dir.mkdir()
-    claw_yaml = """\
-name: claw-tool
-version: "1.0.0"
-description: A test tool
-instructions: Run it
-commands:
-  - name: run
-    command: "echo hello"
-"""
-    (claw_dir / "tool.yaml").write_text(claw_yaml)
+    # OpenClaw skill: a directory containing SKILL.md, per the Agent Skills
+    # standard. See tests/parsers/test_openclaw_conformance.py.
+    claw_skill = tmp_path / ".openclaw" / "skills" / "claw-tool"
+    claw_skill.mkdir(parents=True)
+    (claw_skill / "SKILL.md").write_text(
+        "---\n"
+        "name: claw-tool\n"
+        'version: "1.0.0"\n'
+        "description: A test tool\n"
+        "---\n\n"
+        "Run it.\n\n"
+        "```bash\necho hello\n```\n"
+    )
 
     return tmp_path
 

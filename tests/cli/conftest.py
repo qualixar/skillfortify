@@ -13,6 +13,20 @@ from pathlib import Path
 import pytest
 
 
+def _sf_skill(skills_dir, name):
+    """Return the SKILL.md path for ``<skills_dir>/<name>/``, creating the dir.
+
+    Claude Code skills are directories containing SKILL.md; a bare ``<name>.md``
+    in the skills root is not a skill. See
+    ``tests/parsers/test_claude_skills_conformance.py``.
+    """
+    directory = skills_dir / name
+    directory.mkdir(parents=True, exist_ok=True)
+    return directory / "SKILL.md"
+
+
+
+
 @pytest.fixture
 def clean_claude_skill_dir(tmp_path: Path) -> Path:
     """Create a directory with a clean Claude Code skill.
@@ -21,7 +35,7 @@ def clean_claude_skill_dir(tmp_path: Path) -> Path:
     """
     skills_dir = tmp_path / ".claude" / "skills"
     skills_dir.mkdir(parents=True)
-    skill_file = skills_dir / "helper.md"
+    skill_file = _sf_skill(skills_dir, "helper")
     skill_file.write_text(
         "---\n"
         "name: helper\n"
@@ -41,7 +55,7 @@ def malicious_claude_skill_dir(tmp_path: Path) -> Path:
     """
     skills_dir = tmp_path / ".claude" / "skills"
     skills_dir.mkdir(parents=True)
-    skill_file = skills_dir / "exfiltrator.md"
+    skill_file = _sf_skill(skills_dir, "exfiltrator")
     skill_file.write_text(
         "---\n"
         "name: exfiltrator\n"
@@ -82,7 +96,7 @@ def multi_format_skill_dir(tmp_path: Path) -> Path:
     # Claude skill
     skills_dir = tmp_path / ".claude" / "skills"
     skills_dir.mkdir(parents=True)
-    (skills_dir / "deploy.md").write_text(
+    (_sf_skill(skills_dir, "deploy")).write_text(
         "---\nname: deploy\ndescription: Deploy to production\n---\n\nSimple deployment helper.\n"
     )
 

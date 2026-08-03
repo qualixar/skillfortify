@@ -26,7 +26,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -126,6 +126,49 @@ class Lockfile:
         digest = hashlib.sha256(content).hexdigest()
         return f"sha256:{digest}"
 
+    @staticmethod
+    def compute_tree_integrity(skill_path: Path) -> str:
+        """Compute a SHA-256 integrity hash over an entire skill directory.
+
+        The Agent Skills format allows a skill directory to ship supporting
+        files and executable scripts (``scripts/check-env.sh`` and the like).
+        Hashing ``SKILL.md`` alone would leave those unprotected, so integrity
+        is computed over the whole directory.
+
+        The digest covers every regular file under the skill directory: each
+        file contributes its path relative to the directory root and its
+        content, with paths sorted so the result is order-independent and
+        reproducible across filesystems. Including the path means a rename is
+        detected as readily as an edit.
+
+        Args:
+            skill_path: The skill's ``SKILL.md`` file, or its directory.
+
+        Returns:
+            Integrity string in "sha256:<64-hex-chars>" format.
+        """
+        root = skill_path.parent if skill_path.is_file() else skill_path
+        digest = hashlib.sha256()
+        try:
+            files = sorted(f for f in root.rglob("*") if f.is_file())
+        except (OSError, PermissionError):
+            files = []
+
+        for file_path in files:
+            try:
+                data = file_path.read_bytes()
+            except (OSError, PermissionError):
+                continue
+            relative = file_path.relative_to(root).as_posix()
+            # Length-prefix both fields so a path/content boundary cannot be
+            # shifted to produce a colliding digest for a different tree.
+            digest.update(f"{len(relative)}:".encode())
+            digest.update(relative.encode("utf-8"))
+            digest.update(f"{len(data)}:".encode())
+            digest.update(data)
+
+        return f"sha256:{digest.hexdigest()}"
+
     def verify_integrity(self, skill_name: str, content: str | bytes) -> bool:
         """Verify that a skill's content matches its lockfile integrity hash.
 
@@ -185,7 +228,7 @@ class Lockfile:
             "lockfile_version": self.LOCKFILE_VERSION,
             "generated_by": "skillfortify",
             "provenance": "sf-e94b3c8b10240fab",
-            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "generated_at": datetime.now(UTC).isoformat(),
             "integrity_algorithm": self.INTEGRITY_ALGORITHM,
             "skills": skills_dict,
             "metadata": metadata_dict,

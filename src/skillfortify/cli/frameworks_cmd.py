@@ -20,14 +20,14 @@ from skillfortify import __version__
 # Each tuple: (human_name, format_id, detection_hint)
 
 _FRAMEWORKS: tuple[tuple[str, str, str], ...] = (
-    ("Claude Code Skills", "claude", ".claude/skills/*.md"),
-    ("MCP Configs", "mcp", "mcp.json, mcp_config.json"),
+    ("Claude Code Skills", "claude", ".claude/skills/<name>/SKILL.md"),
+    ("MCP Configs", "mcp", ".claude.json, .mcp.json, .vscode/mcp.json, ..."),
     ("MCP Servers", "mcp_server", "server.py with MCP SDK"),
-    ("OpenClaw", "openclaw", ".claw/*.yaml"),
+    ("OpenClaw", "openclaw", ".openclaw/skills/<name>/SKILL.md"),
     ("OpenAI Agents SDK", "openai_agents", "@function_tool, Agent()"),
     ("Google ADK", "google_adk", "google.adk imports"),
     ("LangChain", "langchain", "BaseTool, @tool"),
-    ("CrewAI", "crewai", "crew.yaml"),
+    ("CrewAI", "crewai", "crewai imports, agents.yaml"),
     ("AutoGen", "autogen", "@register_for_llm"),
     ("Dify Plugins", "dify", "manifest.yaml"),
     ("Composio", "composio", "Action, App, @action"),

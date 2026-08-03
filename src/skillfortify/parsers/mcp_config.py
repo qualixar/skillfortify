@@ -46,19 +46,47 @@ References:
 from __future__ import annotations
 
 import json
+import tomllib
 from pathlib import Path
 
 from skillfortify.parsers.base import ParsedSkill, SkillParser
 
 # MCP config filenames to probe, in priority order.
-_MCP_CONFIG_FILENAMES = (
+# Config locations relative to a scan root. These are *paths*, not bare
+# filenames: several clients nest their config in a dot-directory, and a flat
+# filename check misses every one of them. Verified against vendor docs and a
+# real machine on 2026-08-03; see tests/parsers/test_mcp_config_conformance.py.
+_MCP_CONFIG_PATHS = (
+    # Claude Code
+    ".claude.json",
+    ".mcp.json",
+    # Claude Desktop
+    "claude_desktop_config.json",
+    "Library/Application Support/Claude/claude_desktop_config.json",
+    # Editors
+    ".vscode/mcp.json",
+    ".cursor/mcp.json",
+    ".codeium/windsurf/mcp_config.json",
+    ".cline/mcp_settings.json",
+    ".roo/mcp.json",
+    # Other CLIs
+    ".gemini/settings.json",
+    ".opencode/mcp.json",
+    # Generic names kept for compatibility
     "mcp.json",
     "mcp_servers.json",
     "mcp_settings.json",
     "mcp_config.json",
-    ".mcp.json",
-    "claude_desktop_config.json",
 )
+
+# TOML configs declare servers under a table rather than a JSON object.
+_MCP_TOML_PATHS = (".codex/config.toml",)
+
+# Table name holding servers in TOML configs.
+_MCP_TOML_SERVER_KEY = "mcp_servers"
+
+# Key under which some clients nest per-project server maps.
+_MCP_PROJECTS_KEY = "projects"
 
 # Top-level keys that contain server maps across different MCP clients.
 _MCP_SERVER_KEYS = ("mcpServers", "mcp", "servers")
@@ -88,6 +116,46 @@ def _extract_npm_packages(args: list[str]) -> list[str]:
     return packages
 
 
+def _load_json(config_path: Path) -> dict | None:
+    """Load a JSON config, returning None on any read or parse error."""
+    try:
+        data = json.loads(config_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def _load_toml(config_path: Path) -> dict | None:
+    """Load a TOML config, returning None on any read or parse error."""
+    try:
+        with config_path.open("rb") as handle:
+            return tomllib.load(handle)
+    except (OSError, tomllib.TOMLDecodeError):
+        return None
+
+
+def _servers_from_json(data: dict, source: Path):
+    """Yield ``(name, config, source)`` from a JSON config document.
+
+    Handles both the top-level server map and the per-project maps that
+    clients such as Claude Code nest under ``projects.<path>.mcpServers``.
+    Those nested entries are live servers, so omitting them under-reports the
+    attack surface on any developer machine.
+    """
+    for key in _MCP_SERVER_KEYS:
+        candidate = data.get(key)
+        if isinstance(candidate, dict):
+            for name, entry in candidate.items():
+                if isinstance(entry, dict):
+                    yield name, entry, source
+
+    projects = data.get(_MCP_PROJECTS_KEY)
+    if isinstance(projects, dict):
+        for project_config in projects.values():
+            if isinstance(project_config, dict):
+                yield from _servers_from_json(project_config, source)
+
+
 class McpConfigParser(SkillParser):
     """Parser for MCP server configurations in JSON format.
 
@@ -112,11 +180,7 @@ class McpConfigParser(SkillParser):
         Returns:
             True if a valid MCP config file with non-empty mcpServers exists.
         """
-        for filename in _MCP_CONFIG_FILENAMES:
-            config_file = path / filename
-            if config_file.is_file():
-                return True
-        return False
+        return next(iter(self._iter_servers(path)), None) is not None
 
     def parse(self, path: Path) -> list[ParsedSkill]:
         """Parse all MCP server entries from ALL configuration files.
@@ -134,14 +198,45 @@ class McpConfigParser(SkillParser):
         """
         results: list[ParsedSkill] = []
         seen_names: set[str] = set()
-        for filename in _MCP_CONFIG_FILENAMES:
-            config_file = path / filename
-            if config_file.is_file():
-                for skill in self._parse_config(config_file):
-                    if skill.name not in seen_names:
-                        seen_names.add(skill.name)
-                        results.append(skill)
+        for name, config, source in self._iter_servers(path):
+            if name in seen_names:
+                continue
+            skill = self._parse_server_entry(name, config, source)
+            if skill is not None:
+                seen_names.add(name)
+                results.append(skill)
         return results
+
+    def _iter_servers(self, path: Path):
+        """Yield ``(server_name, server_config, source_path)`` for every surface.
+
+        Covers JSON and TOML configs, and the per-project server maps that
+        clients such as Claude Code nest inside their user config.
+        """
+        if not path.is_dir():
+            return
+
+        for relative in _MCP_CONFIG_PATHS:
+            config_file = path / relative
+            if not config_file.is_file():
+                continue
+            data = _load_json(config_file)
+            if data is None:
+                continue
+            yield from _servers_from_json(data, config_file)
+
+        for relative in _MCP_TOML_PATHS:
+            config_file = path / relative
+            if not config_file.is_file():
+                continue
+            data = _load_toml(config_file)
+            if data is None:
+                continue
+            table = data.get(_MCP_TOML_SERVER_KEY)
+            if isinstance(table, dict):
+                for name, entry in table.items():
+                    if isinstance(entry, dict):
+                        yield name, entry, config_file
 
     def _parse_config(self, config_path: Path) -> list[ParsedSkill]:
         """Parse a single MCP configuration file.

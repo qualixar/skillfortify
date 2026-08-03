@@ -20,7 +20,7 @@ Resource Types
 --------------
 ``CAPABILITY_UNIVERSE`` enumerates the eight known resource types derived
 from empirical analysis of 42,447 skills [ASW26]_ and the MalTool
-benchmark of 6,487 malicious tools [MT26]_.
+benchmark of 7,027 malicious tools [MT26]_.
 
 References
 ----------
@@ -33,14 +33,13 @@ References
 
 .. [ASW26] "Agent Skills in the Wild" (arXiv:2601.10338, Jan 2026).
 
-.. [MT26] "MalTool: Benchmarking Malicious Tool Attacks Against LLM Agents"
+.. [MT26] "MalTool: Malicious Tool Attacks on LLM Agents"
    (arXiv:2602.12194, Feb 12, 2026).
 """
 
 from __future__ import annotations
 
 from enum import IntEnum
-
 
 # ---------------------------------------------------------------------------
 # CAPABILITY_UNIVERSE: The set of known resource types

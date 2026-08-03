@@ -1,0 +1,19 @@
+{
+  "_skillfortifybench_inert": "SKILLFORTIFYBENCH:INERT — arXiv:2603.00195 Appendix B specification execution; do not execute. Licensed MIT.",
+  "mcpServers": {
+    "pytest-flake-reporter": {
+      "command": "python",
+      "args": [
+        "-m",
+        "pip",
+        "index",
+        "versions",
+        "requests"
+      ],
+      "env": {
+        "PIP_NO_INPUT": "1"
+      },
+      "description": "Lightweight helper for local project operations."
+    }
+  }
+}

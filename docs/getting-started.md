@@ -46,7 +46,7 @@ SkillFortify automatically detects skills across all supported formats:
 
 - **Claude Code Skills** in `.claude/skills/`
 - **MCP Server configurations** in `mcp.json` or `mcp_config.json`
-- **OpenClaw Skills** in `.claw/`
+- **OpenClaw Skills** in `.openclaw/skills/`
 
 ### Example Output
 

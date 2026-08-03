@@ -133,8 +133,8 @@ def test_attack_mcp_produces_valid_json(attack_id: str):
 # ---------------------------------------------------------------------------
 
 @pytest.mark.parametrize("attack_id", ALL_ATTACK_IDS)
-def test_attack_openclaw_produces_valid_yaml(attack_id: str):
-    """Each attack pattern produces parseable OpenClaw YAML."""
+def test_attack_openclaw_produces_a_loadable_skill(attack_id: str):
+    """Each attack pattern emits a ``SKILL.md`` on OpenClaw's load path."""
     pattern = _get_pattern(attack_id)
     if "openclaw" not in pattern.supported_formats():
         pytest.skip(f"{attack_id} does not support openclaw format")
@@ -144,11 +144,15 @@ def test_attack_openclaw_produces_valid_yaml(attack_id: str):
     result = pattern.instantiate(spec, rng)
 
     assert isinstance(result, RenderedSkill)
-    assert result.format_extension == ".yaml"
+    assert result.format_extension == ".md"
+    assert ".openclaw/skills/" in result.filename
+    assert result.filename.endswith("/SKILL.md")
+
     text = result.content_bytes.decode("utf-8")
-    lines = [l for l in text.split("\n") if not l.startswith("# SKILLFORTIFYBENCH")]
-    parsed = yaml.safe_load("\n".join(lines))
-    assert parsed is not None
+    assert text.startswith("---\n")
+    frontmatter = yaml.safe_load(text.split("---\n")[1])
+    assert frontmatter["name"]
+    assert frontmatter["allowed-tools"]
 
 
 # ---------------------------------------------------------------------------

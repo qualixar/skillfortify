@@ -12,6 +12,8 @@ from abc import ABC, abstractmethod
 from collections import OrderedDict
 from typing import TYPE_CHECKING
 
+from ..layout import finalize, inject_sentinel_mcp
+
 if TYPE_CHECKING:
     from ..core import RenderedSkill, SkillSpec
     from ..rng import DeterministicRNG
@@ -148,6 +150,11 @@ class AttackPattern(ABC):
     parent_class: str
     sources: tuple[str, ...]
     obfuscation_levels_supported: frozenset[int]
+    #: Human-readable name of the behaviour this pattern emits. Written into
+    #: ``attack_taxonomy.json`` so that documentation quotes the generator
+    #: rather than restating it, which is how the published tables came to
+    #: carry a different set of names from the code that produced them.
+    display_name: str
     mnemonic: str
     cve_reproduction_note: str | None = None
 
@@ -159,15 +166,22 @@ class AttackPattern(ABC):
     # -- dispatch --------------------------------------------------------------
 
     def instantiate(self, spec: "SkillSpec", rng: "DeterministicRNG") -> "RenderedSkill":
-        """Dispatch to format-specific instantiator."""
+        """Dispatch to the format-specific instantiator, then normalise.
+
+        The result passes through :func:`..layout.finalize`, which both
+        hierarchies share, so schema and file placement cannot drift along the
+        malicious/benign boundary and become a label signal.
+        """
         fmt = spec.format
         if fmt == "claude":
-            return self.instantiate_claude(spec, rng)
-        if fmt == "mcp":
-            return self.instantiate_mcp(spec, rng)
-        if fmt == "openclaw":
-            return self.instantiate_openclaw(spec, rng)
-        raise NotImplementedError(f"unsupported format: {fmt}")
+            rendered = self.instantiate_claude(spec, rng)
+        elif fmt == "mcp":
+            rendered = self.instantiate_mcp(spec, rng)
+        elif fmt == "openclaw":
+            rendered = self.instantiate_openclaw(spec, rng)
+        else:
+            raise NotImplementedError(f"unsupported format: {fmt}")
+        return finalize(rendered, spec, rng)
 
     @abstractmethod
     def instantiate_claude(self, spec: "SkillSpec", rng: "DeterministicRNG") -> "RenderedSkill":
@@ -296,11 +310,7 @@ class AttackPattern(ABC):
         return (frontmatter, new_body)
 
     def _inject_sentinel_mcp(self, mcp_payload: dict) -> OrderedDict:
-        result = OrderedDict()
-        result[SENTINEL_MCP_KEY] = SENTINEL_MCP_VALUE
-        for key in mcp_payload:
-            result[key] = mcp_payload[key]
-        return result
+        return inject_sentinel_mcp(mcp_payload)
 
     def _prepend_sentinel_openclaw(self, yaml_payload: dict) -> str:
         from ..registry import YamlOpenClawDialect

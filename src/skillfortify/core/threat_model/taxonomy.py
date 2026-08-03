@@ -9,11 +9,11 @@ Defines the formal threat model's classification hierarchy:
 
 References
 ----------
-.. [ClawHavoc26] "SoK: Agentic Skills in the Wild" (arXiv:2602.20867,
-   Feb 24, 2026). Documents 1,200+ malicious skills in OpenClaw marketplace.
+.. [ClawHavoc26] "SoK: Agentic Skills -- Beyond Tool Use in LLM Agents" (arXiv:2602.20867,
+   Feb 24, 2026). Documents at least 1,184 malicious skills in OpenClaw marketplace.
 
 .. [MalTool26] "MalTool: Benchmarking Malicious Tool Attacks Against LLM
-   Agents" (arXiv:2602.12194, Feb 12, 2026). Catalogs 6,487 malicious tools.
+   Agents" (arXiv:2602.12194, Feb 12, 2026). Catalogs 7,027 malicious tools (1,300 standalone + 5,727 with embedded behaviour).
 """
 
 from __future__ import annotations
@@ -21,7 +21,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum, IntEnum
 from typing import ClassVar
-
 
 # ---------------------------------------------------------------------------
 # SupplyChainPhase: The five-phase skill lifecycle
@@ -96,8 +95,8 @@ class AttackClass(Enum):
         Returns:
             Frozenset of ``SupplyChainPhase`` values. Guaranteed non-empty.
 
-        The mapping is derived from empirical analysis of ClawHavoc (1,200+
-        malicious skills) and MalTool (6,487 malicious tools):
+        The mapping is derived from empirical analysis of ClawHavoc (at least
+        1,184 malicious skills) and MalTool (7,027 malicious tools):
 
         - DATA_EXFILTRATION: Requires runtime access (EXECUTE) or persistence
           layer access (PERSIST) to exfiltrate data.

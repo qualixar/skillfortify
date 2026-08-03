@@ -1,0 +1,5402 @@
+[
+  {
+    "skill_id": "claude_ben_cat1_001",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat1_002",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat1_003",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat1_004",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat1_005",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat1_006",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat1_007",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat1_008",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat1_009",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat1_010",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat1_011",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat1_012",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat1_013",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat1_014",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat1_015",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat1_016",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat1_017",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat1_018",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat2_001",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat2_002",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat2_003",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat2_004",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat2_005",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat2_006",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat2_007",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat2_008",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat2_009",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat2_010",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat2_011",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat2_012",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat2_013",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat2_014",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat2_015",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat2_016",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat2_017",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat2_018",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat3_001",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat3_002",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat3_003",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat3_004",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat3_005",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat3_006",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat3_007",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat3_008",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat3_009",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat3_010",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat3_011",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat3_012",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat3_013",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat3_014",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat3_015",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat3_016",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat3_017",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat3_018",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat4_001",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat4_002",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat4_003",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat4_004",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat4_005",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat4_006",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat4_007",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat4_008",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat4_009",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat4_010",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat4_011",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat4_012",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat4_013",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat4_014",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat4_015",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat4_016",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat4_017",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat4_018",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_ben_cat5_001",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat5_002",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat5_003",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat5_004",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat5_005",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat5_006",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat5_007",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat5_008",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat5_009",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat5_010",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat5_011",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat5_012",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat5_013",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat5_014",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat5_015",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat5_016",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat5_017",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_ben_cat5_018",
+    "format": "claude",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A01_001",
+    "format": "claude",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "claude_mal_A01_002",
+    "format": "claude",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "claude_mal_A01_003",
+    "format": "claude",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "claude_mal_A01_004",
+    "format": "claude",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "claude_mal_A01_005",
+    "format": "claude",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "claude_mal_A01_006",
+    "format": "claude",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "claude_mal_A01_007",
+    "format": "claude",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "claude_mal_A01_008",
+    "format": "claude",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "claude_mal_A01_009",
+    "format": "claude",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "claude_mal_A01_010",
+    "format": "claude",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "claude_mal_A02_001",
+    "format": "claude",
+    "attack_type": "A2",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 9
+  },
+  {
+    "skill_id": "claude_mal_A02_002",
+    "format": "claude",
+    "attack_type": "A2",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 9
+  },
+  {
+    "skill_id": "claude_mal_A02_003",
+    "format": "claude",
+    "attack_type": "A2",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 9
+  },
+  {
+    "skill_id": "claude_mal_A02_004",
+    "format": "claude",
+    "attack_type": "A2",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 8
+  },
+  {
+    "skill_id": "claude_mal_A02_005",
+    "format": "claude",
+    "attack_type": "A2",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 9
+  },
+  {
+    "skill_id": "claude_mal_A02_006",
+    "format": "claude",
+    "attack_type": "A2",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 9
+  },
+  {
+    "skill_id": "claude_mal_A03_001",
+    "format": "claude",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A03_002",
+    "format": "claude",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A03_003",
+    "format": "claude",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A03_004",
+    "format": "claude",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A03_005",
+    "format": "claude",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A03_006",
+    "format": "claude",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A03_007",
+    "format": "claude",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A03_008",
+    "format": "claude",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "claude_mal_A03_009",
+    "format": "claude",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A03_010",
+    "format": "claude",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "claude_mal_A04_001",
+    "format": "claude",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "claude_mal_A04_002",
+    "format": "claude",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "claude_mal_A04_003",
+    "format": "claude",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A04_004",
+    "format": "claude",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "claude_mal_A04_005",
+    "format": "claude",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "claude_mal_A04_006",
+    "format": "claude",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A04_007",
+    "format": "claude",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "claude_mal_A04_008",
+    "format": "claude",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "claude_mal_A04_009",
+    "format": "claude",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A04_010",
+    "format": "claude",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "claude_mal_A05_001",
+    "format": "claude",
+    "attack_type": "A5",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 9
+  },
+  {
+    "skill_id": "claude_mal_A05_002",
+    "format": "claude",
+    "attack_type": "A5",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 9
+  },
+  {
+    "skill_id": "claude_mal_A05_003",
+    "format": "claude",
+    "attack_type": "A5",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 9
+  },
+  {
+    "skill_id": "claude_mal_A05_004",
+    "format": "claude",
+    "attack_type": "A5",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 9
+  },
+  {
+    "skill_id": "claude_mal_A05_005",
+    "format": "claude",
+    "attack_type": "A5",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 9
+  },
+  {
+    "skill_id": "claude_mal_A05_006",
+    "format": "claude",
+    "attack_type": "A5",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 9
+  },
+  {
+    "skill_id": "claude_mal_A06_001",
+    "format": "claude",
+    "attack_type": "A6",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "claude_mal_A06_002",
+    "format": "claude",
+    "attack_type": "A6",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "claude_mal_A06_003",
+    "format": "claude",
+    "attack_type": "A6",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "claude_mal_A06_004",
+    "format": "claude",
+    "attack_type": "A6",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "claude_mal_A06_005",
+    "format": "claude",
+    "attack_type": "A6",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "claude_mal_A06_006",
+    "format": "claude",
+    "attack_type": "A6",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "claude_mal_A07_001",
+    "format": "claude",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A07_002",
+    "format": "claude",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A07_003",
+    "format": "claude",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A07_004",
+    "format": "claude",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A07_005",
+    "format": "claude",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A07_006",
+    "format": "claude",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A07_007",
+    "format": "claude",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A07_008",
+    "format": "claude",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A08_001",
+    "format": "claude",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A08_002",
+    "format": "claude",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A08_003",
+    "format": "claude",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A08_004",
+    "format": "claude",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A08_005",
+    "format": "claude",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A08_006",
+    "format": "claude",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A08_007",
+    "format": "claude",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A08_008",
+    "format": "claude",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A09_001",
+    "format": "claude",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "claude_mal_A09_002",
+    "format": "claude",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "claude_mal_A09_003",
+    "format": "claude",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A09_004",
+    "format": "claude",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A09_005",
+    "format": "claude",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "claude_mal_A09_006",
+    "format": "claude",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "claude_mal_A09_007",
+    "format": "claude",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A09_008",
+    "format": "claude",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "claude_mal_A10_001",
+    "format": "claude",
+    "attack_type": "A10",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A10_002",
+    "format": "claude",
+    "attack_type": "A10",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A10_003",
+    "format": "claude",
+    "attack_type": "A10",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A10_004",
+    "format": "claude",
+    "attack_type": "A10",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A11_001",
+    "format": "claude",
+    "attack_type": "A11",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "claude_mal_A11_002",
+    "format": "claude",
+    "attack_type": "A11",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "claude_mal_A11_003",
+    "format": "claude",
+    "attack_type": "A11",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "claude_mal_A11_004",
+    "format": "claude",
+    "attack_type": "A11",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_mal_A12_001",
+    "format": "claude",
+    "attack_type": "A12",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_mal_A12_002",
+    "format": "claude",
+    "attack_type": "A12",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "claude_mal_A13_001",
+    "format": "claude",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A13_002",
+    "format": "claude",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A13_003",
+    "format": "claude",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A13_004",
+    "format": "claude",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A13_005",
+    "format": "claude",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A13_006",
+    "format": "claude",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A13_007",
+    "format": "claude",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "claude_mal_A13_008",
+    "format": "claude",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "mcp_ben_cat1_001",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat1_002",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat1_003",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat1_004",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat1_005",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat1_006",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat1_007",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat1_008",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat1_009",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat1_010",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat1_011",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat1_012",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat1_013",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat1_014",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat1_015",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat1_016",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat1_017",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat1_018",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat2_001",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat2_002",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat2_003",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat2_004",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat2_005",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat2_006",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat2_007",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat2_008",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat2_009",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat2_010",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat2_011",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat2_012",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat2_013",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat2_014",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat2_015",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat2_016",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat2_017",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat2_018",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat3_001",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat3_002",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat3_003",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat3_004",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat3_005",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat3_006",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat3_007",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat3_008",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat3_009",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat3_010",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat3_011",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat3_012",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat3_013",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat3_014",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat3_015",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat3_016",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat3_017",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat3_018",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat4_001",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat4_002",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat4_003",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat4_004",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat4_005",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat4_006",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat4_007",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat4_008",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat4_009",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat4_010",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat4_011",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat4_012",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat4_013",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat4_014",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat4_015",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat4_016",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat4_017",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat4_018",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_ben_cat5_001",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat5_002",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat5_003",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat5_004",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat5_005",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat5_006",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat5_007",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat5_008",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat5_009",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat5_010",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat5_011",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat5_012",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat5_013",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat5_014",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat5_015",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat5_016",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat5_017",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_ben_cat5_018",
+    "format": "mcp",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A01_001",
+    "format": "mcp",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A01_002",
+    "format": "mcp",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A01_003",
+    "format": "mcp",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "mcp_mal_A01_004",
+    "format": "mcp",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_mal_A01_005",
+    "format": "mcp",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A01_006",
+    "format": "mcp",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A01_007",
+    "format": "mcp",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "mcp_mal_A01_008",
+    "format": "mcp",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A01_009",
+    "format": "mcp",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A01_010",
+    "format": "mcp",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_mal_A02_001",
+    "format": "mcp",
+    "attack_type": "A2",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "mcp_mal_A02_002",
+    "format": "mcp",
+    "attack_type": "A2",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "mcp_mal_A02_003",
+    "format": "mcp",
+    "attack_type": "A2",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A02_004",
+    "format": "mcp",
+    "attack_type": "A2",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A02_005",
+    "format": "mcp",
+    "attack_type": "A2",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_mal_A02_006",
+    "format": "mcp",
+    "attack_type": "A2",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "MEDIUM",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A03_001",
+    "format": "mcp",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A03_002",
+    "format": "mcp",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A03_003",
+    "format": "mcp",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A03_004",
+    "format": "mcp",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A03_005",
+    "format": "mcp",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A03_006",
+    "format": "mcp",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A03_007",
+    "format": "mcp",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A03_008",
+    "format": "mcp",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A03_009",
+    "format": "mcp",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A03_010",
+    "format": "mcp",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A04_001",
+    "format": "mcp",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A04_002",
+    "format": "mcp",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A04_003",
+    "format": "mcp",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "mcp_mal_A04_004",
+    "format": "mcp",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A04_005",
+    "format": "mcp",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A04_006",
+    "format": "mcp",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A04_007",
+    "format": "mcp",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "mcp_mal_A04_008",
+    "format": "mcp",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A04_009",
+    "format": "mcp",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A04_010",
+    "format": "mcp",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A05_001",
+    "format": "mcp",
+    "attack_type": "A5",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A05_002",
+    "format": "mcp",
+    "attack_type": "A5",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A05_003",
+    "format": "mcp",
+    "attack_type": "A5",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A05_004",
+    "format": "mcp",
+    "attack_type": "A5",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A05_005",
+    "format": "mcp",
+    "attack_type": "A5",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A05_006",
+    "format": "mcp",
+    "attack_type": "A5",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A06_001",
+    "format": "mcp",
+    "attack_type": "A6",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A06_002",
+    "format": "mcp",
+    "attack_type": "A6",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A06_003",
+    "format": "mcp",
+    "attack_type": "A6",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A06_004",
+    "format": "mcp",
+    "attack_type": "A6",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A06_005",
+    "format": "mcp",
+    "attack_type": "A6",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A06_006",
+    "format": "mcp",
+    "attack_type": "A6",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A07_001",
+    "format": "mcp",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "mcp_mal_A07_002",
+    "format": "mcp",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "mcp_mal_A07_003",
+    "format": "mcp",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "mcp_mal_A07_004",
+    "format": "mcp",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "mcp_mal_A07_005",
+    "format": "mcp",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "mcp_mal_A07_006",
+    "format": "mcp",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "mcp_mal_A07_007",
+    "format": "mcp",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "mcp_mal_A07_008",
+    "format": "mcp",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "mcp_mal_A08_001",
+    "format": "mcp",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A08_002",
+    "format": "mcp",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A08_003",
+    "format": "mcp",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A08_004",
+    "format": "mcp",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A08_005",
+    "format": "mcp",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_mal_A08_006",
+    "format": "mcp",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A08_007",
+    "format": "mcp",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_mal_A08_008",
+    "format": "mcp",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_mal_A09_001",
+    "format": "mcp",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A09_002",
+    "format": "mcp",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A09_003",
+    "format": "mcp",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A09_004",
+    "format": "mcp",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A09_005",
+    "format": "mcp",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A09_006",
+    "format": "mcp",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A09_007",
+    "format": "mcp",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A09_008",
+    "format": "mcp",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A10_001",
+    "format": "mcp",
+    "attack_type": "A10",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A10_002",
+    "format": "mcp",
+    "attack_type": "A10",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A10_003",
+    "format": "mcp",
+    "attack_type": "A10",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A10_004",
+    "format": "mcp",
+    "attack_type": "A10",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A11_001",
+    "format": "mcp",
+    "attack_type": "A11",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_mal_A11_002",
+    "format": "mcp",
+    "attack_type": "A11",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_mal_A12_001",
+    "format": "mcp",
+    "attack_type": "A12",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_mal_A12_002",
+    "format": "mcp",
+    "attack_type": "A12",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_mal_A12_003",
+    "format": "mcp",
+    "attack_type": "A12",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_mal_A12_004",
+    "format": "mcp",
+    "attack_type": "A12",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "mcp_mal_A13_001",
+    "format": "mcp",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A13_002",
+    "format": "mcp",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A13_003",
+    "format": "mcp",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A13_004",
+    "format": "mcp",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A13_005",
+    "format": "mcp",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A13_006",
+    "format": "mcp",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "mcp_mal_A13_007",
+    "format": "mcp",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "mcp_mal_A13_008",
+    "format": "mcp",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_ben_cat1_001",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat1_002",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat1_003",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat1_004",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat1_005",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat1_006",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat1_007",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat1_008",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat1_009",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat1_010",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat1_011",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat1_012",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat1_013",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat1_014",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat1_015",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat1_016",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat1_017",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat1_018",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat2_001",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_ben_cat2_002",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_ben_cat2_003",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_ben_cat2_004",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_ben_cat2_005",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_ben_cat2_006",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_ben_cat2_007",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_ben_cat2_008",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_ben_cat2_009",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_ben_cat2_010",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_ben_cat2_011",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_ben_cat2_012",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_ben_cat2_013",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_ben_cat2_014",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_ben_cat2_015",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_ben_cat2_016",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_ben_cat2_017",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_ben_cat2_018",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": "LOW",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_ben_cat3_001",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat3_002",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat3_003",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat3_004",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat3_005",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat3_006",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat3_007",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat3_008",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat3_009",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat3_010",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat3_011",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat3_012",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat3_013",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat3_014",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat3_015",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat3_016",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat3_017",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat3_018",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat4_001",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat4_002",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat4_003",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat4_004",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat4_005",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat4_006",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat4_007",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat4_008",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat4_009",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat4_010",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat4_011",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat4_012",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat4_013",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat4_014",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat4_015",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat4_016",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat4_017",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat4_018",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat5_001",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat5_002",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat5_003",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat5_004",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat5_005",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat5_006",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat5_007",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat5_008",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat5_009",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat5_010",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat5_011",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat5_012",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat5_013",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat5_014",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat5_015",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat5_016",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat5_017",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_ben_cat5_018",
+    "format": "openclaw",
+    "attack_type": "benign",
+    "is_malicious": false,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_mal_A01_001",
+    "format": "openclaw",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A01_002",
+    "format": "openclaw",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A01_003",
+    "format": "openclaw",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A01_004",
+    "format": "openclaw",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A01_005",
+    "format": "openclaw",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A01_006",
+    "format": "openclaw",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A01_007",
+    "format": "openclaw",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A01_008",
+    "format": "openclaw",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A01_009",
+    "format": "openclaw",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A01_010",
+    "format": "openclaw",
+    "attack_type": "A1",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A02_001",
+    "format": "openclaw",
+    "attack_type": "A2",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A02_002",
+    "format": "openclaw",
+    "attack_type": "A2",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A02_003",
+    "format": "openclaw",
+    "attack_type": "A2",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A02_004",
+    "format": "openclaw",
+    "attack_type": "A2",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A02_005",
+    "format": "openclaw",
+    "attack_type": "A2",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 5
+  },
+  {
+    "skill_id": "openclaw_mal_A02_006",
+    "format": "openclaw",
+    "attack_type": "A2",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A03_001",
+    "format": "openclaw",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A03_002",
+    "format": "openclaw",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A03_003",
+    "format": "openclaw",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A03_004",
+    "format": "openclaw",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A03_005",
+    "format": "openclaw",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A03_006",
+    "format": "openclaw",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A03_007",
+    "format": "openclaw",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A03_008",
+    "format": "openclaw",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A03_009",
+    "format": "openclaw",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A03_010",
+    "format": "openclaw",
+    "attack_type": "A3",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A04_001",
+    "format": "openclaw",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "openclaw_mal_A04_002",
+    "format": "openclaw",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "openclaw_mal_A04_003",
+    "format": "openclaw",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "openclaw_mal_A04_004",
+    "format": "openclaw",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "openclaw_mal_A04_005",
+    "format": "openclaw",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "openclaw_mal_A04_006",
+    "format": "openclaw",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "openclaw_mal_A04_007",
+    "format": "openclaw",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "openclaw_mal_A04_008",
+    "format": "openclaw",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "openclaw_mal_A04_009",
+    "format": "openclaw",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "openclaw_mal_A04_010",
+    "format": "openclaw",
+    "attack_type": "A4",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 4
+  },
+  {
+    "skill_id": "openclaw_mal_A05_001",
+    "format": "openclaw",
+    "attack_type": "A5",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_mal_A05_002",
+    "format": "openclaw",
+    "attack_type": "A5",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_mal_A05_003",
+    "format": "openclaw",
+    "attack_type": "A5",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_mal_A05_004",
+    "format": "openclaw",
+    "attack_type": "A5",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_mal_A05_005",
+    "format": "openclaw",
+    "attack_type": "A5",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_mal_A05_006",
+    "format": "openclaw",
+    "attack_type": "A5",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_mal_A06_001",
+    "format": "openclaw",
+    "attack_type": "A6",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A06_002",
+    "format": "openclaw",
+    "attack_type": "A6",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A06_003",
+    "format": "openclaw",
+    "attack_type": "A6",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A06_004",
+    "format": "openclaw",
+    "attack_type": "A6",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A06_005",
+    "format": "openclaw",
+    "attack_type": "A6",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A06_006",
+    "format": "openclaw",
+    "attack_type": "A6",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A07_001",
+    "format": "openclaw",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "openclaw_mal_A07_002",
+    "format": "openclaw",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "openclaw_mal_A07_003",
+    "format": "openclaw",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "openclaw_mal_A07_004",
+    "format": "openclaw",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "openclaw_mal_A07_005",
+    "format": "openclaw",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "openclaw_mal_A07_006",
+    "format": "openclaw",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "openclaw_mal_A07_007",
+    "format": "openclaw",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "openclaw_mal_A07_008",
+    "format": "openclaw",
+    "attack_type": "A7",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "openclaw_mal_A08_001",
+    "format": "openclaw",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_mal_A08_002",
+    "format": "openclaw",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_mal_A08_003",
+    "format": "openclaw",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_mal_A08_004",
+    "format": "openclaw",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_mal_A08_005",
+    "format": "openclaw",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_mal_A08_006",
+    "format": "openclaw",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_mal_A08_007",
+    "format": "openclaw",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_mal_A08_008",
+    "format": "openclaw",
+    "attack_type": "A8",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_mal_A09_001",
+    "format": "openclaw",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A09_002",
+    "format": "openclaw",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A09_003",
+    "format": "openclaw",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A09_004",
+    "format": "openclaw",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A09_005",
+    "format": "openclaw",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A09_006",
+    "format": "openclaw",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A09_007",
+    "format": "openclaw",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A09_008",
+    "format": "openclaw",
+    "attack_type": "A9",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 6
+  },
+  {
+    "skill_id": "openclaw_mal_A10_001",
+    "format": "openclaw",
+    "attack_type": "A10",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A10_002",
+    "format": "openclaw",
+    "attack_type": "A10",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A10_003",
+    "format": "openclaw",
+    "attack_type": "A10",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A10_004",
+    "format": "openclaw",
+    "attack_type": "A10",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A11_001",
+    "format": "openclaw",
+    "attack_type": "A11",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "HIGH",
+    "finding_count": 1
+  },
+  {
+    "skill_id": "openclaw_mal_A11_002",
+    "format": "openclaw",
+    "attack_type": "A11",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_mal_A12_001",
+    "format": "openclaw",
+    "attack_type": "A12",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_mal_A12_002",
+    "format": "openclaw",
+    "attack_type": "A12",
+    "is_malicious": true,
+    "detected": false,
+    "skills_found": 1,
+    "max_severity": null,
+    "finding_count": 0
+  },
+  {
+    "skill_id": "openclaw_mal_A13_001",
+    "format": "openclaw",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "openclaw_mal_A13_002",
+    "format": "openclaw",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "openclaw_mal_A13_003",
+    "format": "openclaw",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "openclaw_mal_A13_004",
+    "format": "openclaw",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_mal_A13_005",
+    "format": "openclaw",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 3
+  },
+  {
+    "skill_id": "openclaw_mal_A13_006",
+    "format": "openclaw",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "openclaw_mal_A13_007",
+    "format": "openclaw",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "openclaw_mal_A13_008",
+    "format": "openclaw",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 2
+  },
+  {
+    "skill_id": "openclaw_mal_A13_009",
+    "format": "openclaw",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 5
+  },
+  {
+    "skill_id": "openclaw_mal_A13_010",
+    "format": "openclaw",
+    "attack_type": "A13",
+    "is_malicious": true,
+    "detected": true,
+    "skills_found": 1,
+    "max_severity": "CRITICAL",
+    "finding_count": 14
+  }
+]

@@ -95,7 +95,7 @@ class SkillParser(ABC):
 
         The check should be fast and based on file/directory existence,
         not on full content parsing. For example, the Claude parser checks
-        for ``.claude/skills/*.md`` files.
+        for ``.claude/skills/<name>/SKILL.md`` files.
 
         Args:
             path: Root directory to probe.

@@ -26,7 +26,8 @@ class A9_ReverseShell(AttackPattern):
     parent_class = "c1_DATA_EXFILTRATION"
     sources: tuple[str, ...] = ("MalTool (arXiv:2602.12194)",)
     obfuscation_levels_supported: frozenset[int] = frozenset({1, 2, 3, 4})
-    mnemonic = "shadow"
+    display_name = "Reverse shell"
+    mnemonic = "reverse_shell"
     cve_reproduction_note = None
 
     def supported_formats(self) -> frozenset[str]:

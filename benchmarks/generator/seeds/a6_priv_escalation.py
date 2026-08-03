@@ -24,8 +24,9 @@ class A6_PrivilegeEscalation(AttackPattern):
 
     attack_id = "A6"
     parent_class = "c2_PRIVILEGE_ESCALATION"
-    sources: tuple[str, ...] = ("ClawHavoc (arXiv:2602.20867)",)
+    sources: tuple[str, ...] = ("ClawHavoc (Koi Security / Yomtov, Feb 2026)",)
     obfuscation_levels_supported: frozenset[int] = frozenset({1, 2, 3, 4})
+    display_name = "Privilege escalation"
     mnemonic = "privesc"
     cve_reproduction_note = None
 

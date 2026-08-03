@@ -28,7 +28,9 @@ _URL_PATTERN = re.compile(r"https?://[^\s\"'`)\]>]+")
 _ENV_VAR_PATTERN = re.compile(
     r"""(?:"""
     r"""\$\{?([A-Z][A-Z0-9_]{1,})\}?"""
-    r"""|(?:^|[\s=:])([A-Z][A-Z_]{1,}[A-Z0-9_]*)(?=[=\s"'`])"""
+    # An underscore is required so that capitalised prose words are not read
+    # as environment variables; sigil forms above still catch $PATH.
+    r"""|(?:^|[\s=:])([A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+)(?=[=\s"'`])"""
     r""")""",
     re.MULTILINE,
 )

@@ -24,9 +24,10 @@ class A5_FileSystemTampering(AttackPattern):
 
     attack_id = "A5"
     parent_class = "c2_PRIVILEGE_ESCALATION"
-    sources: tuple[str, ...] = ("ClawHavoc (arXiv:2602.20867)",)
+    sources: tuple[str, ...] = ("ClawHavoc (Koi Security / Yomtov, Feb 2026)",)
     obfuscation_levels_supported: frozenset[int] = frozenset({1, 2, 3, 4})
-    mnemonic = "shell_inj"
+    display_name = "File system tampering"
+    mnemonic = "fs_tamper"
     cve_reproduction_note = None
 
     def supported_formats(self) -> frozenset[str]:

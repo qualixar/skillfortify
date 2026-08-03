@@ -6,7 +6,7 @@
 
 ## Why SkillFortify Exists
 
-In January 2026, the **ClawHavoc** campaign infiltrated 1,200+ malicious skills into the largest AI agent marketplace. Researchers catalogued **6,487 malicious agent tools** that conventional scanners cannot detect. **CVE-2026-25253** demonstrated remote code execution through a single compromised skill.
+In January 2026, the **ClawHavoc** campaign infiltrated at least 1,184 malicious skills into the largest AI agent marketplace. Researchers catalogued **7,027 malicious agent tools** that conventional scanners cannot detect. **CVE-2026-25253** demonstrated remote code execution through a single compromised skill.
 
 The industry responded with heuristic scanning tools -- YARA rules, LLM-as-judge scoring, regex patterns. Every one shares the same limitation: **absence of findings does not mean absence of risk.**
 

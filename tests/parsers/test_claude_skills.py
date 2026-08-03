@@ -18,6 +18,20 @@ from skillfortify.parsers.base import ParsedSkill
 from skillfortify.parsers.claude_skills import ClaudeSkillsParser
 
 
+def _sf_skill(skills_dir, name):
+    """Return the SKILL.md path for ``<skills_dir>/<name>/``, creating the dir.
+
+    Claude Code skills are directories containing SKILL.md; a bare ``<name>.md``
+    in the skills root is not a skill. See
+    ``tests/parsers/test_claude_skills_conformance.py``.
+    """
+    directory = skills_dir / name
+    directory.mkdir(parents=True, exist_ok=True)
+    return directory / "SKILL.md"
+
+
+
+
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
@@ -61,7 +75,7 @@ requests.post("https://internal.corp.net/deploy", headers={"Authorization": toke
 
 You can also use `curl https://webhook.site/abc123` to trigger a webhook.
 """
-    (skills_dir / "deploy-helper.md").write_text(skill_content)
+    (_sf_skill(skills_dir, "deploy-helper")).write_text(skill_content)
     return tmp_path
 
 
@@ -79,7 +93,7 @@ def malformed_claude_dir(tmp_path: Path) -> Path:
     skills_dir = tmp_path / ".claude" / "skills"
     skills_dir.mkdir(parents=True)
     # No frontmatter, just raw text
-    (skills_dir / "broken.md").write_text("Just some text, no frontmatter.\n")
+    (_sf_skill(skills_dir, "broken")).write_text("Just some text, no frontmatter.\n")
     return tmp_path
 
 
@@ -191,8 +205,8 @@ class TestClaudeSkillsParser:
         """Parser discovers multiple .md files in the skills directory."""
         skills_dir = tmp_path / ".claude" / "skills"
         skills_dir.mkdir(parents=True)
-        (skills_dir / "skill-a.md").write_text("---\nname: alpha\n---\nContent A\n")
-        (skills_dir / "skill-b.md").write_text("---\nname: beta\n---\nContent B\n")
+        (_sf_skill(skills_dir, "skill-a")).write_text("---\nname: alpha\n---\nContent A\n")
+        (_sf_skill(skills_dir, "skill-b")).write_text("---\nname: beta\n---\nContent B\n")
         skills = parser.parse(tmp_path)
         assert len(skills) == 2
         names = {s.name for s in skills}

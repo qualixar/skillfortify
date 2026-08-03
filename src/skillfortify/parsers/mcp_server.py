@@ -24,7 +24,7 @@ Security Relevance:
 
 References:
     CVE-2026-25253: RCE via malicious MCP server configuration.
-    ClawHavoc (Feb 2026): 1,200+ malicious skills infiltrated marketplace.
+    ClawHavoc (Feb 2026): at least 1,184 malicious skills infiltrated marketplace.
 """
 
 from __future__ import annotations

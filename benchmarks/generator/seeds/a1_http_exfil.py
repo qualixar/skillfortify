@@ -25,8 +25,9 @@ class A1_HttpExfil(AttackPattern):
 
     attack_id = "A1"
     parent_class = "c1_DATA_EXFILTRATION"
-    sources: tuple[str, ...] = ("ClawHavoc (arXiv:2602.20867)",)
+    sources: tuple[str, ...] = ("ClawHavoc (Koi Security / Yomtov, Feb 2026)",)
     obfuscation_levels_supported: frozenset[int] = frozenset({1, 2, 3, 4})
+    display_name = "HTTP exfiltration"
     mnemonic = "exfil_http"
     cve_reproduction_note = None
 

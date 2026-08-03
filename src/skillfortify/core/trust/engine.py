@@ -19,6 +19,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
+from . import propagation as _propagation
 from .models import (
     LEVEL_COMMUNITY_THRESHOLD,
     LEVEL_FORMAL_THRESHOLD,
@@ -28,7 +29,16 @@ from .models import (
     TrustSignals,
     TrustWeights,
 )
-from . import propagation as _propagation
+
+# A signal at or below this value carries no positive information: it is the
+# neutral default used when nothing is known. Evidence-gated levels require a
+# signal strictly above it.
+_NEUTRAL_SIGNAL = 0.5
+
+# A behavioural signal at or below this value means dangerous content was
+# positively detected. Such a skill is floored at UNSIGNED regardless of its
+# other signals: a strong publisher does not make confirmed malware trustworthy.
+_MALICIOUS_BEHAVIOUR = 0.05
 
 
 class TrustEngine:
@@ -155,7 +165,7 @@ class TrustEngine:
 
         # Clamp to [0, 1]
         effective = max(0.0, min(1.0, effective))
-        level = self.score_to_level(effective)
+        level = self.score_to_level(effective, signals)
 
         return TrustScore(
             skill_name=skill_name,
@@ -168,7 +178,7 @@ class TrustEngine:
 
     # -- Level mapping --
 
-    def score_to_level(self, score: float) -> TrustLevel:
+    def score_to_level(self, score: float, signals: TrustSignals | None = None) -> TrustLevel:
         """Map a numeric trust score to a SLSA-inspired trust level.
 
         Level boundaries:
@@ -177,19 +187,48 @@ class TrustEngine:
             - L2 (COMMUNITY_VERIFIED): 0.50 <= score < 0.75
             - L3 (FORMALLY_VERIFIED):  score >= 0.75
 
+        Evidence gating
+        ---------------
+        A numeric score alone cannot justify a level whose *name* asserts a
+        particular kind of verification, because absence of detection is not
+        evidence of safety. Each named level therefore requires the
+        corresponding evidence: COMMUNITY_VERIFIED requires a community signal
+        above neutral, FORMALLY_VERIFIED requires provenance above neutral.
+        Without it the level is capped one step below; the numeric score is
+        unchanged.
+
         Args:
             score: Numeric trust score in [0, 1].
+            signals: The signals the score was computed from. When omitted the
+                boundaries apply unguarded, preserving the original behaviour
+                for callers that only have a number.
 
         Returns:
             The corresponding ``TrustLevel``.
         """
         if score >= LEVEL_FORMAL_THRESHOLD:
-            return TrustLevel.FORMALLY_VERIFIED
-        if score >= LEVEL_COMMUNITY_THRESHOLD:
-            return TrustLevel.COMMUNITY_VERIFIED
-        if score >= LEVEL_SIGNED_THRESHOLD:
-            return TrustLevel.SIGNED
-        return TrustLevel.UNSIGNED
+            level = TrustLevel.FORMALLY_VERIFIED
+        elif score >= LEVEL_COMMUNITY_THRESHOLD:
+            level = TrustLevel.COMMUNITY_VERIFIED
+        elif score >= LEVEL_SIGNED_THRESHOLD:
+            level = TrustLevel.SIGNED
+        else:
+            level = TrustLevel.UNSIGNED
+
+        if signals is None:
+            return level
+
+        # `behavioral` at or near zero means dangerous content was positively
+        # identified: evidence against the skill, not merely missing evidence
+        # for it. Reputation must not raise such a skill's level.
+        if signals.behavioral <= _MALICIOUS_BEHAVIOUR:
+            return TrustLevel.UNSIGNED
+
+        if level >= TrustLevel.FORMALLY_VERIFIED and signals.provenance <= _NEUTRAL_SIGNAL:
+            level = TrustLevel.COMMUNITY_VERIFIED
+        if level >= TrustLevel.COMMUNITY_VERIFIED and signals.community <= _NEUTRAL_SIGNAL:
+            level = TrustLevel.SIGNED
+        return level
 
     # -- Chain propagation (delegated to propagation module) --
 

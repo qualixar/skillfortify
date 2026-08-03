@@ -18,7 +18,7 @@ from pathlib import Path
 import click
 
 from skillfortify.core.analyzer import StaticAnalyzer
-from skillfortify.core.lockfile import Lockfile, LockedSkill
+from skillfortify.core.lockfile import LockedSkill, Lockfile
 from skillfortify.parsers.registry import default_registry
 
 
@@ -38,7 +38,9 @@ def _build_lockfile_from_skills(skills, results) -> Lockfile:
     """
     lockfile = Lockfile()
     for skill, result in zip(skills, results):
-        integrity = Lockfile.compute_integrity(skill.raw_content)
+        # Hash the whole skill directory, not just SKILL.md: companion scripts
+        # are part of the skill and are what an attacker would swap.
+        integrity = Lockfile.compute_tree_integrity(Path(skill.source_path))
         caps = list(skill.declared_capabilities)
         if result.inferred_capabilities:
             for cap in result.inferred_capabilities:

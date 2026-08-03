@@ -16,13 +16,13 @@ Theorem 5 (Trust Monotonicity):
 References:
     RFC 2704 (KeyNote Trust Management): Assertion monotonicity.
     SolarWinds (2020): Supply chain trust propagation failure.
-    ClawHavoc (arXiv:2602.20867): 1,200+ malicious skills.
+    ClawHavoc (Koi Security / Yomtov, Feb 2026): at least 1,184 malicious skills.
 """
 
 from __future__ import annotations
 
 import math
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from .models import TrustScore, TrustSignals
 
@@ -97,13 +97,13 @@ def apply_decay(
         A new ``TrustScore`` with decayed effective score.
     """
     if current_time is None:
-        current_time = datetime.now(timezone.utc)
+        current_time = datetime.now(UTC)
 
     # Ensure both datetimes are timezone-aware for safe subtraction
     if last_update.tzinfo is None:
-        last_update = last_update.replace(tzinfo=timezone.utc)
+        last_update = last_update.replace(tzinfo=UTC)
     if current_time.tzinfo is None:
-        current_time = current_time.replace(tzinfo=timezone.utc)
+        current_time = current_time.replace(tzinfo=UTC)
 
     delta = current_time - last_update
     days_elapsed = max(0.0, delta.total_seconds() / 86400.0)

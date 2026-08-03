@@ -11,6 +11,7 @@ from collections import OrderedDict
 from typing import TYPE_CHECKING, Mapping
 
 from ..config import FORMAT_EXTENSIONS
+from ..layout import finalize, inject_sentinel_mcp
 from ..seeds.base import (
     SENTINEL_CLAUDE_LINE,
     SENTINEL_MCP_KEY,
@@ -44,7 +45,12 @@ class BenignCategory(ABC):
     # -- dispatch --------------------------------------------------------------
 
     def instantiate(self, spec: "SkillSpec", rng: "DeterministicRNG") -> "RenderedSkill":
-        """Dispatch to format-specific instantiator, inject sentinel, serialize."""
+        """Dispatch to format-specific instantiator, then normalise.
+
+        The result passes through :func:`..layout.finalize`, which both
+        hierarchies share, so schema and file placement cannot drift along the
+        malicious/benign boundary and become a label signal.
+        """
         from ..core import RenderedSkill
         from ..registry import (
             JsonMcpDialect,
@@ -69,15 +75,14 @@ class BenignCategory(ABC):
             raise NotImplementedError(f"unsupported format: {fmt}")
 
         ext = FORMAT_EXTENSIONS[fmt]
-        filename = spec.skill_id + ext
-
-        return RenderedSkill(
+        rendered = RenderedSkill(
             spec=spec,
-            filename=filename,
+            filename=spec.skill_id + ext,
             content_bytes=content_bytes,
             format_extension=ext,
             sources=self.sources,
         )
+        return finalize(rendered, spec, rng)
 
     # -- abstract per-format methods -------------------------------------------
 
@@ -113,17 +118,12 @@ class BenignCategory(ABC):
 
     @staticmethod
     def _inject_sentinel_mcp(payload: dict[str, object]) -> OrderedDict:
-        """Insert sentinel key as first entry in MCP JSON payload.
+        """Insert the sentinel key as the first entry of an MCP JSON payload.
 
-        Value includes the canonical SKILLFORTIFYBENCH:INERT marker so
-        that substring-based sentinel checks pass on serialized JSON.
+        Delegates to the shared implementation so that the marker is
+        byte-identical to the one malicious specimens carry.
         """
-        result: OrderedDict[str, object] = OrderedDict()
-        sentinel_val = "SKILLFORTIFYBENCH:INERT " + SENTINEL_MCP_VALUE
-        result[SENTINEL_MCP_KEY] = sentinel_val
-        for key in payload:
-            result[key] = payload[key]
-        return result
+        return inject_sentinel_mcp(payload)
 
     @staticmethod
     def _serialize_openclaw_with_sentinel(payload: dict[str, object]) -> bytes:

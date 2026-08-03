@@ -45,6 +45,7 @@ class A11_Typosquatting(AttackPattern):
     parent_class = "c5_TYPOSQUATTING"
     sources: tuple[str, ...] = ("Agent Skills in the Wild (arXiv:2601.10338)",)
     obfuscation_levels_supported: frozenset[int] = frozenset({1, 2})
+    display_name = "Typosquatting"
     mnemonic = "typosquat"
     cve_reproduction_note = None
 

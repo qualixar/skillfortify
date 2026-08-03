@@ -1,12 +1,15 @@
 """Tests for the OpenClaw skills parser.
 
-OpenClaw skills are defined in YAML files within ``.claw/`` or ``.openclaw/``
-directories. Each YAML file declares a skill with metadata (name, description,
-version), instructions, commands, and dependencies.
+OpenClaw skills use the Agent Skills open standard: a skill is a directory
+containing ``SKILL.md`` with YAML frontmatter and markdown instructions, loaded
+from ``~/.openclaw/skills/``, ``<workspace>/skills/``, or ``.openclaw/skills/``.
 
-The parser must extract security-relevant metadata including URLs referenced
-in instructions, environment variables, and shell commands -- all of which
-feed into the capability lattice and threat model for static analysis.
+This module covers per-file parsing behaviour -- frontmatter handling, metadata
+extraction, and malformed input. Layout and discovery conformance against the
+published specification lives in ``test_openclaw_conformance.py``.
+
+Fixtures follow the published layout so that they test the format OpenClaw
+actually ships rather than an assumption made inside this project.
 """
 
 from __future__ import annotations
@@ -17,7 +20,6 @@ import pytest
 
 from skillfortify.parsers.base import ParsedSkill
 from skillfortify.parsers.openclaw import OpenClawParser
-
 
 # ---------------------------------------------------------------------------
 # Fixtures
@@ -31,177 +33,183 @@ def parser() -> OpenClawParser:
 
 @pytest.fixture
 def openclaw_skill_dir(tmp_path: Path) -> Path:
-    """Create a .claw/ directory with a sample skill YAML."""
-    claw_dir = tmp_path / ".claw"
-    claw_dir.mkdir()
+    """Create ``.openclaw/skills/web-scraper/SKILL.md`` with a realistic skill."""
+    skill_dir = tmp_path / ".openclaw" / "skills" / "web-scraper"
+    skill_dir.mkdir(parents=True)
 
-    skill_yaml = """\
+    (skill_dir / "SKILL.md").write_text(
+        """\
+---
 name: web-scraper
 version: "1.3.0"
 description: Scrapes web pages and extracts structured data
-instructions: |
-  Use this skill to scrape data from https://target-site.com/api.
-  Requires SCRAPER_API_KEY to authenticate.
-  Also connects to https://proxy.internal.net for rate limiting.
-commands:
-  - name: scrape
-    description: Scrape a URL
-    command: "curl -H 'Authorization: Bearer $SCRAPER_API_KEY' https://target-site.com"
-  - name: export
-    description: Export scraped data
-    command: "python export.py --output /tmp/data.json"
-dependencies:
-  - beautifulsoup4>=4.12
-  - httpx>=0.27
-"""
-    (claw_dir / "web-scraper.yaml").write_text(skill_yaml)
+metadata:
+  openclaw:
+    requires:
+      env: [SCRAPER_API_KEY]
+      bins: [curl]
+---
+
+Use this skill to scrape data from https://target-site.com/api.
+Also connects to https://proxy.internal.net for rate limiting.
+
+```bash
+curl -H 'Authorization: Bearer $SCRAPER_API_KEY' https://target-site.com
+python export.py --output /tmp/data.json
+```
+""",
+        encoding="utf-8",
+    )
     return tmp_path
 
 
 @pytest.fixture
-def openclaw_alt_dir(tmp_path: Path) -> Path:
-    """Create a .openclaw/ directory (alternative naming) with a .yml file."""
-    openclaw_dir = tmp_path / ".openclaw"
-    openclaw_dir.mkdir()
-
-    skill_yml = """\
-name: code-reviewer
-version: "0.2.0"
-description: Reviews code for common issues
-instructions: |
-  Analyze code quality. Set CODE_REVIEW_TOKEN for GitHub integration.
-commands:
-  - name: review
-    command: "gh pr review --approve"
-"""
-    (openclaw_dir / "code-reviewer.yml").write_text(skill_yml)
+def workspace_skill_dir(tmp_path: Path) -> Path:
+    """Create a workspace-level ``skills/code-reviewer/SKILL.md``."""
+    skill_dir = tmp_path / "skills" / "code-reviewer"
+    skill_dir.mkdir(parents=True)
+    (skill_dir / "SKILL.md").write_text(
+        "---\nname: code-reviewer\nversion: 0.2.0\ndescription: Reviews code\n---\n\nReview it.\n",
+        encoding="utf-8",
+    )
     return tmp_path
 
 
 @pytest.fixture
-def empty_claw_dir(tmp_path: Path) -> Path:
-    """Create an empty .claw/ directory."""
-    (tmp_path / ".claw").mkdir()
+def empty_skills_dir(tmp_path: Path) -> Path:
+    """Create an empty ``.openclaw/skills/`` directory."""
+    (tmp_path / ".openclaw" / "skills").mkdir(parents=True)
     return tmp_path
 
 
 @pytest.fixture
-def malformed_claw_dir(tmp_path: Path) -> Path:
-    """Create a .claw/ directory with an invalid YAML file."""
-    claw_dir = tmp_path / ".claw"
-    claw_dir.mkdir()
-    (claw_dir / "broken.yaml").write_text("name: [invalid yaml\n  missing: {bracket")
+def malformed_skill_dir(tmp_path: Path) -> Path:
+    """Create a skill whose frontmatter is not valid YAML."""
+    skill_dir = tmp_path / ".openclaw" / "skills" / "broken"
+    skill_dir.mkdir(parents=True)
+    (skill_dir / "SKILL.md").write_text(
+        "---\nname: [invalid yaml\n  missing: {bracket\n---\n\nBody.\n", encoding="utf-8"
+    )
     return tmp_path
 
 
 # ---------------------------------------------------------------------------
-# TestOpenClawParser
+# Detection
+# ---------------------------------------------------------------------------
+
+
+class TestOpenClawDetection:
+    def test_can_parse_project_skills(
+        self, parser: OpenClawParser, openclaw_skill_dir: Path
+    ) -> None:
+        """A ``.openclaw/skills/`` tree containing a SKILL.md is detected."""
+        assert parser.can_parse(openclaw_skill_dir) is True
+
+    def test_can_parse_workspace_skills(
+        self, parser: OpenClawParser, workspace_skill_dir: Path
+    ) -> None:
+        """A ``<workspace>/skills/`` tree is detected."""
+        assert parser.can_parse(workspace_skill_dir) is True
+
+    def test_cannot_parse_empty_skills_dir(
+        self, parser: OpenClawParser, empty_skills_dir: Path
+    ) -> None:
+        """An empty skills directory is not parseable."""
+        assert parser.can_parse(empty_skills_dir) is False
+
+    def test_cannot_parse_unrelated_directory(self, parser: OpenClawParser, tmp_path: Path) -> None:
+        """A directory with no skills directory is not parseable."""
+        (tmp_path / "src").mkdir()
+        assert parser.can_parse(tmp_path) is False
+
+
+# ---------------------------------------------------------------------------
+# Parsing
 # ---------------------------------------------------------------------------
 
 
 class TestOpenClawParser:
-    """Validate the OpenClaw skills parser."""
-
-    def test_can_parse_valid_dir(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
-        """Parser recognises a directory containing .claw/*.yaml files."""
-        assert parser.can_parse(openclaw_skill_dir) is True
-
-    def test_can_parse_alt_dir(self, parser: OpenClawParser, openclaw_alt_dir: Path) -> None:
-        """Parser recognises .openclaw/ directory with .yml files."""
-        assert parser.can_parse(openclaw_alt_dir) is True
-
-    def test_cannot_parse_invalid_dir(self, parser: OpenClawParser, tmp_path: Path) -> None:
-        """Parser rejects a directory without .claw/ or .openclaw/."""
-        assert parser.can_parse(tmp_path) is False
-
-    def test_cannot_parse_empty_claw_dir(
-        self, parser: OpenClawParser, empty_claw_dir: Path
-    ) -> None:
-        """Parser rejects .claw/ when it contains no YAML files."""
-        assert parser.can_parse(empty_claw_dir) is False
-
     def test_parses_skill_name(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
-        """Extracts the skill name from the YAML top-level 'name' field."""
-        skills = parser.parse(openclaw_skill_dir)
-        assert len(skills) == 1
-        assert skills[0].name == "web-scraper"
+        (skill,) = parser.parse(openclaw_skill_dir)
+        assert skill.name == "web-scraper"
+
+    def test_parses_version(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
+        (skill,) = parser.parse(openclaw_skill_dir)
+        assert skill.version == "1.3.0"
 
     def test_extracts_description(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
-        """Extracts the description from the YAML top-level 'description' field."""
-        skills = parser.parse(openclaw_skill_dir)
-        assert "scrapes" in skills[0].description.lower()
+        (skill,) = parser.parse(openclaw_skill_dir)
+        assert "Scrapes web pages" in skill.description
 
-    def test_extracts_version(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
-        """Extracts the version string from the YAML."""
-        skills = parser.parse(openclaw_skill_dir)
-        assert skills[0].version == "1.3.0"
+    def test_extracts_instructions(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
+        """Instructions are the markdown body, with frontmatter stripped."""
+        (skill,) = parser.parse(openclaw_skill_dir)
+        assert "scrape data" in skill.instructions
+        assert "version:" not in skill.instructions
 
     def test_extracts_urls(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
-        """Extracts all URLs from instructions and commands."""
-        skills = parser.parse(openclaw_skill_dir)
-        urls = skills[0].urls
-        assert any("target-site.com" in u for u in urls)
-        assert any("proxy.internal.net" in u for u in urls)
+        (skill,) = parser.parse(openclaw_skill_dir)
+        joined = " ".join(skill.urls)
+        assert "target-site.com" in joined
+        assert "proxy.internal.net" in joined
 
     def test_extracts_env_vars(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
-        """Extracts environment variable references from instructions and commands."""
-        skills = parser.parse(openclaw_skill_dir)
-        env_vars = skills[0].env_vars_referenced
-        assert "SCRAPER_API_KEY" in env_vars
+        """Declared and referenced env vars are merged."""
+        (skill,) = parser.parse(openclaw_skill_dir)
+        assert "SCRAPER_API_KEY" in skill.env_vars_referenced
 
     def test_extracts_shell_commands(
         self, parser: OpenClawParser, openclaw_skill_dir: Path
     ) -> None:
-        """Extracts shell commands from the commands list."""
-        skills = parser.parse(openclaw_skill_dir)
-        shell_cmds = skills[0].shell_commands
-        assert any("curl" in cmd for cmd in shell_cmds)
-        assert any("python" in cmd for cmd in shell_cmds)
+        (skill,) = parser.parse(openclaw_skill_dir)
+        assert any("curl" in c for c in skill.shell_commands)
+        assert any("export.py" in c for c in skill.shell_commands)
 
-    def test_extracts_dependencies(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
-        """Extracts declared dependencies from the YAML."""
-        skills = parser.parse(openclaw_skill_dir)
-        deps = skills[0].dependencies
-        assert any("beautifulsoup4" in d for d in deps)
-        assert any("httpx" in d for d in deps)
-
-    def test_extracts_instructions(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
-        """Extracts the instructions text."""
-        skills = parser.parse(openclaw_skill_dir)
-        assert "scrape" in skills[0].instructions.lower()
+    def test_extracts_required_bins_as_dependencies(
+        self, parser: OpenClawParser, openclaw_skill_dir: Path
+    ) -> None:
+        (skill,) = parser.parse(openclaw_skill_dir)
+        assert "curl" in skill.dependencies
 
     def test_format_is_correct(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
-        """Parsed skills must have format='openclaw'."""
-        skills = parser.parse(openclaw_skill_dir)
-        assert skills[0].format == "openclaw"
+        (skill,) = parser.parse(openclaw_skill_dir)
+        assert skill.format == "openclaw"
 
     def test_source_path_is_set(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
-        """source_path points to the actual YAML file on disk."""
-        skills = parser.parse(openclaw_skill_dir)
-        assert skills[0].source_path.exists()
-        assert skills[0].source_path.suffix == ".yaml"
+        (skill,) = parser.parse(openclaw_skill_dir)
+        assert skill.source_path.name == "SKILL.md"
+        assert skill.source_path.parent.name == "web-scraper"
 
-    def test_handles_empty_dir(self, parser: OpenClawParser, empty_claw_dir: Path) -> None:
-        """Parsing an empty .claw/ directory returns an empty list."""
-        skills = parser.parse(empty_claw_dir)
-        assert skills == []
-
-    def test_handles_malformed_content(
-        self, parser: OpenClawParser, malformed_claw_dir: Path
-    ) -> None:
-        """Parsing invalid YAML returns an empty list rather than crashing."""
-        skills = parser.parse(malformed_claw_dir)
-        assert skills == []
+    def test_raw_content_preserved(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
+        """raw_content keeps the whole file, frontmatter included."""
+        (skill,) = parser.parse(openclaw_skill_dir)
+        assert skill.raw_content.startswith("---")
+        assert "version:" in skill.raw_content
 
     def test_returns_parsed_skill_instances(
         self, parser: OpenClawParser, openclaw_skill_dir: Path
     ) -> None:
-        """All returned items are ParsedSkill instances."""
         skills = parser.parse(openclaw_skill_dir)
-        for skill in skills:
-            assert isinstance(skill, ParsedSkill)
+        assert all(isinstance(s, ParsedSkill) for s in skills)
 
-    def test_raw_content_preserved(self, parser: OpenClawParser, openclaw_skill_dir: Path) -> None:
-        """The full raw content of the YAML file is available."""
-        skills = parser.parse(openclaw_skill_dir)
-        assert "web-scraper" in skills[0].raw_content
+
+# ---------------------------------------------------------------------------
+# Robustness
+# ---------------------------------------------------------------------------
+
+
+class TestOpenClawRobustness:
+    def test_handles_empty_dir(self, parser: OpenClawParser, empty_skills_dir: Path) -> None:
+        assert parser.parse(empty_skills_dir) == []
+
+    def test_handles_malformed_frontmatter(
+        self, parser: OpenClawParser, malformed_skill_dir: Path
+    ) -> None:
+        """A broken skill is still surfaced, falling back to the directory name."""
+        skills = parser.parse(malformed_skill_dir)
+        assert [s.name for s in skills] == ["broken"]
+
+    def test_handles_nonexistent_path(self, parser: OpenClawParser, tmp_path: Path) -> None:
+        missing = tmp_path / "does-not-exist"
+        assert parser.can_parse(missing) is False
+        assert parser.parse(missing) == []

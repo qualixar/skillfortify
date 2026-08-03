@@ -48,6 +48,65 @@ TABLE_11_DISTRIBUTION: Final[Mapping[tuple[str, str], int]] = {
     ("claude", "benign"): 90, ("mcp", "benign"): 90, ("openclaw", "benign"): 90,
 }
 
+# Skill names, shared by both classes.
+#
+# Names are drawn from one pool so that the name cannot separate the classes.
+# A corpus whose malicious and benign names come from disjoint vocabularies is
+# classifiable from a lookup table alone, and a scanner measured against it
+# posts a score without reading a single skill. Marketplace malware also
+# impersonates useful tools rather than announcing itself, so one shared
+# vocabulary is the more faithful choice as well as the sound one.
+BENIGN_NAME_POOLS: Final[Mapping[str, tuple[str, ...]]] = {
+    "file_management": (
+        "text-file-deduper", "dir-tree-summarizer", "yaml-merger",
+        "csv-row-counter", "file-hash-report", "json-lint-helper",
+        "path-normalizer", "file-size-reporter", "log-file-rotator",
+        "config-file-validator", "archive-extractor", "temp-dir-cleaner",
+    ),
+    "data_transformation": (
+        "csv-to-json-converter", "yaml-to-json-bridge", "xml-pretty-printer",
+        "json-formatter", "csv-to-tsv-converter", "base-converter",
+        "tsv-normalizer", "markdown-table-formatter", "ini-to-yaml-bridge",
+        "toml-to-json-converter", "ndjson-splitter", "jsonl-merger",
+    ),
+    "api_integration": (
+        "pypi-version-probe", "github-issue-summarizer", "npm-meta-fetch",
+        "docs-python-link-check", "github-repo-stats", "pypi-download-counter",
+        "npm-dep-tree-viewer", "github-release-checker", "pypi-license-scanner",
+        "npm-audit-reporter", "github-star-tracker", "registry-health-check",
+    ),
+    "development_tooling": (
+        "pytest-flake-reporter", "eslint-rule-counter", "ruff-preset-applier",
+        "coverage-line-annotator", "mypy-stub-generator", "black-format-checker",
+        "isort-import-sorter", "bandit-security-scanner", "pylint-score-tracker",
+        "flake8-config-helper", "tox-env-lister", "pre-commit-hook-runner",
+    ),
+    "system_information": (
+        "uptime-reporter", "disk-usage-summary", "kernel-version-check",
+        "free-memory-report", "cpu-info-collector", "hostname-resolver",
+        "load-average-monitor", "swap-usage-checker", "os-release-reader",
+        "network-iface-lister", "process-count-reporter", "env-path-inspector",
+    ),
+}
+
+#: Every skill name in the corpus, in a stable order.
+SHARED_NAME_POOL: Final[tuple[str, ...]] = tuple(
+    sorted({name for pool in BENIGN_NAME_POOLS.values() for name in pool})
+)
+
+#: Publisher strings. Both classes draw from this pool, so a claim of being
+#: verified is a signal the analyser must weigh rather than a label giveaway.
+AUTHOR_POOL: Final[tuple[str, ...]] = (
+    "verified-publisher",
+    "community",
+    "internal-tools",
+    "opensource-maintainer",
+)
+
+#: Attack types whose skill name *is* the attack, and which therefore keep the
+#: name their seed chose. Detecting these names is the scanner's job.
+NAME_BEARING_ATTACKS: Final[frozenset[str]] = frozenset({"A11"})
+
 # §5.5 Forbidden words (case-insensitive grep targets)
 FORBIDDEN_WORDS: Final[tuple[str, ...]] = (
     "regenerated", "regeneration", "regen",

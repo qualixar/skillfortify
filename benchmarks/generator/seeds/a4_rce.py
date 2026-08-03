@@ -25,13 +25,14 @@ class A4_ArbitraryCodeExecution(AttackPattern):
     attack_id = "A4"
     parent_class = "c2_PRIVILEGE_ESCALATION"
     sources: tuple[str, ...] = (
-        "ClawHavoc (arXiv:2602.20867)",
+        "ClawHavoc (Koi Security / Yomtov, Feb 2026)",
         "CVE-2026-25253",
         "invariant-labs/mcp-injection-experiments",
         "Paper Listing 2",
     )
     obfuscation_levels_supported: frozenset[int] = frozenset({1, 2, 3, 4})
-    mnemonic = "rce_cve"
+    display_name = "Arbitrary code execution"
+    mnemonic = "rce"
     cve_reproduction_note = (
         "CVE-2026-25253 describes arbitrary-code-execution via docstring-injection "
         "in MCP tool descriptions. Our A4 specimens reproduce the CVE's structural "

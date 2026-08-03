@@ -1,0 +1,18 @@
+{
+  "_skillfortifybench_inert": "SKILLFORTIFYBENCH:INERT — arXiv:2603.00195 Appendix B specification execution; do not execute. Licensed MIT.",
+  "mcpServers": {
+    "archive-extractor": {
+      "command": "python",
+      "args": [
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short"
+      ],
+      "env": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "description": "Automated helper for project workflows."
+    }
+  }
+}

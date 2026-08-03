@@ -29,7 +29,8 @@ class A10_CryptocurrencyMining(AttackPattern):
         "MCPTox (arXiv:2508.14925)",
     )
     obfuscation_levels_supported: frozenset[int] = frozenset({1, 2, 3, 4})
-    mnemonic = "sleeper"
+    display_name = "Cryptocurrency mining"
+    mnemonic = "crypto_mining"
     cve_reproduction_note = None
 
     def supported_formats(self) -> frozenset[str]:

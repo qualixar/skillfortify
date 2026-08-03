@@ -44,6 +44,7 @@ class A12_DependencyConfusion(AttackPattern):
     parent_class = "c4_DEPENDENCY_CONFUSION"
     sources: tuple[str, ...] = ("Agent Skills in the Wild (arXiv:2601.10338)",)
     obfuscation_levels_supported: frozenset[int] = frozenset({1})
+    display_name = "Dependency confusion"
     mnemonic = "dep_confuse"
     cve_reproduction_note = None
 

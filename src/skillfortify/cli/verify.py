@@ -18,34 +18,9 @@ from pathlib import Path
 
 import click
 
+from skillfortify.cli.skill_lookup import find_project_root
 from skillfortify.core.analyzer import StaticAnalyzer
 from skillfortify.parsers.registry import default_registry
-
-
-def _find_project_root(skill_path: Path) -> Path | None:
-    """Walk up from a skill file to find the project root.
-
-    The project root is the directory where a parser's ``can_parse()``
-    returns True. For Claude skills at ``.claude/skills/foo.md``, the
-    root is two levels above the skills directory.
-
-    Args:
-        skill_path: Absolute path to the skill file.
-
-    Returns:
-        The project root directory, or None if not found.
-    """
-    registry = default_registry()
-    current = skill_path.parent
-    # Walk up at most 5 levels to find a parseable root
-    for _ in range(5):
-        skills = registry.discover(current)
-        if skills:
-            return current
-        if current.parent == current:
-            break
-        current = current.parent
-    return None
 
 
 def _result_to_json(result, skill_format: str) -> dict:
@@ -104,7 +79,7 @@ def verify_command(skill_path: str, output_format: str) -> None:
     resolved = target.resolve()
 
     # Find project root by walking up directory tree
-    root = _find_project_root(resolved)
+    root = find_project_root(target)
     if root is None:
         if output_format == "json":
             click.echo(

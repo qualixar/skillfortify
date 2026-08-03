@@ -99,8 +99,13 @@ def test_file_management_mcp_produces_valid_json():
     assert "mcpServers" in parsed
 
 
-def test_file_management_openclaw_produces_valid_yaml():
-    """LLD-03 §6.1: file_management OpenClaw output parses as YAML."""
+def test_file_management_openclaw_produces_a_loadable_skill():
+    """A benign OpenClaw specimen has the same shape as a malicious one.
+
+    Benign and malicious specimens are built by separate class hierarchies.
+    If the two disagree on layout or on which fields they emit, the label can
+    be read off the file's shape without looking at its content.
+    """
     from benchmarks.generator.benign import BENIGN_REGISTRY
 
     cat = BENIGN_REGISTRY["file_management"]
@@ -109,11 +114,16 @@ def test_file_management_openclaw_produces_valid_yaml():
     result = cat.instantiate(spec, rng)
 
     assert isinstance(result, RenderedSkill)
-    assert result.format_extension == ".yaml"
+    assert result.format_extension == ".md"
+    assert ".openclaw/skills/" in result.filename
+    assert result.filename.endswith("/SKILL.md")
+
     text = result.content_bytes.decode("utf-8")
-    lines = [l for l in text.split("\n") if not l.startswith("# SKILLFORTIFYBENCH")]
-    parsed = yaml.safe_load("\n".join(lines))
-    assert parsed is not None
+    assert text.startswith("---\n")
+    frontmatter = yaml.safe_load(text.split("---\n")[1])
+    assert frontmatter["name"]
+    assert frontmatter["allowed-tools"]
+    assert text.count("SKILLFORTIFYBENCH:INERT") == 1
 
 
 # ---------------------------------------------------------------------------

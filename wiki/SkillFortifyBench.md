@@ -37,9 +37,9 @@ SkillFortifyBench addresses all of these gaps.
 
 Malicious samples were derived from three verified sources:
 
-1. **ClawHavoc campaign samples**: Skills based on the attack patterns documented in the ClawHavoc investigation (1,200+ malicious skills that infiltrated the OpenClaw marketplace in January-February 2026)
+1. **ClawHavoc campaign samples**: Skills based on the attack patterns documented in the ClawHavoc investigation (at least 1,184 malicious skills that infiltrated the OpenClaw marketplace in January-February 2026)
 
-2. **MalTool dataset patterns**: Attack techniques from the MalTool research paper (6,487 malicious agent tools catalogued in February 2026), adapted to the three supported skill formats
+2. **MalTool dataset patterns**: Attack techniques from the MalTool research paper (7,027 malicious agent tools catalogued in February 2026), adapted to the three supported skill formats
 
 3. **CVE-2026-25253 variants**: Remote code execution patterns derived from the first agent-software CVE, including variations that exploit installation, loading, and execution phases
 
@@ -92,8 +92,10 @@ Skills are distributed across all three supported formats to ensure format-agnos
 | Metric | Value |
 |--------|-------|
 | **Precision** | 100% (zero false positives) |
-| **Recall** | 94.12% |
-| **F1 Score** | 96.95% |
+| **Recall** (paper) | 94.12% |
+| **F1 Score** (paper) | 96.95% |
+| **Recall** (reproduced) | 91.48% |
+| **F1 Score** (reproduced) | 95.55% |
 | **Average analysis time** | 2.55 ms per skill |
 
 ### What the Numbers Mean
@@ -203,7 +205,7 @@ SkillFortifyBench is the first benchmark specifically designed for agent skill s
 | Benchmark | Focus | Size | Agent Skills? | Ground Truth? |
 |-----------|-------|------|---------------|---------------|
 | **SkillFortifyBench** | Agent skill security | 540 | Yes (3 formats) | Yes |
-| MalTool dataset | Malicious tool cataloguing | 6,487 | Partial | Partial |
+| MalTool dataset | Malicious tool cataloguing | 7,027 | Partial | Partial |
 | ToolShield eval set | Tool safety | ~100 | Partial | Yes |
 | OWASP Benchmark | Web application security | 2,740 | No | Yes |
 

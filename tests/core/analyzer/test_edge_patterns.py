@@ -15,7 +15,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-
 from skillfortify.core.analyzer import Severity, StaticAnalyzer
 from skillfortify.parsers.base import ParsedSkill
 
@@ -104,19 +103,16 @@ class TestBase64Patterns:
         critical = [f for f in result.findings if f.severity == Severity.CRITICAL]
         assert len(critical) >= 1
 
-    def test_base64_decode_long_flag_not_matched(self) -> None:
-        """``base64 --decode | bash`` is NOT matched by current patterns.
+    def test_base64_decode_long_flag_is_matched(self) -> None:
+        """The long decode option must fire the same pattern as the short one.
 
-        The current pattern catalog uses ``base64\\s+-d`` which matches
-        the short flag ``-d`` but not the long form ``--decode``. This is
-        a known gap documented here for future pattern expansion.
-        The shell command still gets flagged as ``shell:WRITE`` capability
-        but the specific base64-pipe-to-shell CRITICAL pattern does not fire.
+        The catalog matches the decode-then-execute behaviour rather than a
+        single spelling of the flag.
         """
         skill = _make_skill(shell_commands=["cat payload.b64 | base64 --decode | bash"])
         result = StaticAnalyzer().analyze(skill)
-        # Current pattern does not match --decode, so no CRITICAL finding.
-        assert result.is_safe
+        assert not result.is_safe
+        assert any("base64" in f.message.lower() for f in result.findings)
 
 
 class TestMultipleDangerousPatterns:
