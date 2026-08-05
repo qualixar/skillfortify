@@ -21,6 +21,9 @@ verify:  ## Verify existing benchmark against manifest
 benchmark:  ## Score the scanner against the corpus and write results/
 	$(PYTHON) -m benchmarks.metrics --corpus benchmarks --output benchmarks/results
 
+experiments:  ## Run the E3-E7 experiments and write results/experiments.json
+	$(PYTHON) -m benchmarks.experiments --corpus benchmarks --output benchmarks/results
+
 leakage:  ## Fail if any structural feature of a specimen predicts its label
 	$(PYTHON) -c "from pathlib import Path; \
 		from benchmarks.metrics.leakage import find_leaks, format_report; \

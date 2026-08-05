@@ -71,6 +71,7 @@ from pathlib import Path
 
 import yaml
 
+from skillfortify.parsers import treewalk
 from skillfortify.parsers.base import ParsedSkill, SkillParser
 
 # ---------------------------------------------------------------------------
@@ -80,19 +81,23 @@ from skillfortify.parsers.base import ParsedSkill, SkillParser
 # A skill is a directory containing this file, never a standalone YAML file.
 _SKILL_FILENAME = "SKILL.md"
 
-# Directories that may contain skill directories, relative to a scan root.
-_SKILL_ROOTS = (
-    ".openclaw/skills",
-    "skills",
-)
+# The install-root marker. A repository may hold several: one at the top and
+# one per package, so it is searched for at depth.
+_OPENCLAW_DIR = ".openclaw"
+
+# Skill directories live under this, relative to each ``.openclaw`` found.
+_SKILLS_SUBDIR = "skills"
+
+# Upstream also honours a bare ``skills/`` directory, but only for a root the
+# user named explicitly. Re-anchoring that onto every directory in a tree
+# would claim any unrelated ``skills/`` folder, so it stays root-only.
+_ROOT_ONLY_SKILL_ROOTS = ("skills",)
 
 # Upstream discovers SKILL.md up to six levels below a configured root.
 _MAX_SKILL_DEPTH = 6
 
 # Directories that never contain skills; pruned to keep scans bounded.
-_PRUNED_DIR_NAMES = frozenset(
-    {"node_modules", "__pycache__", "venv", "site-packages", "dist", "build", "target", "vendor"}
-)
+_PRUNED_DIR_NAMES = treewalk.PRUNED_DIR_NAMES
 
 # ---------------------------------------------------------------------------
 # Extraction patterns
@@ -228,8 +233,18 @@ class OpenClawParser(SkillParser):
 
     @staticmethod
     def _iter_skill_roots(path: Path) -> Iterator[Path]:
-        """Yield every directory that may contain OpenClaw skill directories."""
-        for relative in _SKILL_ROOTS:
+        """Yield every directory that may contain OpenClaw skill directories.
+
+        Searches the tree for ``.openclaw`` install roots, so skills held in
+        ``packages/*/.openclaw/skills`` are covered by a single scan of the
+        top level, then adds the root-only ``skills/`` convention.
+        """
+        for openclaw_dir in treewalk.iter_marker_dirs(path, _OPENCLAW_DIR):
+            candidate = openclaw_dir / _SKILLS_SUBDIR
+            if candidate.is_dir():
+                yield candidate
+
+        for relative in _ROOT_ONLY_SKILL_ROOTS:
             candidate = path / relative
             if candidate.is_dir():
                 yield candidate

@@ -49,6 +49,7 @@ import json
 import tomllib
 from pathlib import Path
 
+from skillfortify.parsers import treewalk
 from skillfortify.parsers.base import ParsedSkill, SkillParser
 
 # MCP config filenames to probe, in priority order.
@@ -185,9 +186,10 @@ class McpConfigParser(SkillParser):
     def parse(self, path: Path) -> list[ParsedSkill]:
         """Parse all MCP server entries from ALL configuration files.
 
-        Scans every known config filename and aggregates servers from all
-        files found. Deduplicates by server name so the same MCP server
-        declared in multiple config files is only reported once.
+        Scans every known config location and aggregates servers from all
+        files found. Deduplicates per project directory, so one server
+        declared in several client configs of the same project is reported
+        once while same-named servers in different projects are both kept.
 
         Args:
             path: Root directory containing MCP config file(s).
@@ -197,38 +199,39 @@ class McpConfigParser(SkillParser):
             Empty if no config found or all configs are malformed.
         """
         results: list[ParsedSkill] = []
-        seen_names: set[str] = set()
-        for name, config, source in self._iter_servers(path):
-            if name in seen_names:
+        seen: set[tuple[Path, str]] = set()
+        for anchor, name, config, source in self._iter_servers(path):
+            key = (anchor, name)
+            if key in seen:
                 continue
             skill = self._parse_server_entry(name, config, source)
             if skill is not None:
-                seen_names.add(name)
+                seen.add(key)
                 results.append(skill)
         return results
 
     def _iter_servers(self, path: Path):
-        """Yield ``(server_name, server_config, source_path)`` for every surface.
+        """Yield ``(anchor, server_name, server_config, source_path)`` per surface.
 
         Covers JSON and TOML configs, and the per-project server maps that
-        clients such as Claude Code nest inside their user config.
+        clients such as Claude Code nest inside their user config. ``anchor``
+        is the project directory the config was found under, and it scopes
+        deduplication to that project.
         """
         if not path.is_dir():
             return
 
-        for relative in _MCP_CONFIG_PATHS:
-            config_file = path / relative
-            if not config_file.is_file():
-                continue
+        # Each relative path is re-anchored onto every directory in the tree,
+        # not just the scan root, because a project commonly gives each of its
+        # packages an .mcp.json of its own.
+        for anchor, config_file in treewalk.iter_files(path, _MCP_CONFIG_PATHS):
             data = _load_json(config_file)
             if data is None:
                 continue
-            yield from _servers_from_json(data, config_file)
+            for name, entry, source in _servers_from_json(data, config_file):
+                yield anchor, name, entry, source
 
-        for relative in _MCP_TOML_PATHS:
-            config_file = path / relative
-            if not config_file.is_file():
-                continue
+        for anchor, config_file in treewalk.iter_files(path, _MCP_TOML_PATHS):
             data = _load_toml(config_file)
             if data is None:
                 continue
@@ -236,7 +239,7 @@ class McpConfigParser(SkillParser):
             if isinstance(table, dict):
                 for name, entry in table.items():
                     if isinstance(entry, dict):
-                        yield name, entry, config_file
+                        yield anchor, name, entry, config_file
 
     def _parse_config(self, config_path: Path) -> list[ParsedSkill]:
         """Parse a single MCP configuration file.

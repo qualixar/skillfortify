@@ -57,6 +57,7 @@ from pathlib import Path
 
 import yaml
 
+from skillfortify.parsers import treewalk
 from skillfortify.parsers.base import ParsedSkill, SkillParser
 
 # ---------------------------------------------------------------------------
@@ -174,30 +175,10 @@ def _safe_resolve(path: Path) -> Path | None:
 def _iter_claude_dirs(root: Path, max_depth: int = _MAX_SCAN_DEPTH) -> Iterator[Path]:
     """Yield every ``.claude`` directory at or below ``root``.
 
-    Uses a breadth-first walk bounded by ``max_depth`` and prunes
-    directories that never contain skills (VCS metadata, dependency trees,
-    virtualenvs). Scanning a home directory or a large monorepo therefore
-    stays predictable instead of descending the entire filesystem.
+    Delegates to the shared bounded walk so every format is discovered under
+    the same depth, prune, and symlink rules.
     """
-    frontier = [(root, 0)]
-    while frontier:
-        current, depth = frontier.pop(0)
-        try:
-            entries = sorted(current.iterdir())
-        except (OSError, PermissionError):
-            continue
-
-        for entry in entries:
-            if not entry.is_dir() or entry.is_symlink():
-                continue
-            if entry.name == _CLAUDE_DIR:
-                yield entry
-                continue
-            if depth >= max_depth or entry.name in _PRUNED_DIR_NAMES:
-                continue
-            if entry.name.startswith("."):
-                continue
-            frontier.append((entry, depth + 1))
+    yield from treewalk.iter_marker_dirs(root, _CLAUDE_DIR, max_depth=max_depth)
 
 
 def _iter_dirs(root: Path, pattern: str, max_depth: int = _MAX_SCAN_DEPTH) -> Iterator[Path]:

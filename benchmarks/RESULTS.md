@@ -1,6 +1,6 @@
 # SkillFortifyBench Results
 
-SkillFortify **0.5.0**, MEDIUM severity threshold, corpus generated
+SkillFortify **0.6.0**, MEDIUM severity threshold, corpus generated
 from seed=42 with `PYTHONHASHSEED=0`.
 
 Every figure below is computed from `results/specimen-results.json`, which
@@ -123,4 +123,4 @@ manifest hash.
 
 ---
 
-*Wilson intervals use z=1.96. Evaluated with SkillFortify 0.5.0.*
+*Wilson intervals use z=1.96. Evaluated with SkillFortify 0.6.0.*

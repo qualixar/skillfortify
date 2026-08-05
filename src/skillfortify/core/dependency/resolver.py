@@ -20,7 +20,6 @@ from skillfortify.core.dependency.graph import AgentDependencyGraph
 # When unavailable, DependencyResolver.resolve() raises ImportError.
 try:
     from pysat.solvers import Solver as _PySATSolver
-    from pysat.card import CardEnc, EncType  # noqa: F401 — reserved for future at-most-k encoding
 
     _PYSAT_AVAILABLE = True
 except ImportError:  # pragma: no cover

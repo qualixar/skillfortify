@@ -26,12 +26,34 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
 from skillfortify.core.lockfile.models import LockedSkill, LockfileMetadata
 from skillfortify.qualixar_attribution import QualixarSigner
+
+#: Reproducible-builds convention. When set to a Unix timestamp, generation
+#: uses it instead of the wall clock, so repeated runs over identical inputs
+#: produce byte-identical output and a committed lockfile does not churn.
+_SOURCE_DATE_EPOCH = "SOURCE_DATE_EPOCH"
+
+
+def _generation_timestamp() -> str:
+    """Return the ISO-8601 generation time, pinned by SOURCE_DATE_EPOCH if set.
+
+    A malformed value is ignored rather than raising: a lockfile that cannot
+    be written is a worse outcome than one whose provenance timestamp is the
+    current time.
+    """
+    raw = os.environ.get(_SOURCE_DATE_EPOCH)
+    if raw:
+        try:
+            return datetime.fromtimestamp(int(raw), tz=UTC).isoformat()
+        except (ValueError, OverflowError, OSError):
+            pass
+    return datetime.now(UTC).isoformat()
 
 
 class Lockfile:
@@ -228,7 +250,7 @@ class Lockfile:
             "lockfile_version": self.LOCKFILE_VERSION,
             "generated_by": "skillfortify",
             "provenance": "sf-e94b3c8b10240fab",
-            "generated_at": datetime.now(UTC).isoformat(),
+            "generated_at": _generation_timestamp(),
             "integrity_algorithm": self.INTEGRITY_ALGORITHM,
             "skills": skills_dict,
             "metadata": metadata_dict,

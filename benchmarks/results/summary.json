@@ -201,5 +201,5 @@
     }
   },
   "severity_threshold": "MEDIUM",
-  "scanner_version": "0.5.0"
+  "scanner_version": "0.6.0"
 }

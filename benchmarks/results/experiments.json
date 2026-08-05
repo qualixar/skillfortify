@@ -1,0 +1,246 @@
+{
+  "experiments": [
+    {
+      "added_coverage_fraction": 0.0,
+      "description": "Detection coverage: pattern matching alone vs. with information flow",
+      "detected_exclusively_by_info_flow": 0,
+      "detected_pattern_only": 250,
+      "detected_with_info_flow": 250,
+      "exclusive_specimen_names": [],
+      "experiment": "E3",
+      "info_flow_attack_types": {
+        "A13": 44
+      },
+      "info_flow_findings_total": 44,
+      "interpretation": "The information-flow rule co-occurs with pattern findings on every specimen it fires for. It adds no detection that pattern matching does not already make, so its contribution to coverage is zero.",
+      "malicious_specimens": 270,
+      "not_detected": 20,
+      "severity_threshold": "MEDIUM"
+    },
+    {
+      "description": "SAT-based dependency resolution scalability",
+      "experiment": "E4",
+      "max_dependencies_per_skill": 3,
+      "measurements": [
+        {
+          "max_seconds": 0.000218,
+          "median_seconds": 5.2e-05,
+          "min_seconds": 4.6e-05,
+          "per_skill_ms": 0.0052,
+          "resolved": true,
+          "skills": 10
+        },
+        {
+          "max_seconds": 0.000321,
+          "median_seconds": 0.000288,
+          "min_seconds": 0.000284,
+          "per_skill_ms": 0.0058,
+          "resolved": true,
+          "skills": 50
+        },
+        {
+          "max_seconds": 0.000769,
+          "median_seconds": 0.000692,
+          "min_seconds": 0.000655,
+          "per_skill_ms": 0.0069,
+          "resolved": true,
+          "skills": 100
+        },
+        {
+          "max_seconds": 0.001886,
+          "median_seconds": 0.00181,
+          "min_seconds": 0.001723,
+          "per_skill_ms": 0.0091,
+          "resolved": true,
+          "skills": 200
+        },
+        {
+          "max_seconds": 0.008828,
+          "median_seconds": 0.007681,
+          "min_seconds": 0.007475,
+          "per_skill_ms": 0.0154,
+          "resolved": true,
+          "skills": 500
+        },
+        {
+          "max_seconds": 0.027501,
+          "median_seconds": 0.027184,
+          "min_seconds": 0.027053,
+          "per_skill_ms": 0.0272,
+          "resolved": true,
+          "skills": 1000
+        }
+      ],
+      "repeats": 5,
+      "seed": 42,
+      "solver": "Glucose3 (CDCL) via python-sat",
+      "status": "measured"
+    },
+    {
+      "decay_alternate_rate": {
+        "decay_rate_per_day": 0.005,
+        "half_life_days": 138.6,
+        "initial_score": 0.85,
+        "trajectory": {
+          "day_0": 0.85,
+          "day_180": 0.3456,
+          "day_30": 0.7316,
+          "day_90": 0.542
+        }
+      },
+      "decay_shipped_default": {
+        "decay_rate_per_day": 0.01,
+        "half_life_days": 69.3,
+        "initial_score": 0.85,
+        "trajectory": {
+          "day_0": 0.85,
+          "day_180": 0.1405,
+          "day_30": 0.6297,
+          "day_90": 0.3456
+        }
+      },
+      "description": "Trust algebra: monotonicity, weight sensitivity, and decay",
+      "experiment": "E5",
+      "monotonicity": {
+        "boundedness_violations": 0,
+        "data_points": 200,
+        "holds": true,
+        "violation_details": [],
+        "violations": 0
+      },
+      "note": "The decay rate is configurable. The shipped default is what a user gets unless they tune it; the alternate rate is shown for contrast.",
+      "seed": 42,
+      "weight_sensitivity": {
+        "max_cv": 0.17,
+        "mean_cv": 0.1279,
+        "min_cv": 0.067,
+        "skills": 10,
+        "weight_vectors": 100
+      }
+    },
+    {
+      "byte_determinism_fraction": 1.0,
+      "byte_identical_with_pinned_epoch": 10,
+      "configurations": [
+        {
+          "byte_identical_with_pinned_epoch": true,
+          "content_identical": true,
+          "resolved": true,
+          "seed": 1000,
+          "sha256": "82fcf25323ed207b",
+          "skills": 3
+        },
+        {
+          "byte_identical_with_pinned_epoch": true,
+          "content_identical": true,
+          "resolved": true,
+          "seed": 1001,
+          "sha256": "f690c5aad820a5dd",
+          "skills": 5
+        },
+        {
+          "byte_identical_with_pinned_epoch": true,
+          "content_identical": true,
+          "resolved": true,
+          "seed": 1002,
+          "sha256": "998b9e30eebaf975",
+          "skills": 8
+        },
+        {
+          "byte_identical_with_pinned_epoch": true,
+          "content_identical": true,
+          "resolved": true,
+          "seed": 1003,
+          "sha256": "c40b4a95ad14e744",
+          "skills": 12
+        },
+        {
+          "byte_identical_with_pinned_epoch": true,
+          "content_identical": true,
+          "resolved": true,
+          "seed": 1004,
+          "sha256": "f673e10b8b45ace2",
+          "skills": 16
+        },
+        {
+          "byte_identical_with_pinned_epoch": true,
+          "content_identical": true,
+          "resolved": true,
+          "seed": 1005,
+          "sha256": "553646efb8222d1d",
+          "skills": 20
+        },
+        {
+          "byte_identical_with_pinned_epoch": true,
+          "content_identical": true,
+          "resolved": true,
+          "seed": 1006,
+          "sha256": "871d68fadf3ccb14",
+          "skills": 25
+        },
+        {
+          "byte_identical_with_pinned_epoch": true,
+          "content_identical": true,
+          "resolved": true,
+          "seed": 1007,
+          "sha256": "883dd1a472fb7694",
+          "skills": 32
+        },
+        {
+          "byte_identical_with_pinned_epoch": true,
+          "content_identical": true,
+          "resolved": true,
+          "seed": 1008,
+          "sha256": "58c75fdae46bbb1a",
+          "skills": 40
+        },
+        {
+          "byte_identical_with_pinned_epoch": true,
+          "content_identical": true,
+          "resolved": true,
+          "seed": 1009,
+          "sha256": "3f71172996c10bbe",
+          "skills": 50
+        }
+      ],
+      "configurations_tested": 10,
+      "content_determinism_fraction": 1.0,
+      "content_identical": 10,
+      "description": "Lockfile determinism",
+      "experiment": "E6",
+      "mechanisms": [
+        "canonical JSON serialisation with sorted keys",
+        "deterministic SAT solving with fixed variable ordering",
+        "SHA-256 content hashing of resolved skill artifacts"
+      ],
+      "status": "measured"
+    },
+    {
+      "description": "End-to-end scan performance over the benchmark corpus",
+      "experiment": "E7",
+      "findings_produced": 1131,
+      "note": "Discovery and analysis over a single scan root, the path the CLI takes. Timings are specific to the host recorded with this run.",
+      "repeats": 5,
+      "scan": {
+        "max_seconds": 0.3902,
+        "median_seconds": 0.3796,
+        "min_seconds": 0.3756,
+        "per_skill_ms": 0.5272
+      },
+      "skills_discovered": 720,
+      "status": "measured",
+      "warmup_runs": 1
+    }
+  ],
+  "host": {
+    "cpu_count": 15,
+    "machine": "arm64",
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "processor": "arm",
+    "python": "3.14.5",
+    "python_hash_seed": "0",
+    "sat_solver_available": true,
+    "skillfortify_version": "0.6.0",
+    "timestamp_utc": "2026-08-05T07:42:54+00:00"
+  }
+}
